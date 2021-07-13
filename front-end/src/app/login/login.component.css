@@ -1,0 +1,42 @@
+.background-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position:fixed;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+    .background-img{
+        height: 100%;
+        width: 100%;
+    }
+  }
+
+.login-card{
+    padding-top: 20%;
+}
+
+.sub-btn{
+    margin-top: 10px;
+}
+.btn.register {
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    color: rgb(0, 165, 236);
+}
+
+#password{
+    margin-top: 10px;
+}
+
+.btn.register:hover,
+.btn.register:active,
+.btn.register:focus {
+    background-color: transparent;
+    color: #006394;
+}

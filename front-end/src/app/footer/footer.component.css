@@ -1,0 +1,18 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #657f8b;
+    color: white;
+    text-align: center;
+    font-size: 10pt;
+    overflow: hidden;
+    z-index: 2;
+}
+
+@media screen and (max-height: 450px) {
+    .footer {
+        display: none;
+    }
+}
