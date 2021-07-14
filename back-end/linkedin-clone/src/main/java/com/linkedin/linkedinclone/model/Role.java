@@ -17,9 +17,6 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Enumerated(EnumType.STRING) @NonNull
     private RoleType name;
 
@@ -28,6 +25,4 @@ public class Role {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users = new HashSet<User>();
-
-
 }
