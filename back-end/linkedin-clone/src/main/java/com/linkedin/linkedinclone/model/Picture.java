@@ -16,12 +16,14 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "format", nullable = false)
+    private String format;
+
     @Column(name = "name", nullable = false)
     private String name;
 
-
-    @Column(name = "pictureBytes", nullable = false,length = 200000)
-    private byte[] pictureBytes;
+    @Column(name = "bytes", nullable = false,length = 200000)
+    private byte[] bytes;
 
     // ---------- RELATIONS ---------- //
 
@@ -31,4 +33,11 @@ public class Picture {
     @ToString.Exclude
     private User user;
 
+
+    // ---------- CONSTRUCTORS ---------- //
+    public Picture(String name, String format, byte[] bytes){
+        this.name = name;
+        this.format = format;
+        this.bytes = bytes;
+    }
 }
