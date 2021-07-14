@@ -21,6 +21,6 @@ import { FooterComponent } from './footer/footer.component';
     BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent,LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
