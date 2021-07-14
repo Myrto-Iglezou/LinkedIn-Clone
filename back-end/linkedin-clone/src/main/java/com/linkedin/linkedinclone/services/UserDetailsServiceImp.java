@@ -26,7 +26,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws EmailNotFoundException {
-        com.linkedin.linkedinclone.model.User applicationUser = applicationUserRepository.findUserByEmail(username);
+        com.linkedin.linkedinclone.model.User applicationUser = applicationUserRepository.findUserByUsername(username);
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -35,6 +35,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
         for (Role role : applicationUser.getRoles())
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName().name()));
         
-        return new User(applicationUser.getEmail(), applicationUser.getPassword(), emptyList());
+        return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
     }
 }

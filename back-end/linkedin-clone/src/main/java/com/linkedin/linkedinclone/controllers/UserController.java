@@ -41,7 +41,7 @@ public class UserController {
     private final BCryptPasswordEncoder encoder;
 
     @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public List<User> all() {
         return userRepository.findAll();
@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping(value = "/signup", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> signup(@RequestPart("object") User user, @RequestPart("imageFile") MultipartFile file) throws IOException {
 
-        if(userRepository.findUserByEmail(user.getEmail()) == null) {
+        if(userRepository.findUserByUsername(user.getUsername()) == null) {
             if (!user.getPassword().equals(user.getPasswordConfirm())) {
                 user.setPassword(encoder.encode(user.getPassword()));
                 Role role = roleRepository.findById(RoleType.PROFESSIONAL).orElseThrow(() -> new RuntimeException("Role not found"));
@@ -64,10 +64,10 @@ public class UserController {
             } else
                 throw new PasswordsNotSameException();
         } else
-            throw new EmailExistsAlreadyException(user.getEmail());
+            throw new EmailExistsAlreadyException(user.getUsername());
 
         String token = JWT.create()
-                .withSubject(user.getEmail())
+                .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
         HttpHeaders responseHeaders = new HttpHeaders();

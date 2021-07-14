@@ -27,7 +27,7 @@ public class User {
 
     @Column(name = "email", nullable = false) @NonNull
     @Email
-    private String email;
+    private String username;
 
     @Column(name = "password", nullable = false) @NonNull
     private String password;
@@ -41,19 +41,21 @@ public class User {
     @Column(name = "surname", nullable = false) @NonNull
     private String surname;
 
-    @Column(name = "phoneNumber", nullable = false) @NonNull
+    @Column(name = "phoneNumber")
+    //@NonNull
     private String phoneNumber;
 
-    @Column(name = "city", nullable = false) @NonNull
+    @Column(name = "city")
+    //@NonNull
     private String city;
 
-    @Column(name = "profession", nullable = false)
+    @Column(name = "profession")
     private String profession;
 
-    @Column(name = "company", nullable = false)
+    @Column(name = "company")
     private String company;
 
-    @Column(name = "education", nullable = false)
+    @Column(name = "education")
     private String education;
 
 
@@ -63,7 +65,7 @@ public class User {
     @JsonIgnoreProperties("user")
     private Picture profilePicture;
 
-    @ManyToMany(cascade = CascadeType.PERSIST , fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<Role> roles;
 

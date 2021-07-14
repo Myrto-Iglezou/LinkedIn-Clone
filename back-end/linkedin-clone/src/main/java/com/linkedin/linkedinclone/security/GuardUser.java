@@ -15,7 +15,7 @@ public class GuardUser {
 
     public boolean checkUserId(Authentication authentication, int id) {
         String name = authentication.getName();
-        User result = userRepository.findUserByEmail(name);
+        User result = userRepository.findUserByUsername(name);
         return result != null && result.getId() == id;
     }
 }
