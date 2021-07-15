@@ -65,6 +65,19 @@ public class User {
     @JsonIgnoreProperties("user")
     private Set<SkillsAndExperience> info = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("usersConnectedWith")
+    private Set<User> usersConnectedWith = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("user")
+    private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
+    @JsonIgnoreProperties("userMadeBy")
+    private Set<Comment> comments = new HashSet<>();
+
+
 
     public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {
         this.username = username;

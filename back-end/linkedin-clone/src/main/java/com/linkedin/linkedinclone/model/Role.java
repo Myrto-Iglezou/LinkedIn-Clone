@@ -28,4 +28,5 @@ public class Role {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users = new HashSet<User>();
+
 }

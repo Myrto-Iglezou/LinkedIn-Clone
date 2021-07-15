@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,8 @@ public class UserController {
     private final BCryptPasswordEncoder encoder;
 
     @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
-    //@PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/users")
     public List<User> all() {
         return userRepository.findAll();
     }
@@ -86,16 +87,17 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/users/{id}/settings")
+    @PutMapping("/users/{id}/settings")
     public ResponseEntity changePasswordOrUsername(@PathVariable Long id , @RequestBody NewUserInfo info) {
-
+        System.out.println("HERE");
         String responseMessage = new String();
-        User user  = userRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("User with id "+id+"doesn't exist"));
-        if(encoder.matches(user.getPassword(), encoder.encode(info.getCurrentPassword()))){
+        User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
+        if(encoder.matches(info.getCurrentPassword(),user.getPassword())){
             if(info.getNewPassword()!=null){
                 if (info.getNewPassword().equals(info.getPasswordConfirm())) {
                     user.setPassword(encoder.encode(info.getNewPassword()));
                     responseMessage += "Password updated\n";
+                    System.out.println("Password updated");
                 }
             }
             if(info.getNewUsername()!=null){
@@ -106,7 +108,7 @@ public class UserController {
         }else
             throw new WrongPasswordException();
 
-        return ResponseEntity.ok(responseMessage);
+        return ResponseEntity.ok("\"All changes made with success!\"");
     }
 
     //@CrossOrigin(origins = "*")
@@ -114,6 +116,7 @@ public class UserController {
     //public ResponseEntity editSkills(@PathVariable Long id , @RequestBody SkillsAndExperience info) {
 
     //}
+
 
 
 }

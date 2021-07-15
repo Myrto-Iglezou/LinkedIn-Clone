@@ -1,12 +1,12 @@
 package com.linkedin.linkedinclone.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,8 +26,15 @@ public class Post {
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
 
+    @ManyToOne
+    @JsonIgnoreProperties("posts")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User user;
 
-
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
+    @JsonIgnoreProperties("post")
+    private Set<Comment> comments = new HashSet<>();
 
 
 }

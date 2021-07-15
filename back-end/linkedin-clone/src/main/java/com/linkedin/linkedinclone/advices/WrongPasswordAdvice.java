@@ -14,7 +14,7 @@ public class WrongPasswordAdvice  {
 
     @ResponseBody
     @ExceptionHandler(WrongPasswordException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     String wrongPasswordHandler(WrongPasswordException ex) {
         return ex.getMessage();
     }
