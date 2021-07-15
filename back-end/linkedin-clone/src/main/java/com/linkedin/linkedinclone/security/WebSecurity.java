@@ -1,7 +1,9 @@
 package com.linkedin.linkedinclone.security;
 
+import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserDetailsServiceImp;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +17,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true) //pre-authorized
@@ -22,6 +26,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private UserDetailsServiceImp userDetailsService;
     private BCryptPasswordEncoder  passwordEncoder;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,7 +39,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**","/signup/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(),userRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -49,6 +56,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.applyPermitDefaultValues();
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.addExposedHeader("Authorization");
         config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);

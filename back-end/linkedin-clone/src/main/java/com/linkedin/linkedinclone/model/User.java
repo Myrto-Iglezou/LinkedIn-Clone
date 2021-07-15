@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import com.linkedin.linkedinclone.model.Role;
 
@@ -29,7 +30,7 @@ public class User {
     @Email
     private String username;
 
-    @Column(name = "password", nullable = false) @NonNull
+    @Column(name = "password") @NotBlank
     private String password;
 
     @Transient
@@ -69,6 +70,10 @@ public class User {
     @JsonIgnoreProperties("users")
     private Set<Role> roles;
 
-
-
+    public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+    }
 }

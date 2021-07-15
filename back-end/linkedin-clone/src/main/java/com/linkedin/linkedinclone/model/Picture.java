@@ -16,8 +16,8 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "format", nullable = false)
-    private String format;
+    @Column(name = "type", nullable = false)
+    private String type;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,9 +35,9 @@ public class Picture {
 
 
     // ---------- CONSTRUCTORS ---------- //
-    public Picture(String name, String format, byte[] bytes){
+    public Picture(String name, String type, byte[] bytes){
         this.name = name;
-        this.format = format;
+        this.type = type;
         this.bytes = bytes;
     }
 }

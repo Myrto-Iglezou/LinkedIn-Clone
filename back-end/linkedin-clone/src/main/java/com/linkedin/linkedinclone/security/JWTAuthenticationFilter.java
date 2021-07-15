@@ -4,11 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linkedin.linkedinclone.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -27,13 +29,14 @@ import static com.linkedin.linkedinclone.security.SecurityConstants.TOKEN_PREFIX
 import static com.linkedin.linkedinclone.security.SecurityConstants.SECRET;
 import static com.linkedin.linkedinclone.security.SecurityConstants.EXPIRATION_TIME;
 
-
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
-    private UserRepository repository;
+    private UserRepository userRepository;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        super.setAuthenticationFailureHandler(new AuthenticationFailureHandlerCustom());
     }
 
     @Override
@@ -66,9 +69,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
         PrintWriter out = res.getWriter();
-        com.linkedin.linkedinclone.model.User user = repository.findUserByUsername(((User) auth.getPrincipal()).getUsername());
-        if(user == null)
-            throw new RuntimeException("User "+((User) auth.getPrincipal()).getUsername()+" in successfulAuthentication not found");
+        String username = ((User) auth.getPrincipal()).getUsername();
+        com.linkedin.linkedinclone.model.User user = userRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(username));
         user.setPassword(null);
         String userJsonString = new ObjectMapper().writeValueAsString(user);
         out.print(userJsonString);

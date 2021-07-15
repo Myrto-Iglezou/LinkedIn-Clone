@@ -6,6 +6,8 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+
+// Functions taken from https://medium.com/@rameez.s.shaikh/upload-and-retrieve-images-using-spring-boot-angular-8-mysql-18c166f7bc98
 public class PictureSave {
     // compress the image bytes before storing it in the database
     public static byte[] compressBytes(byte[] data) {
