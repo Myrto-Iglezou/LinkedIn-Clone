@@ -3,7 +3,7 @@ package com.linkedin.linkedinclone.controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.linkedin.linkedinclone.dto.NewUserInfo;
-import com.linkedin.linkedinclone.dto.SkillsAndExperience;
+import com.linkedin.linkedinclone.model.SkillsAndExperience;
 import com.linkedin.linkedinclone.enumerations.RoleType;
 import com.linkedin.linkedinclone.exceptions.EmailExistsAlreadyException;
 import com.linkedin.linkedinclone.exceptions.PasswordsNotSameException;
@@ -15,13 +15,10 @@ import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.security.SecurityConstants;
-import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +48,7 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/signup",consumes = "application/json")
+    @PostMapping(value = "/signup")
     public ResponseEntity<?> signup(@RequestBody User user, @RequestPart(value = "imageFile",required = false) MultipartFile file) throws IOException {
 
         if(userRepository.findUserByUsername(user.getUsername()) == null) {
@@ -89,12 +86,12 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/users/{id}/settings")
+    @PostMapping("/users/{id}/settings")
     public ResponseEntity changePasswordOrUsername(@PathVariable Long id , @RequestBody NewUserInfo info) {
 
         String responseMessage = new String();
         User user  = userRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("User with id "+id+"doesn't exist"));
-        if(encoder.matches(user.getPassword(), info.getCurrentPassword())){
+        if(encoder.matches(user.getPassword(), encoder.encode(info.getCurrentPassword()))){
             if(info.getNewPassword()!=null){
                 if (info.getNewPassword().equals(info.getPasswordConfirm())) {
                     user.setPassword(encoder.encode(info.getNewPassword()));
@@ -112,12 +109,11 @@ public class UserController {
         return ResponseEntity.ok(responseMessage);
     }
 
-    @CrossOrigin(origins = "*")
-    @PutMapping("/users/{id}/info")
-    public ResponseEntity editSkills(@PathVariable Long id , @RequestBody SkillsAndExperience info) {
+    //@CrossOrigin(origins = "*")
+    //@PutMapping("/users/{id}/info")
+    //public ResponseEntity editSkills(@PathVariable Long id , @RequestBody SkillsAndExperience info) {
 
-
-    }
+    //}
 
 
 }

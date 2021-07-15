@@ -9,8 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.linkedin.linkedinclone.model.Role;
-
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -50,15 +49,6 @@ public class User {
     //@NonNull
     private String city;
 
-    @Column(name = "profession")
-    private String profession;
-
-    @Column(name = "company")
-    private String company;
-
-    @Column(name = "education")
-    private String education;
-
 
     // ------------ DATA MEMBERS WITH RELATIONS ------------------ //
 
@@ -68,7 +58,13 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("user")
+    private Set<SkillsAndExperience> info = new HashSet<>();
+
 
     public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {
         this.username = username;
