@@ -75,15 +75,15 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    @PreAuthorize("hasRole('PROFESSIONAL')")
-    @GetMapping("/users/{id}")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @GetMapping("/in/{id}")
     public User getProfileDetails(@PathVariable Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
     }
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
-    @PutMapping("/user/settings")
+    @PutMapping("in/{id}/settings")
     public ResponseEntity changePasswordOrUsername(@RequestBody NewUserInfo info) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -113,7 +113,7 @@ public class UserController {
     }
 
     //@CrossOrigin(origins = "*")
-    //@PutMapping("/users/{id}/info")
+    //@PutMapping("/in/{id}/info")
     //public ResponseEntity editSkills(@PathVariable Long id , @RequestBody SkillsAndExperience info) {
 
     //}

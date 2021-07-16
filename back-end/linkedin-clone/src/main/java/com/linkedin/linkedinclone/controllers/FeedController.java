@@ -28,7 +28,7 @@ public class FeedController {
 
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasRole('PROFESSIONAL')")
-    @GetMapping("/feed")
+    @GetMapping("/in/{id}/feed")
     public Set<Post> getFeed(@PathVariable Long id) {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
@@ -42,11 +42,10 @@ public class FeedController {
         feedPosts.addAll(currentUser.getPosts());
 
         // Posts from users connections
-        //Set<User> connectedUsers = currentUser.getUsersConnectedWith();
-        //for(User u: connectedUsers) {
-            //feedPosts.addAll(u.getPosts());
-
-        //}
+        Set<User> connectedUsers = currentUser.getUsersConnectedWith();
+        for(User u: connectedUsers) {
+            feedPosts.addAll(u.getPosts());
+        }
 
         // Posts from connections that are interested
 
