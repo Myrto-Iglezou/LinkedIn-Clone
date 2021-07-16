@@ -2,6 +2,7 @@ package com.linkedin.linkedinclone.services;
 
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.Comment;
+import com.linkedin.linkedinclone.model.Connection;
 import com.linkedin.linkedinclone.model.Post;
 import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.CommentRepository;
@@ -22,17 +23,28 @@ public class UserService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
-    public void addConnection(User user,Long newConnectionId) {
-        User newConnection = userRepository.findById(newConnectionId).orElseThrow(()-> new UserNotFoundException("Id: "+newConnectionId));
-        Set<User> connectedUsers = user.getUsersConnectedWith();
-        connectedUsers.add(newConnection);
-        user.setUsersConnectedWith(connectedUsers);
-        userRepository.save(user);
+    public void newConnection(User user,Long userFollowingId) {
+        User userToBeFollowed = userRepository.findById(userFollowingId).orElseThrow(()-> new UserNotFoundException("Id: "+newConnectionId));
 
+        Connection newConnection = new Connection(user,userToBeFollowed);
+
+        Set<Connection> connectedUsers = user.getUsersFollowing();
+        System.out.println(connectedUsers);
+
+        connectedUsers.add(newConnection);
+        System.out.println(connectedUsers);
+        user.setUsersConnectedWith(connectedUsers);
+
+        userRepository.save(user);
+        System.out.println("---------------");
         connectedUsers = newConnection.getUsersConnectedWith();
+        System.out.println(connectedUsers==null);
         connectedUsers.add(user);
-        newConnection.setUsersConnectedWith(connectedUsers);
-        userRepository.save(newConnection);
+        System.out.println(connectedUsers==null);
+
+
+
+        System.out.println("---------------");
     }
 
 

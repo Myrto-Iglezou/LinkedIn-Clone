@@ -4,20 +4,18 @@ package com.linkedin.linkedinclone.controllers;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.Comment;
+import com.linkedin.linkedinclone.model.Connection;
 import com.linkedin.linkedinclone.model.Post;
 import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.CommentRepository;
 import com.linkedin.linkedinclone.repositories.PostRepository;
-import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -49,10 +47,14 @@ public class FeedController {
         feedPosts.addAll(currentUser.getPosts());
 
         // Posts from users connections
-        Set<User> connectedUsers = currentUser.getUsersConnectedWith();
-        for(User u: connectedUsers) {
-            feedPosts.addAll(u.getPosts());
+        Set<Connection> connections = currentUser.getUsersFollowing();
 
+        for(Connection con: connections) {
+
+
+
+            //feedPosts.addAll(u.getPosts());
+            //feedPosts.addAll(u.getPostsInterested());
             // Posts from connections that are interested
 
         }
@@ -80,20 +82,18 @@ public class FeedController {
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         Post post = postRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
         userService.newPostInterested(currentUser,post);
-        return ResponseEntity.ok("\"Post created with success!\"");
+        return ResponseEntity.ok("\"Interested in post created with success!\"");
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/in/{id}/feed/comment/{postdId}")
     public ResponseEntity newComment(@PathVariable Long id,@PathVariable Long postdId,@RequestBody Comment comment) {
 
-
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         Post post = postRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
-
         userService.newPostComment(currentUser,post,comment);
 
-        return ResponseEntity.ok("\"Post created with success!\"");
+        return ResponseEntity.ok("\"Comment in post created with success!\"");
     }
 
 }

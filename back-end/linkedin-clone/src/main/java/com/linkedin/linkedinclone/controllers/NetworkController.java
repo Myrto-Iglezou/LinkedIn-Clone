@@ -50,7 +50,7 @@ public class NetworkController {
 
         Set<User> usersSet = new HashSet<>();
 
-        return user.getUsersConnectedWith();
+        return user.getUsersConnectedWith().getUsers();
     }
 
     @CrossOrigin(origins = "*")

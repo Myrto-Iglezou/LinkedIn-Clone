@@ -65,9 +65,13 @@ public class User {
     @JsonIgnoreProperties("user")
     private Set<SkillsAndExperience> info = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("usersConnectedWith")
-    private Set<User> usersConnectedWith = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("userFollowing")
+    private Set<Connection> usersFollowing = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("userFollowed")
+    private Set<Connection> userFollowedBy = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="owner")
     @JsonIgnoreProperties("owner")
@@ -77,9 +81,13 @@ public class User {
     @JsonIgnoreProperties("userMadeBy")
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("user")
+    private Set<Notification> notifications = new HashSet<>();
+    
+    @OneToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("usersInterested")
-    private Set<Post> postsInterested = new HashSet<>();
+    private Set<InterestReaction> interestReactions = new HashSet<>();
 
 
     public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {

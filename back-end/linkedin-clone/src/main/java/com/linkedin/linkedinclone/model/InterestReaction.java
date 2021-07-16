@@ -11,15 +11,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "comment")
-public class Comment {
-
+@Table(name = "interest_reaction")
+public class InterestReaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "content", nullable = false) @NonNull
-    private String content;
 
     @Column(name = "timestamp", nullable = false) @NonNull
     private Timestamp timestamp;
