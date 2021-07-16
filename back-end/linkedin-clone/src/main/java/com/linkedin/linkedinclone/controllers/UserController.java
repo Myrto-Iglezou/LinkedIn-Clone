@@ -36,7 +36,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    
+
     @Autowired
     private final BCryptPasswordEncoder encoder;
 

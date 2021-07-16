@@ -17,13 +17,12 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Long id;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false) @NonNull
     private String content;
 
-    @Column(name = "timestamp", nullable = false)
+    @Column(name = "timestamp", nullable = false) @NonNull
     private Timestamp timestamp;
 
     @ManyToOne
