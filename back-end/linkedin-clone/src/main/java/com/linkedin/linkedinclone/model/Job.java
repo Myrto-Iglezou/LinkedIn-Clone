@@ -5,14 +5,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "message")
-public class Message {
+@Table(name = "job")
+public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +24,12 @@ public class Message {
     private Timestamp timestamp;
 
     @ManyToOne
-    @JsonIgnoreProperties("chat")
-    private Chat chat;
-
-    @ManyToOne
-    @JsonIgnoreProperties("messages")
+    @JsonIgnoreProperties("jobsCreated")
     private User userMadeBy;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("jobApplied")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Job> usersApplied = new HashSet<>();
 }

@@ -40,7 +40,7 @@ public class NetworkController {
     }
 
 
-    @CrossOrigin(origins = "*")
+/*    @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/network")
     public Set<User> getUsersNetwork() {
@@ -51,7 +51,7 @@ public class NetworkController {
         Set<User> usersSet = new HashSet<>();
 
         return user.getUsersConnectedWith().getUsers();
-    }
+    }*/
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
@@ -61,7 +61,7 @@ public class NetworkController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
 
-        userService.addConnection(user,newUserId);
+        /*userService.addConnection(user,newUserId);*/
 
 
         return ResponseEntity.ok("\"New connection added with success!\"");

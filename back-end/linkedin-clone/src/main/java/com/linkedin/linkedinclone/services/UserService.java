@@ -23,7 +23,7 @@ public class UserService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
-    public void newConnection(User user,Long userFollowingId) {
+/*    public void newConnection(User user,Long userFollowingId) {
         User userToBeFollowed = userRepository.findById(userFollowingId).orElseThrow(()-> new UserNotFoundException("Id: "+newConnectionId));
 
         Connection newConnection = new Connection(user,userToBeFollowed);
@@ -45,7 +45,7 @@ public class UserService {
 
 
         System.out.println("---------------");
-    }
+    }*/
 
 
     public void newPost(User user, Post newPost) {
@@ -58,7 +58,7 @@ public class UserService {
     }
 
     public void newPostInterested(User user, Post post) {
-        Set<Post> userPosts = user.getPostsInterested();
+/*        Set<Post> userPosts = user.getPostsInterested();
         userPosts.add(post);
         user.setPosts(userPosts);
         userRepository.save(user);
@@ -66,7 +66,7 @@ public class UserService {
         Set<User> usersInterested = post.getUsersInterested();
         usersInterested.add(user);
         post.setUsersInterested(usersInterested);
-        postRepository.save(post);
+        postRepository.save(post);*/
     }
 
     public void newPostComment(User user, Post post, Comment comment) {

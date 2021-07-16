@@ -60,16 +60,15 @@ public class User {
     @JsonIgnoreProperties("users")
     private Set<Role> roles = new HashSet<>();
 
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
     @JsonIgnoreProperties("user")
     private Set<SkillsAndExperience> info = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userFollowing")
     @JsonIgnoreProperties("userFollowing")
     private Set<Connection> usersFollowing = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userFollowed")
     @JsonIgnoreProperties("userFollowed")
     private Set<Connection> userFollowedBy = new HashSet<>();
 
@@ -84,10 +83,26 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
     @JsonIgnoreProperties("user")
     private Set<Notification> notifications = new HashSet<>();
-    
+
     @OneToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("usersInterested")
     private Set<InterestReaction> interestReactions = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
+    @JsonIgnoreProperties("userMadeBy")
+    private Set<Job> jobsCreated = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("usersApplied")
+    private Set<Job> jobApplied = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
+    @JsonIgnoreProperties("userMadeBy")
+    private Set<Message> messages = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("users")
+    private Set<Chat> chats = new HashSet<>();
 
 
     public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {
