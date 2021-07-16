@@ -28,7 +28,7 @@ public class FeedController {
 
     @CrossOrigin(origins = "*")
     @PreAuthorize("hasRole('PROFESSIONAL')")
-    @GetMapping("/users/feed")
+    @GetMapping("/feed")
     public Set<Post> getFeed(@PathVariable Long id) {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));

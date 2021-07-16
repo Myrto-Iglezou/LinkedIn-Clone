@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class JobAddsController {
+public class JobController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 

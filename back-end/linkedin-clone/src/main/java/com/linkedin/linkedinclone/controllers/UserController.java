@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +75,7 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/users/{id}")
     public User getProfileDetails(@PathVariable Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
@@ -81,11 +83,16 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
-    @PutMapping("/users/{id}/settings")
-    public ResponseEntity changePasswordOrUsername(@PathVariable Long id , @RequestBody NewUserInfo info) {
+    @PutMapping("/user/settings")
+    public ResponseEntity changePasswordOrUsername(@RequestBody NewUserInfo info) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+
+
         System.out.println("HERE");
         String responseMessage = new String();
-        User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
+        //User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
         if(encoder.matches(info.getCurrentPassword(),user.getPassword())){
             if(info.getNewPassword()!=null){
                 if (info.getNewPassword().equals(info.getPasswordConfirm())) {
