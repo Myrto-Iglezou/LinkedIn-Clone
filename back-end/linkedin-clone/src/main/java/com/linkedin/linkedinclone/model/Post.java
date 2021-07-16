@@ -36,5 +36,8 @@ public class Post {
     @JsonIgnoreProperties("post")
     private Set<Comment> comments = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("postsInterested")
+    private Set<User> usersInterested = new HashSet<>();
 
 }

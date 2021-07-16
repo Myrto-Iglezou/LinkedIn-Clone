@@ -36,17 +36,9 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
-
+    
     @Autowired
     private final BCryptPasswordEncoder encoder;
-
-    @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin/users")
-    public List<User> all() {
-        return userRepository.findAll();
-    }
 
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/signup")
@@ -81,12 +73,14 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/users/{id}")
     public User getProfileDetails(@PathVariable Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
     }
 
     @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @PutMapping("/users/{id}/settings")
     public ResponseEntity changePasswordOrUsername(@PathVariable Long id , @RequestBody NewUserInfo info) {
         System.out.println("HERE");

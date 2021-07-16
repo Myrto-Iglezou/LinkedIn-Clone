@@ -77,6 +77,9 @@ public class User {
     @JsonIgnoreProperties("userMadeBy")
     private Set<Comment> comments = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("usersInterested")
+    private Set<Post> postsInterested = new HashSet<>();
 
 
     public User(@NonNull @Email String username, @NotBlank String password, @NonNull String name, @NonNull String surname) {
