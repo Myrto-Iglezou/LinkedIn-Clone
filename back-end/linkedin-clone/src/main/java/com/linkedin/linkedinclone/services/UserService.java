@@ -1,8 +1,10 @@
 package com.linkedin.linkedinclone.services;
 
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
+import com.linkedin.linkedinclone.model.Comment;
 import com.linkedin.linkedinclone.model.Post;
 import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.repositories.CommentRepository;
 import com.linkedin.linkedinclone.repositories.PostRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     public void addConnection(User user,Long newConnectionId) {
         User newConnection = userRepository.findById(newConnectionId).orElseThrow(()-> new UserNotFoundException("Id: "+newConnectionId));
@@ -40,5 +43,34 @@ public class UserService {
         userRepository.save(user);
         newPost.setOwner(user);
         postRepository.save(newPost);
+    }
+
+    public void newPostInterested(User user, Post post) {
+        Set<Post> userPosts = user.getPostsInterested();
+        userPosts.add(post);
+        user.setPosts(userPosts);
+        userRepository.save(user);
+
+        Set<User> usersInterested = post.getUsersInterested();
+        usersInterested.add(user);
+        post.setUsersInterested(usersInterested);
+        postRepository.save(post);
+    }
+
+    public void newPostComment(User user, Post post, Comment comment) {
+
+        Set<Comment> postComments = post.getComments();
+        postComments.add(comment);
+        post.setComments(postComments);
+        postRepository.save(post);
+
+        comment.setUserMadeBy(user);
+        comment.setPost(post);
+        commentRepository.save(comment);
+
+        Set<Comment> comments = user.getComments();
+        comments.add(comment);
+        user.setComments(comments);
+        userRepository.save(user);
     }
 }
