@@ -29,7 +29,7 @@ public class Post {
     @JsonIgnoreProperties("posts")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User user;
+    private User owner;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
     @JsonIgnoreProperties("post")

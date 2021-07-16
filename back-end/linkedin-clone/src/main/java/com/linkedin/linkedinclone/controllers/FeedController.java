@@ -4,18 +4,18 @@ package com.linkedin.linkedinclone.controllers;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.Post;
 import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.repositories.PostRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
+import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -23,11 +23,13 @@ import java.util.*;
 @AllArgsConstructor
 public class FeedController {
 
+    @Autowired
+    UserService userService;
+
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final PostRepository postRepository;
 
     @CrossOrigin(origins = "*")
-    @PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/feed")
     public Set<Post> getFeed(@PathVariable Long id) {
 
@@ -50,5 +52,17 @@ public class FeedController {
         // Posts from connections that are interested
 
         return feedPosts;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/in/{id}/feed/new-post")
+    public ResponseEntity newPost(@PathVariable Long id,@RequestBody Post post) {
+
+        // AUDIO IMAGES AND VIDEO TO BE DONEEE
+
+        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+        userService.newPost(currentUser,post);
+        postRepository.save(post);
+        return ResponseEntity.ok("\"Post created with success!\"");
     }
 }

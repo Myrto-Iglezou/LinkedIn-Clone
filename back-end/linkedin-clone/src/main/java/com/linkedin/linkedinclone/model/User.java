@@ -69,8 +69,8 @@ public class User {
     @JsonIgnoreProperties("usersConnectedWith")
     private Set<User> usersConnectedWith = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
-    @JsonIgnoreProperties("user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="owner")
+    @JsonIgnoreProperties("owner")
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
