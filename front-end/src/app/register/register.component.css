@@ -1,0 +1,76 @@
+.selector{
+    background-image: url("/../assets/images/so-white.png");
+
+}
+
+.background-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position:fixed;
+}
+
+#mylogo{
+    margin-top: 10%;
+    width: 180px;
+    margin-left: 10%;
+    margin-bottom: -8%;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+    .background-img{
+        height: 100%;
+        width: 100%;
+    }
+  }
+
+@media screen and (max-height: 800px) { 
+    #mylogo{
+        margin-top: -5%;
+    }   
+}
+
+.card{
+    margin-bottom: 15%;
+}
+
+
+.sign-in-btn{
+    background-color: #158eff;
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+
+    width: 100%;
+    border:none;
+    font-size: 18px;
+}
+
+.join-now {
+    text-align: center;
+    margin: 40px 0 0;
+    
+}
+
+.heading {
+    margin: 20px;
+    font-size: 36px;  
+}
+.sub-heading{
+    margin-left: 20px;
+}
+
+.join-now-btn, .heading, .forgot-password{
+    color: #158eff;
+}
+
+.forgot-password, .join-now-btn{
+    text-decoration: none;
+}
+
+.form-input{
+    width: 100% ;
+}

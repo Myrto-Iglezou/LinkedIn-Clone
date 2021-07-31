@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {FormControl,FormGroup, Validators} from '@angular/forms';
+import {FormControl, Validators,FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -10,14 +10,25 @@ import {FormControl,FormGroup, Validators} from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+  registerForm = new FormGroup({
+    firstname : new FormControl('', [Validators.required]),
+    lastname : new FormControl('', [Validators.required]),
+    phonenumber : new FormControl('', [Validators.required]),
+    email : new FormControl('', [Validators.required, Validators.email]),
+    password_1 : new FormControl('', [Validators.required]),
+    password_2 : new FormControl('', [Validators.required]),
+    image : new FormControl('', [Validators.required]),
+    
   });
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    document.body.className = "selector";
   }
 
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.registerForm.value);
+  }
 }

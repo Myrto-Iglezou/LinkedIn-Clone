@@ -1,0 +1,56 @@
+<div class="selector">
+    <div class="container">
+      <div class="row  login-card justify-content-center ">
+        <div class="mylogo col-6">
+          <img id="mylogo" src="../../../assets/images/logo.png" alt="">
+        </div>
+      </div>
+      <div class="row justify-content-center login-card">
+       
+        <div class="card" style="width: 28rem;">
+          <div class="header-content">
+            <h1 class="heading"> Sign up</h1>
+            <p class="sub-heading">Create your professional world</p>
+          </div>
+          <div class="card-body">
+            <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">            
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Firstname</mat-label>
+                    <input matInput type="text" formControlName="firstname"  placeholder="Ex. Nick" >
+                </mat-form-field><br>
+
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Lastname</mat-label>
+                    <input type="text" formControlName="lastname" matInput placeholder="Ex. Brown" >
+                </mat-form-field><br>
+
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input type="email" formControlName="email" matInput placeholder="Ex. pat@example.com" >
+                </mat-form-field><br>
+
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password"  placeholder="Password"  formControlName="password_1">
+                </mat-form-field> <br>
+
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Repeat Password</mat-label>
+                    <input matInput type="password"  placeholder="Repeat Password"  formControlName="password_1">
+                </mat-form-field> <br>
+
+                <mat-form-field class="form-input" appearance="fill">
+                    <mat-label>Phonenumber</mat-label>
+                    <input matInput type="text"  placeholder="Phonenumber"  formControlName="phonenumber">
+                </mat-form-field> <br>
+
+                <button class="sign-in-btn btn btn-primary" [disabled]="!registerForm.valid" type="submit" >Sign up</button>
+            </form>
+            <div class="join-now">Already have an account? <a href="\login" class="join-now-btn"><b>Sign in</b></a></div>
+          </div>
+        </div>
+      </div>
+    </div>    
+</div>
+<app-footer></app-footer>
+    
