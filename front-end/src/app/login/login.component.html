@@ -1,28 +1,48 @@
-<img class="background-img" src="../../../assets/images/networks.jpg" />
-<div class="layer"></div>
+<div class="selector">
 <div class="container">
-    <div class="row justify-content-md-left login-card">
-        <div class="col col-lg-1">
-            <div class="card" style="width: 28rem;">
-                <div class="card-body">
-                  <h1 class="card-title">Welcome</h1>
-                  <form>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1" style="font-size: 20px;" id="username">Username</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your username">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1" style="font-size: 20px;" id="password">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                      <a>Forgot password?</a>
-                    </div>
-                    <button type="submit" class="btn btn-primary sub-btn">Submit</button>
-                  </form>
-                  <a class="btn btn-secondary register">New to X? Join now</a>
-                </div>
-              </div>
-        </div>
+  <div class="row  login-card justify-content-center ">
+    <div class="mylogo col-6">
+      <img id="mylogo" src="../../../assets/images/logo.png" alt="">
     </div>
+  </div>
+  <div class="row justify-content-center login-card">
+   
+    <div class="card" style="width: 28rem;">
+      <div class="header-content">
+        <h1 class="heading"> Sign in</h1>
+        <p class="sub-heading">Stay tuned to your professional world</p>
+      </div>
+      <div class="card-body">
+            <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <mat-form-field class="form-input" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input type="email" formControlName="email" matInput placeholder="Ex. pat@example.com">
+                <!-- <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
+                  Please enter a valid email address
+                </mat-error> -->
+                <!-- <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error> -->
+              </mat-form-field><br>
+              <mat-form-field class="form-input" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password"  placeholder="Password"  formControlName="password">
+                <!-- <mat-error *ngIf="loginForm.get('password').hasError('required')">Password is <strong>required</strong></mat-error> -->
+              </mat-form-field> <br>
+
+              <a href="" class="forgot-password" data-cie-control-urn="forgot-password-btn">Forgot password?</a><br>
+              <button class="sign-in-btn btn btn-primary" [disabled]="!loginForm.valid" type="submit" >Sign in</button>
+            </form>
+            
+
+        <div class="join-now">New to LinkedNet? <a href="\register" class="join-now-btn"><b>Join now</b></a></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+</div>
+ 
+
 
 <app-footer></app-footer>

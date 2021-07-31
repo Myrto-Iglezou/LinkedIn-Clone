@@ -1,3 +1,8 @@
+.selector{
+    background-image: url("/../assets/images/so-white.png");
+
+}
+
 .background-img {
     background-size: cover;
     background-repeat: no-repeat;
@@ -8,6 +13,13 @@
     position:fixed;
 }
 
+#mylogo{
+    margin-top: 10%;
+    width: 180px;
+    margin-left: 10%;
+    margin-bottom: -8%;
+}
+
 @media screen and (max-width: 1024px) { /* Specific to this particular image */
     .background-img{
         height: 100%;
@@ -15,28 +27,50 @@
     }
   }
 
-.login-card{
-    padding-top: 20%;
+@media screen and (max-height: 800px) { 
+    #mylogo{
+        margin-top: -5%;
+    }   
 }
 
-.sub-btn{
-    margin-top: 10px;
+.card{
+    margin-bottom: 15%;
 }
-.btn.register {
+
+
+.sign-in-btn{
+    background-color: #158eff;
+    color: white;
     text-align: center;
-    font-size: 14px;
-    border: none;
-    background-color: transparent;
-    color: rgb(0, 165, 236);
+    margin-top: 30px;
+
+    width: 100%;
+    border:none;
+    font-size: 18px;
 }
 
-#password{
-    margin-top: 10px;
+.join-now {
+    text-align: center;
+    margin: 40px 0 0;
+    
 }
 
-.btn.register:hover,
-.btn.register:active,
-.btn.register:focus {
-    background-color: transparent;
-    color: #006394;
+.heading {
+    margin: 20px;
+    font-size: 36px;  
+}
+.sub-heading{
+    margin-left: 20px;
+}
+
+.join-now-btn, .heading, .forgot-password{
+    color: #158eff;
+}
+
+.forgot-password, .join-now-btn{
+    text-decoration: none;
+}
+
+.form-input{
+    width: 100% ;
 }
