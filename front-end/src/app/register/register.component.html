@@ -9,41 +9,41 @@
        
         <div class="card" style="width: 28rem;">
           <div class="header-content">
-            <h1 class="heading"> Sign up</h1>
+            <h1 class="heading">Sign up</h1>
             <p class="sub-heading">Create your professional world</p>
           </div>
           <div class="card-body">
             <form class="example-form" name="form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">            
                 <mat-form-field class="form-input"  appearance="fill">
                     <mat-label>Firstname</mat-label>
-                    <input ngModel matInput type="text" id="firstname" formControlName="firstname"
-                      placeholder="Ex. Nick" [(ngModel)]="user.firstName" name="firstname" required>
+                    <input matInput type="text" name="firstname" id="firstname" placeholder="Ex. Nick" [(ngModel)]="user.firstName" #firstname="ngModel" required>
                     <!-- <small *ngIf="firstname.invalid" class="text-danger">First name is required field</small> -->
                   </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Lastname</mat-label>
-                    <input type="text" formControlName="lastname" matInput placeholder="Ex. Brown" >
+                    <input matInput type="text" name="lastname" id="lastname"  placeholder="Ex. Brown" [(ngModel)]="user.lastName" #lastname="ngModel" required>
                 </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input type="email" formControlName="email" matInput placeholder="Ex. pat@example.com" >
-                </mat-form-field><br>
+                    <input matInput type="email" name="email" id="email" placeholder="Ex. pat@example.com" [(ngModel)]="user.email" #email="ngModel" required>
+                    <!-- <small *ngIf="email.errors" class="text-danger">Invalid email address</small> -->
+                  </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password"  placeholder="Password"  formControlName="password_1">
+                    <input matInput type="password" name="password_1" id="password_1" placeholder="Password" [(ngModel)]="user.password_1" #password_1="ngModel" required>
                 </mat-form-field> <br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Repeat Password</mat-label>
-                    <input matInput type="password"  placeholder="Repeat Password"  formControlName="password_1">
+                    <input matInput type="password" name="password_2" id="password_2" placeholder="Repeat Password" [(ngModel)]="user.password_2" #password_2="ngModel" required>
                 </mat-form-field> <br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Phonenumber</mat-label>
-                    <input matInput type="text"  placeholder="Phonenumber"  formControlName="phonenumber">
+                    <input matInput type="text" name="phone" id="phone" placeholder="Phonenumber" [(ngModel)]="user.phone" #phone="ngModel" required>
                 </mat-form-field> <br>
 
                 <button class="sign-in-btn btn btn-primary" [disabled]="!registerForm.valid" type="submit" >Sign up</button>
