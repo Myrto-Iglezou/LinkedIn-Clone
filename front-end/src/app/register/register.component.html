@@ -15,13 +15,13 @@
           <div class="card-body">
             <form class="example-form" name="form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">            
                 <mat-form-field class="form-input"  appearance="fill">
-                    <mat-label>Firstname</mat-label>
+                    <mat-label>First Name</mat-label>
                     <input matInput type="text" name="firstname" id="firstname" placeholder="Ex. Nick" [(ngModel)]="user.firstName" #firstname="ngModel" required>
                     <!-- <small *ngIf="firstname.invalid" class="text-danger">First name is required field</small> -->
                   </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
-                    <mat-label>Lastname</mat-label>
+                    <mat-label>Last Name</mat-label>
                     <input matInput type="text" name="lastname" id="lastname"  placeholder="Ex. Brown" [(ngModel)]="user.lastName" #lastname="ngModel" required>
                 </mat-form-field><br>
 
@@ -42,7 +42,7 @@
                 </mat-form-field> <br>
 
                 <mat-form-field class="form-input" appearance="fill">
-                    <mat-label>Phonenumber</mat-label>
+                    <mat-label>Phone Number</mat-label>
                     <input matInput type="text" name="phone" id="phone" placeholder="Phonenumber" [(ngModel)]="user.phone" #phone="ngModel" required>
                 </mat-form-field> <br>
 
