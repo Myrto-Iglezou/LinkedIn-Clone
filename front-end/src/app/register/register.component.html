@@ -13,11 +13,13 @@
             <p class="sub-heading">Create your professional world</p>
           </div>
           <div class="card-body">
-            <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">            
-                <mat-form-field class="form-input" appearance="fill">
+            <form class="example-form" name="form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">            
+                <mat-form-field class="form-input"  appearance="fill">
                     <mat-label>Firstname</mat-label>
-                    <input matInput type="text" formControlName="firstname"  placeholder="Ex. Nick" >
-                </mat-form-field><br>
+                    <input ngModel matInput type="text" id="firstname" formControlName="firstname"
+                      placeholder="Ex. Nick" [(ngModel)]="user.firstName" name="firstname" required>
+                    <!-- <small *ngIf="firstname.invalid" class="text-danger">First name is required field</small> -->
+                  </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Lastname</mat-label>
