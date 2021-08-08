@@ -13,29 +13,25 @@
         <p class="sub-heading">Stay tuned to your professional world</p>
       </div>
       <div class="card-body">
-            <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <mat-form-field class="form-input" appearance="fill">
-                <mat-label>Email</mat-label>
-                <input type="email" formControlName="email" matInput placeholder="Ex. pat@example.com">
-                <!-- <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
-                  Please enter a valid email address
-                </mat-error> -->
-                <!-- <mat-error *ngIf="loginForm.get('email').hasError('required')">
-                  Email is <strong>required</strong>
-                </mat-error> -->
-              </mat-form-field><br>
-              <mat-form-field class="form-input" appearance="fill">
-                <mat-label>Password</mat-label>
-                <input matInput type="password"  placeholder="Password"  formControlName="password">
-                <!-- <mat-error *ngIf="loginForm.get('password').hasError('required')">Password is <strong>required</strong></mat-error> -->
-              </mat-form-field> <br>
+          <form class="example-form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+            <mat-form-field class="form-input" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" name="username" [(ngModel)]="model.username" #username="ngModel" required  matInput placeholder="Ex. pat@example.com">
+              <mat-error *ngIf="f.submitted && !username.valid" style="color: red;">Email is <strong>required</strong></mat-error>
+            </mat-form-field><br>
+            <mat-form-field class="form-input" appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput name="password" [(ngModel)]="model.password" #password="ngModel" required  placeholder="Password">
+               <mat-error  *ngIf="f.submitted && !password.valid" style="color: red;">Password is <strong>required</strong></mat-error>
+            </mat-form-field> <br>
 
-              <a href="" class="forgot-password" data-cie-control-urn="forgot-password-btn">Forgot password?</a><br>
-              <button class="sign-in-btn btn btn-primary" [disabled]="!loginForm.valid" type="submit" >Sign in</button>
-            </form>
-            
-
-        <div class="join-now">New to LinkedNet? <a href="\register" class="join-now-btn"><b>Join now</b></a></div>
+            <a href="" class="forgot-password" data-cie-control-urn="forgot-password-btn">Forgot password?</a><br>
+            <div>
+              <button [disabled]="loading" class="sign-in-btn btn btn-primary" type="submit" >Sign in</button>
+              <div  *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+            </div>
+          </form>
+        <div class="join-now">New to LinkedNet? <a href="\signup" class="join-now-btn"><b>Join now</b></a></div>
       </div>
     </div>
   </div>

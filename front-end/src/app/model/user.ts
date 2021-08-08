@@ -1,13 +1,15 @@
-import {Image} from './image';
+import { Image } from './image';
+import { Role } from './role';
 
 export class User {
   id: number;
-  firstName: string;
-  lastName: string;
-  password_1: string;
-  password_2: string;
-  email: string;
-  phone: string;
-  profilePhoto: Image;
+  name: string;
+  surname: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+  roles: Array<Role> = new Array<Role>();
+  phoneNumber: string;
+  imageFile: Image;
   accepted: boolean;
 }

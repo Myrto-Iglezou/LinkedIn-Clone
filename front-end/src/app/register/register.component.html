@@ -16,36 +16,41 @@
             <form class="example-form" name="form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">            
                 <mat-form-field class="form-input"  appearance="fill">
                     <mat-label>First Name</mat-label>
-                    <input matInput type="text" name="firstname" id="firstname" placeholder="Ex. Nick" [(ngModel)]="user.firstName" #firstname="ngModel" required>
-                    <!-- <small *ngIf="firstname.invalid" class="text-danger">First name is required field</small> -->
-                  </mat-form-field><br>
+                    <input matInput type="text" name="name" id="name" placeholder="Ex. Nick" [(ngModel)]="user.name" #name="ngModel" required [class.is-invalid]="name.invalid && submitattempt">
+                </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Last Name</mat-label>
-                    <input matInput type="text" name="lastname" id="lastname"  placeholder="Ex. Brown" [(ngModel)]="user.lastName" #lastname="ngModel" required>
+                    <input matInput type="text" name="surname" id="surname"  placeholder="Ex. Brown" [(ngModel)]="user.surname" #surname="ngModel" required [class.is-invalid]="surname.invalid && submitattempt">
                 </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input matInput type="email" name="email" id="email" placeholder="Ex. pat@example.com" [(ngModel)]="user.email" #email="ngModel" required>
-                    <!-- <small *ngIf="email.errors" class="text-danger">Invalid email address</small> -->
+                    <input matInput type="username" name="username" id="username" placeholder="Ex. pat@example.com" [(ngModel)]="user.username" #username="ngModel" required [class.is-invalid]="username.invalid && submitattempt">
                   </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Password</mat-label>
-                    <input matInput type="password" name="password_1" id="password_1" placeholder="Password" [(ngModel)]="user.password_1" #password_1="ngModel" required>
+                    <input matInput type="password" name="password id="password placeholder="Password" [(ngModel)]="user.password" #password="ngModel" required [class.is-invalid]="password.invalid && submitattempt">
                 </mat-form-field> <br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Repeat Password</mat-label>
-                    <input matInput type="password" name="password_2" id="password_2" placeholder="Repeat Password" [(ngModel)]="user.password_2" #password_2="ngModel" required>
+                    <input matInput type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Repeat Password" [(ngModel)]="user.passwordConfirm" #passwordConfirm="ngModel" required>
+                    <small *ngIf="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm" style="color: red;">Passwords do not match</small>
                 </mat-form-field> <br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput type="text" name="phone" id="phone" placeholder="Phonenumber" [(ngModel)]="user.phone" #phone="ngModel" required>
+                    <input matInput type="text" name="phoneNumber" id="phoneNumber" placeholder="Phonenumber" [(ngModel)]="user.phoneNumber" #phone="ngModel" required
+                      [class.is-invalid]="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm">
                 </mat-form-field> <br>
-
+                <div>
+                  <label for="profilephoto" style="display: block"><span>Profile photo </span> <span class="text-danger" >*</span></label>
+                  <input #profilephoto id="profilephoto" type="file" accept=".jpg,.jpeg,.png" style="display: block" (change)="setProfilePhoto(profilephoto)" >
+                  <small *ngIf="profilePhoto && (profilePhoto.type !='image/jpeg' && profilePhoto.type !='image/png') && submitattempt " >Image file must be jpeg or png</small>
+                  <small *ngIf="!profilePhoto && submitattempt" style="color: red;">Please choose profile photo</small>
+                </div>
                 <button class="sign-in-btn btn btn-primary" [disabled]="!registerForm.valid" type="submit" >Sign up</button>
             </form>
             <div class="join-now">Already have an account? <a href="\login" class="join-now-btn"><b>Sign in</b></a></div>

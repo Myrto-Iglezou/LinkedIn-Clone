@@ -12,11 +12,13 @@ import { Routes } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 const appRoutes: Routes = [
   {
@@ -24,18 +26,38 @@ const appRoutes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  { path: 'users', children: [
+    {path: ':id' , children: [
+        {path: '', component: UserDetailsComponent},
+        // {path: 'passwordchange', component: ChangePasswordComponent, canActivate: [UserGuard]},
+        // {path: 'edit', component: UserEditComponent, canActivate: [UserGuard]},
+        // { path: 'messages', component: MessagePageComponent, canActivate: [UserGuard]}
+        ] }
+  ] },
   {
     path: 'login',
     component: LoginComponent,
   },
   {
-    path: 'register',
+    path: 'signup',
     component: RegisterComponent,
+  },
+  { path: 'adminpage', children: [
+    {path: '', component: AdminComponent},
+    // {path: 'exportdata', component: AppDataExportComponent }
+   ] //, canActivate: [AdminGuard]
   },
 ];
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, FooterComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    FooterComponent,
+    RegisterComponent,
+    AdminComponent,
+    UserDetailsComponent,
+  ],
   imports: [
     BrowserModule,
     MatSliderModule,
