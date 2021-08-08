@@ -23,12 +23,16 @@
   }
   ```
 - GET:  https://localhost:8443/in/{id} : Returns user id 2 info
-
+- PUT https://localhost:8443in/{id}/settings
 
 ### Feed-Posts
 - GET https://localhost:8443/in/{id}/feed
-- PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId}
+
+
+
 - POST https://localhost:8443/in/{id}/feed/new-post
+
+- PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId}
 - PUT https://localhost:8443/in/{id}/feed/comment/{postdId}
 
 
