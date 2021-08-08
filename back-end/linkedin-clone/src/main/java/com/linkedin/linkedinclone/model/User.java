@@ -89,11 +89,11 @@ public class User {
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
-    @JsonIgnoreProperties("userMadeBy")
+    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
     private Set<Job> jobsCreated = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("usersApplied")
+    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
     private Set<Job> jobApplied = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")

@@ -77,8 +77,12 @@ public class UserController {
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}")
-    public User getProfileDetails(@PathVariable Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+    public User getProfile(@PathVariable Long id) {
+        User userDetails = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+
+
+
+        return userDetails;
     }
 
     @CrossOrigin(origins = "*")
