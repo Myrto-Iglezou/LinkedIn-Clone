@@ -15,7 +15,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService{
 
-  LoggedInUserDetails$ = new BehaviorSubject<UserDetails>(this.getUser(localStorage.getItem('userDetails')!));
+  LoggedInUserDetails$ = new BehaviorSubject<UserDetails>(this.getUser(localStorage.getItem('userDetails')));
 
   constructor(private http: HttpClient, private router : Router) { }
 
@@ -32,7 +32,7 @@ export class AuthenticationService{
 
     logout() {
         // remove userDetails from local storage to log user out
-        this.setLoggedInUser(null!);
+        this.setLoggedInUser(null);
         this.router.navigate(['/homepage']).then(() => {
           location.reload(true);
         });
@@ -52,7 +52,7 @@ export class AuthenticationService{
       if(str != null)
         return JSON.parse(str);
       else
-        return null!;
+        return null;
     }
 
 }
