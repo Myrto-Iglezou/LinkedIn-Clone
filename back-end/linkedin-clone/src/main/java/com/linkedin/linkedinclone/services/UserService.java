@@ -1,5 +1,6 @@
 package com.linkedin.linkedinclone.services;
 
+import com.linkedin.linkedinclone.dto.PostDTO;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.*;
@@ -10,8 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.linkedin.linkedinclone.enumerations.NotificationType.CONNECTION_REQUEST;
-import static com.linkedin.linkedinclone.enumerations.NotificationType.INTEREST;
+import static com.linkedin.linkedinclone.enumerations.NotificationType.*;
 
 @Service
 @AllArgsConstructor
@@ -39,19 +39,29 @@ public class UserService {
     /* --------- FEED --------- */
 
     public void newPost(User user, Post newPost) {
+
         newPost.setOwner(user);
         postRepository.save(newPost);
     }
 
     public void newPostInterested(User user, Post post) {
         InterestReaction newReaction = new InterestReaction(user,post);
-        Notification notification = new Notification(INTEREST,user,newReaction);
-
-        notificationRepository.save(notification);
+        User postOwner = post.getOwner();
+        if(postOwner!=user){
+            Notification notification = new Notification(INTEREST,postOwner,newReaction);
+            notificationRepository.save(notification);
+        }
         interestReactionRepository.save(newReaction);
     }
 
     public void newPostComment(User user, Post post, Comment comment) {
-
+        comment.setUserMadeBy(user);
+        comment.setPost(post);
+        User postOwner = post.getOwner();
+        if(postOwner!=user){
+            Notification notification = new Notification(COMMENT,postOwner,comment);
+            notificationRepository.save(notification);
+        }
+        commentRepository.save(comment);
     }
 }

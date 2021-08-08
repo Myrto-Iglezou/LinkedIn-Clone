@@ -20,16 +20,22 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "timestamp", nullable = false) @NonNull
+    @Column @NonNull
+    private String title;
+
+    @Column @NonNull
+    private String description;
+
+    @Column
     private Timestamp timestamp;
 
-    @ManyToOne
-    @JsonIgnoreProperties("jobsCreated")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private User userMadeBy;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("jobApplied")
+    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<Job> usersApplied = new HashSet<>();
+    private Set<User> usersApplied = new HashSet<>();
 }

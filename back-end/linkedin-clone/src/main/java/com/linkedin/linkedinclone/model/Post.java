@@ -22,7 +22,7 @@ public class Post {
     @Column(name = "content", nullable = false) @NonNull
     private String content;
 
-    @Column(name = "timestamp", nullable = false) @NonNull
+    @Column(name = "timestamp")
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -39,4 +39,7 @@ public class Post {
     @JsonIgnoreProperties(value = {"postsInterested","post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
+    public Post(String content) {
+        this.content = content;
+    }
 }

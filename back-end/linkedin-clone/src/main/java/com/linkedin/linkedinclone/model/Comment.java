@@ -21,22 +21,28 @@ public class Comment {
     @Column(name = "content", nullable = false) @NonNull
     private String content;
 
-    @Column(name = "timestamp", nullable = false) @NonNull
+    @Column(name = "timestamp")
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("comments")
+    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User userMadeBy;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("comments")
+    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Post post;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Notification notification;
 
+    public Comment(@NonNull String content, User userMadeBy, Post post) {
+        this.content = content;
+        this.userMadeBy = userMadeBy;
+        this.post = post;
+    }
 }

@@ -69,7 +69,7 @@ public class FeedController {
     public ResponseEntity newPost(@PathVariable Long id,@RequestBody Post post) {
 
         // AUDIO IMAGES AND VIDEO TO BE DONEEE
-
+        System.out.println(post);
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         userService.newPost(currentUser,post);
         return ResponseEntity.ok("\"Post created with success!\"");
@@ -86,7 +86,7 @@ public class FeedController {
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping("/in/{id}/feed/comment/{postdId}")
+    @PutMapping("/in/{id}/feed/new-comment/{postdId}")
     public ResponseEntity newComment(@PathVariable Long id,@PathVariable Long postdId,@RequestBody Comment comment) {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
