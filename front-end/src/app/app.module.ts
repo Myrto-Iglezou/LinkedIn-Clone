@@ -2,7 +2,8 @@ import { RouterModule } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
-
+import { UserService } from './services/user.service';
+import {AuthenticationService} from './authentication.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor} from './helpers/error.interceptor';
+import { JwtInterceptor} from './helpers/jwt.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
@@ -71,7 +74,12 @@ const appRoutes: Routes = [
     MatGridListModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [],
+  providers:  [
+    UserService,
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
