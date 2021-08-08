@@ -1,12 +1,10 @@
 package com.linkedin.linkedinclone.controllers;
 
 
+import com.linkedin.linkedinclone.dto.FeedDTO;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
-import com.linkedin.linkedinclone.model.Comment;
-import com.linkedin.linkedinclone.model.Connection;
-import com.linkedin.linkedinclone.model.Post;
-import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.CommentRepository;
 import com.linkedin.linkedinclone.repositories.PostRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
@@ -34,34 +32,38 @@ public class FeedController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/feed")
-    public Set<Post> getFeed(@PathVariable Long id) {
+    public FeedDTO getFeed(@PathVariable Long id) {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        Set<Post> feedPosts = new HashSet<>();
 
         // Get authenticated user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
 
-        // Posts made by user
-        feedPosts.addAll(currentUser.getPosts());
+
+        Set<Post> feedPosts = new HashSet<>();
+        feedPosts.addAll(user.getPosts());
+
+        Set<User> network = new HashSet<>();
 
         // Posts from users connections
         Set<Connection> connections = currentUser.getUsersFollowing();
-
         for(Connection con: connections) {
+            User userFollowing = con.getUserFollowing();
+            network.add(user);
+            feedPosts.addAll(userFollowing.getPosts());
 
+            Set<InterestReaction> interestReactions = currentUser.getInterestReactions();
 
-
-            //feedPosts.addAll(u.getPosts());
-            //feedPosts.addAll(u.getPostsInterested());
-            // Posts from connections that are interested
-
+            for(InterestReaction ir: interestReactions){
+                feedPosts.add(ir.getPost());
+            }
         }
 
 
+        FeedDTO feed = new FeedDTO(user,feedPosts,network);
 
-        return feedPosts;
+        return feed;
     }
 
     @CrossOrigin(origins = "*")
