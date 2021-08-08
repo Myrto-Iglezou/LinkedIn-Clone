@@ -20,19 +20,26 @@ public class InterestReaction {
     @Column(name = "timestamp", nullable = false) @NonNull
     private Timestamp timestamp;
 
-    @ManyToOne
-    @JsonIgnoreProperties("comments")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User userMadeBy;
 
-    @ManyToOne
-    @JsonIgnoreProperties("comments")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Post post;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Notification notification;
 
+    public InterestReaction(User userMadeBy, Post post) {
+        this.userMadeBy = userMadeBy;
+        this.post = post;
+    }
 }

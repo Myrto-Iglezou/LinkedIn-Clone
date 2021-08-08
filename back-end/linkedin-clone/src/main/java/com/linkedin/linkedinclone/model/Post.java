@@ -25,18 +25,18 @@ public class Post {
     @Column(name = "timestamp", nullable = false) @NonNull
     private Timestamp timestamp;
 
-    @ManyToOne
-    @JsonIgnoreProperties("posts")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User owner;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
-    @JsonIgnoreProperties("post")
+    @JsonIgnoreProperties(value = {"post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("postsInterested")
-    private Set<User> usersInterested = new HashSet<>();
+    @JsonIgnoreProperties(value = {"postsInterested","post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    private Set<InterestReaction> interestReactions = new HashSet<>();
 
 }

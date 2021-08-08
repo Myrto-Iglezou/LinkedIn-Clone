@@ -24,13 +24,13 @@ public class Comment {
     @Column(name = "timestamp", nullable = false) @NonNull
     private Timestamp timestamp;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("comments")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User userMadeBy;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("comments")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

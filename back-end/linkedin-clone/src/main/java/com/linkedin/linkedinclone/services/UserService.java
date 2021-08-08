@@ -1,19 +1,17 @@
 package com.linkedin.linkedinclone.services;
 
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
-import com.linkedin.linkedinclone.model.Comment;
-import com.linkedin.linkedinclone.model.Connection;
-import com.linkedin.linkedinclone.model.Post;
-import com.linkedin.linkedinclone.model.User;
-import com.linkedin.linkedinclone.repositories.CommentRepository;
-import com.linkedin.linkedinclone.repositories.PostRepository;
-import com.linkedin.linkedinclone.repositories.UserRepository;
+import com.linkedin.linkedinclone.model.*;
+import com.linkedin.linkedinclone.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
+
+import static com.linkedin.linkedinclone.enumerations.NotificationType.CONNECTION_REQUEST;
+import static com.linkedin.linkedinclone.enumerations.NotificationType.INTEREST;
 
 @Service
 @AllArgsConstructor
@@ -22,67 +20,38 @@ public class UserService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final NotificationRepository notificationRepository;
+    private final ConnectionRepository connectionRepository;
+    private final InterestReactionRepository interestReactionRepository;
 
-/*    public void newConnection(User user,Long userFollowingId) {
-        User userToBeFollowed = userRepository.findById(userFollowingId).orElseThrow(()-> new UserNotFoundException("Id: "+newConnectionId));
 
+    /* --------- NETWORK --------- */
+
+    public void newConnection(User user,Long userFollowingId) {
+        User userToBeFollowed = userRepository.findById(userFollowingId).orElseThrow(()-> new UserNotFoundException("Id: "+userFollowingId));
         Connection newConnection = new Connection(user,userToBeFollowed);
+        Notification notification = new Notification(CONNECTION_REQUEST,userToBeFollowed,newConnection);
 
-        Set<Connection> connectedUsers = user.getUsersFollowing();
-        System.out.println(connectedUsers);
+        notificationRepository.save(notification);
+        connectionRepository.save(newConnection);
+    }
 
-        connectedUsers.add(newConnection);
-        System.out.println(connectedUsers);
-        user.setUsersConnectedWith(connectedUsers);
-
-        userRepository.save(user);
-        System.out.println("---------------");
-        connectedUsers = newConnection.getUsersConnectedWith();
-        System.out.println(connectedUsers==null);
-        connectedUsers.add(user);
-        System.out.println(connectedUsers==null);
-
-
-
-        System.out.println("---------------");
-    }*/
-
+    /* --------- FEED --------- */
 
     public void newPost(User user, Post newPost) {
-        Set<Post> userPosts = user.getPosts();
-        userPosts.add(newPost);
-        user.setPosts(userPosts);
-        userRepository.save(user);
         newPost.setOwner(user);
         postRepository.save(newPost);
     }
 
     public void newPostInterested(User user, Post post) {
-/*        Set<Post> userPosts = user.getPostsInterested();
-        userPosts.add(post);
-        user.setPosts(userPosts);
-        userRepository.save(user);
+        InterestReaction newReaction = new InterestReaction(user,post);
+        Notification notification = new Notification(INTEREST,user,newReaction);
 
-        Set<User> usersInterested = post.getUsersInterested();
-        usersInterested.add(user);
-        post.setUsersInterested(usersInterested);
-        postRepository.save(post);*/
+        notificationRepository.save(notification);
+        interestReactionRepository.save(newReaction);
     }
 
     public void newPostComment(User user, Post post, Comment comment) {
 
-        Set<Comment> postComments = post.getComments();
-        postComments.add(comment);
-        post.setComments(postComments);
-        postRepository.save(post);
-
-        comment.setUserMadeBy(user);
-        comment.setPost(post);
-        commentRepository.save(comment);
-
-        Set<Comment> comments = user.getComments();
-        comments.add(comment);
-        user.setComments(comments);
-        userRepository.save(user);
     }
 }

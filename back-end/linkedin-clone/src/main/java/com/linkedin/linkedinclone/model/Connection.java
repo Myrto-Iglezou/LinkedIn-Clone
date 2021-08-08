@@ -1,10 +1,7 @@
 package com.linkedin.linkedinclone.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -22,15 +19,22 @@ public class Connection {
 
     private Boolean isAccepted=false;
 
-    @ManyToOne
-    @JsonIgnoreProperties("usersConnections")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User userFollowing;
 
-    @ManyToOne
-    @JsonIgnoreProperties("usersConnections")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User userFollowed;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"connection_request","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Notification notification;
 
     public Connection(User userFollowing, User userFollowed) {
