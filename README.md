@@ -1,5 +1,55 @@
 # LinkedIn-Clone
 
+## To do
+
+### User credentials and info
+- POST: https://localhost:8443/login  ✅ ☑️
+```json
+  {
+      "username":"n_withpic@mail.com",
+      "password":"012345"
+  }
+  ```
+- POST: https://localhost:8443/signup
+  ```json
+  {
+      "username":"n_withpic@mail.com",
+      "name": "new",
+      "surname":"user",
+      "password":"012345",
+      "passwordConfirm":"012345",
+      "roles":[],
+      "imageFile": { }
+  }
+  ```
+- GET:  https://localhost:8443/in/{id} : Returns user id 2 info
+
+
+### Feed-Posts
+- GET https://localhost:8443/in/{id}/feed
+- PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId}
+- POST https://localhost:8443/in/{id}/feed/new-post
+- PUT https://localhost:8443/in/{id}/feed/comment/{postdId}
+
+
+### Network
+- PUT https://localhost:8443/in/{id}/add-connection/{newUserId}
+
+
+### Jobs
+- POST https://localhost:8443/in/{id}/new-job
+
+
+### Admin
+
+
+
+## Missing
+
+- Images/audio/video
+
+
+
 ## Back-end
 
 <table>
@@ -39,7 +89,7 @@
   <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
 </tr>
 <tr>
-<td> PUT: https://localhost:8443/user/settings </td>
+<td> PUT: https://localhost:8443/user/2/settings </td>
   <td>
 
   ```json
