@@ -8,7 +8,7 @@ export class User {
   username: string;
   password: string;
   passwordConfirm: string;
-  roles: Array<Role> = new Array<Role>();
+  role: string;
   phoneNumber: string;
   imageFile: Image;
   accepted: boolean;

@@ -44,12 +44,11 @@ export class UserDetailsComponent implements OnInit {
 
   getRoles(){
     let str = '';
-    this.user.roles.forEach((role) => {
-      if(role.name === 'ROLE_ADMIN')
-        str = str + 'Admin,';
-      else if(role.name === 'ROLE_PRO')
-        str = str + 'Pro,';
-      });
+
+    if(this.user.role === 'ROLE_ADMIN')
+      str = str + 'Admin,';
+    else if(this.user.role === 'ROLE_PRO')
+      str = str + 'Pro,';
 
     return str.slice(0, -1);
   }

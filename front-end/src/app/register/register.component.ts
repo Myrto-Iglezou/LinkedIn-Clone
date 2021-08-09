@@ -46,13 +46,10 @@ export class RegisterComponent implements OnInit {
 
   hasRole(rolename: string , userDetails: UserDetails): boolean{
     let flag = false;
-    if(userDetails) {
-      userDetails.roles.forEach((role) => {
-        if (role === rolename)
-          flag = true;
-      });
-    }
-    return flag;
+    if (userDetails.role === rolename)
+      flag = true;
+
+      return flag;
   }
 
   setProfilePhoto(inputElement){
@@ -60,10 +57,12 @@ export class RegisterComponent implements OnInit {
   }
   
   register(registerForm) {
-    if (registerForm.form.valid  && (this.user.password === this.user.passwordConfirm) && this.profilePhoto && (this.profilePhoto.type === 'image/jpeg' || this.profilePhoto.type === 'image/png')) {
+    if (registerForm.form.valid){  //&& (this.user.password === this.user.passwordConfirm) && this.profilePhoto && (this.profilePhoto.type === 'image/jpeg' || this.profilePhoto.type === 'image/png')) {
 
       const formWrapper = new FormData();
+      this.user.role = 'ROLE_PRO';
       const userBlob = new Blob([JSON.stringify(this.user)], { type: 'application/json'});
+
       if (this.profilePhoto) {
         formWrapper.append('imageFile' , this.profilePhoto , 'profilePhoto');
       }
@@ -76,18 +75,16 @@ export class RegisterComponent implements OnInit {
             this.user = response.body;
             userDetails.token = response.headers.get('Authorization');
             userDetails.id = this.user.id;
-            this.user.roles.forEach( (role) => {
-              userDetails.roles.push(role.name);
-            } );
+            userDetails.role = this.user.role;
+            
             this.authenticationService.setLoggedInUser(userDetails);
-            this.router.navigate([this.redirect(userDetails)]);
+            // this.router.navigate([this.redirect(userDetails)]);
           }
           ,
           error => {
             this.loading = false;
             this.signuperror = error;
             this.dangerBox = true;
-            this.user.roles = [];
             this.submitattempt = true;
           }
         );
@@ -96,6 +93,5 @@ export class RegisterComponent implements OnInit {
       this.submitattempt = true;
       this.dangerBox = false;
     }
-
   }
 }
