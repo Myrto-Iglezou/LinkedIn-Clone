@@ -46,6 +46,7 @@ public class UserController {
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signup(@RequestBody User user, @RequestPart(value = "imageFile",required = false) MultipartFile file) throws IOException {
 
+        System.out.println("NEW USER");
         if(userRepository.findUserByUsername(user.getUsername()) == null) {
             if (user.getPassword().equals(user.getPasswordConfirm())) {
                 user.setPassword(encoder.encode(user.getPassword()));

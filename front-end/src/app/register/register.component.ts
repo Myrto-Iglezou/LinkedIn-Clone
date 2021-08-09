@@ -60,13 +60,16 @@ export class RegisterComponent implements OnInit {
   }
   
   register(registerForm) {
-    if (registerForm.form.valid  && (this.user.password === this.user.passwordConfirm) && this.profilePhoto && (this.profilePhoto.type === 'image/jpeg' || this.profilePhoto.type === 'image/png')) {
+    if (registerForm.form.valid  && (this.user.password === this.user.passwordConfirm)) {
 
+      alert("here");
       const formWrapper = new FormData();
+      
       const userBlob = new Blob([JSON.stringify(this.user)], { type: 'application/json'});
       if (this.profilePhoto) {
         formWrapper.append('imageFile' , this.profilePhoto , 'profilePhoto');
       }
+      
       formWrapper.append('object', userBlob );
       this.loading = true;
       this.authenticationService.signup(formWrapper)

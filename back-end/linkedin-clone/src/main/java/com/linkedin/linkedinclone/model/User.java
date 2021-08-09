@@ -49,7 +49,11 @@ public class User {
     //@NonNull
     private String city;
 
+    @Column(name = "currentJob")
+    private String currentJob;
 
+    @Column(name = "currentCompany")
+    private String currentCompany;
     // ------------ DATA MEMBERS WITH RELATIONS ------------------ //
 
     @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)

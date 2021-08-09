@@ -50,10 +50,10 @@ public class FeedController {
         Set<Connection> connections = currentUser.getUsersFollowing();
         for(Connection con: connections) {
             User userFollowing = con.getUserFollowing();
-            network.add(user);
+            network.add(userFollowing);
             feedPosts.addAll(userFollowing.getPosts());
 
-            Set<InterestReaction> interestReactions = currentUser.getInterestReactions();
+            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
 
             for(InterestReaction ir: interestReactions){
                 feedPosts.add(ir.getPost());
@@ -97,5 +97,4 @@ public class FeedController {
 
         return ResponseEntity.ok("\"Comment in post created with success!\"");
     }
-
 }
