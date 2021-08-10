@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { FeedComponent } from './feed/feed.component';
 
 const appRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ const appRoutes: Routes = [
     path: 'signup',
     component: SignupComponent,
   },
+  {
+    path: 'feed',
+    component: FeedComponent,
+  },
   { path: 'admin', children: [
     {path: '', component: AdminComponent},
     // {path: 'exportdata', component: AppDataExportComponent }
@@ -61,6 +66,7 @@ const appRoutes: Routes = [
     SignupComponent,
     AdminComponent,
     UserDetailsComponent,
+    FeedComponent,
   ],
   imports: [
     BrowserModule,
