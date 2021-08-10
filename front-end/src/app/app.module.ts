@@ -1,4 +1,4 @@
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,19 +7,18 @@ import {AuthenticationService} from './authentication.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { FooterComponent } from './footer/footer.component';
-import { Routes } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor} from './helpers/error.interceptor';
-import { JwtInterceptor} from './helpers/jwt.interceptor';
+import { ErrorInterceptor} from './auth/helpers/error.interceptor';
+import { JwtInterceptor} from './auth/helpers/jwt.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 
@@ -45,7 +44,7 @@ const appRoutes: Routes = [
     path: 'signup',
     component: RegisterComponent,
   },
-  { path: 'adminpage', children: [
+  { path: 'admin', children: [
     {path: '', component: AdminComponent},
     // {path: 'exportdata', component: AppDataExportComponent }
    ] //, canActivate: [AdminGuard]

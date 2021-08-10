@@ -65,7 +65,7 @@ public class NetworkController {
         return ResponseEntity.ok("\"New connection added with success!\"");
     }
 
-    @CrossOrigin(origins = "*")
+/*    @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/network/users/{userShownId}")
     public UserProfileDTO getNetwork(@PathVariable Long id) {
@@ -75,7 +75,7 @@ public class NetworkController {
 
 
         return network;
-    }
+    }*/
 
 
 }

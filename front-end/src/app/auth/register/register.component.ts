@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import {AuthenticationService} from '../authentication.service';
-import { User } from '../model/user';
-import {UserDetails} from '../model/user-details';
+import {AuthenticationService} from '../../authentication.service';
+import { User } from '../../model/user';
+import {UserDetails} from '../../model/user-details';
 
 @Component({
   selector: 'app-register',
@@ -36,10 +36,10 @@ export class RegisterComponent implements OnInit {
 
   redirect(userDetails: UserDetails): string{
     let redirectUrl: string = null;
-    if(this.hasRole('ROLE_PRO', userDetails)) 
-      redirectUrl = '/feed';
-    else if(this.hasRole('ROLE_ADMIN', userDetails))
-      redirectUrl = '/adminpage';
+    if(this.hasRole('PROFESSIONAL', userDetails)) 
+      redirectUrl = '/in';
+    else if(this.hasRole('ADMIN', userDetails))
+      redirectUrl = '/admin';
 
     return redirectUrl;
   }
@@ -84,8 +84,7 @@ export class RegisterComponent implements OnInit {
             } );
             this.authenticationService.setLoggedInUser(userDetails);
             this.router.navigate([this.redirect(userDetails)]);
-          }
-          ,
+          },
           error => {
             this.loading = false;
             this.signuperror = error;

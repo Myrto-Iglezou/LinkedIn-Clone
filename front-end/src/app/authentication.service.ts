@@ -27,6 +27,7 @@ export class AuthenticationService{
     }
 
   signup(formWrapper: FormData): Observable<HttpResponse<User>> {
+    alert('post to be made');
     return this.http.post<User>('https://localhost:8443/signup', formWrapper, { observe: 'response'});
   }
 

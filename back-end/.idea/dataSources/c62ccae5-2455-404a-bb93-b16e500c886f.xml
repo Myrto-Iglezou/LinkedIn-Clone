@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="linkedin_db@localhost">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.19">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.23">
     <root id="1">
       <ServerVersion>8.0.21</ServerVersion>
       <DefaultEngine>InnoDB</DefaultEngine>
@@ -891,27 +891,15 @@
     </collation>
     <user id="282" parent="1" name="mysql.infoschema">
       <Host>localhost</Host>
-      <ObjectGrants>SELECT
-</ObjectGrants>
     </user>
     <user id="283" parent="1" name="mysql.session">
       <Host>localhost</Host>
-      <ObjectGrants>SHUTDOWN,SUPER
-BACKUP_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,PERSIST_RO_VARIABLES_ADMIN,SESSION_VARIABLES_ADMIN,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN
-SELECT|performance_schema:null
-SELECT|mysql.user:null
-</ObjectGrants>
     </user>
     <user id="284" parent="1" name="mysql.sys">
       <Host>localhost</Host>
-      <ObjectGrants>TRIGGER|sys:null
-SELECT|sys.sys_config:null
-</ObjectGrants>
     </user>
     <user id="285" parent="1" name="root">
       <Host>localhost</Host>
-      <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE,CREATE ROLE,DROP ROLE!
-</ObjectGrants>
     </user>
     <table id="286" parent="3" name="comment">
       <Engine>MyISAM</Engine>

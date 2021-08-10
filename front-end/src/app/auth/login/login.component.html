@@ -13,7 +13,7 @@
         <p class="sub-heading">Stay tuned to your professional world</p>
       </div>
       <div class="card-body">
-          <form class="example-form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <form class="example-form" name="form" #loginform="ngForm" (ngSubmit)="f.form.valid && login(loginform)" #f="ngForm" novalidate>
             <mat-form-field class="form-input" appearance="fill">
               <mat-label>Email</mat-label>
               <input type="email" name="username" [(ngModel)]="model.username" #username="ngModel" required  matInput placeholder="Ex. pat@example.com">
