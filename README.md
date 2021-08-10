@@ -1,5 +1,8 @@
 # LinkedIn-Clone
 
+SSL/TLS browser security must be disabled for localhost: ```chrome://flags/#allow-insecure-localhost```
+
+
 ## To do
 
 ### User credentials and info
