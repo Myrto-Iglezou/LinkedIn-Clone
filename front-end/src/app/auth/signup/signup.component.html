@@ -13,7 +13,7 @@
             <p class="sub-heading">Create your professional world</p>
           </div>
           <div class="card-body">
-            <form class="example-form" name="form" #registerForm="ngForm" (ngSubmit)="register(registerForm)">            
+            <form class="example-form" name="form" #signupForm="ngForm" (ngSubmit)="signup(signupForm)">            
                 <mat-form-field class="form-input"  appearance="fill">
                     <mat-label>First Name</mat-label>
                     <input matInput type="text" name="name" id="name" placeholder="Ex. Nick" [(ngModel)]="user.name" #name="ngModel" required [class.is-invalid]="name.invalid && submitattempt">
@@ -51,7 +51,7 @@
                   <small *ngIf="profilePhoto && (profilePhoto.type !='image/jpeg' && profilePhoto.type !='image/png') && submitattempt " >Image file must be jpeg or png</small>
                   <small *ngIf="!profilePhoto && submitattempt" style="color: red;">Please choose profile photo</small>
                 </div> -->
-                <button class="sign-in-btn btn btn-primary" [disabled]="!registerForm.valid" type="submit" >Sign up</button>
+                <button class="sign-in-btn btn btn-primary" [disabled]="!signupForm.valid" type="submit" >Sign up</button>
             </form>
             <div class="join-now">Already have an account? <a href="\login" class="join-now-btn"><b>Sign in</b></a></div>
           </div>

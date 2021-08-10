@@ -19,8 +19,6 @@ export class AuthenticationService{
 
   constructor(private http: HttpClient, private router : Router) { }
 
-
-
   login(username: string, password: string): Observable<HttpResponse<User>> {
         const ln: Login = { username, password };
         return this.http.post<User>('https://localhost:8443/login', ln, { observe: 'response'});
@@ -31,29 +29,29 @@ export class AuthenticationService{
     return this.http.post<User>('https://localhost:8443/signup', formWrapper, { observe: 'response'});
   }
 
-    logout() {
-        // remove userDetails from local storage to log user out
-        this.setLoggedInUser(null);
-        this.router.navigate(['/homepage']).then(() => {
-          location.reload(true);
-        });
-    }
+  logout() {
+      // remove userDetails from local storage to log user out
+      this.setLoggedInUser(null);
+      this.router.navigate(['/login']).then(() => {
+        location.reload(true);
+      });
+  }
 
-    setLoggedInUser(userDetails: UserDetails){
-      this.LoggedInUserDetails$.next(userDetails);
-      localStorage.setItem('userDetails', JSON.stringify(userDetails));
-    }
+  setLoggedInUser(userDetails: UserDetails){
+    this.LoggedInUserDetails$.next(userDetails);
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+  }
 
-    getLoggedInUser(): Observable<UserDetails>{
-      return this.LoggedInUserDetails$.asObservable();
-    }
+  getLoggedInUser(): Observable<UserDetails>{
+    return this.LoggedInUserDetails$.asObservable();
+  }
 
 
-    getUser(str: string): UserDetails{
-      if(str != null)
-        return JSON.parse(str);
-      else
-        return null;
-    }
+  getUser(str: string): UserDetails{
+    if(str != null)
+      return JSON.parse(str);
+    else
+      return null;
+  }
 
 }

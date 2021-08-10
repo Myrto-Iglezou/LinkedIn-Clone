@@ -7,11 +7,11 @@ import { User } from '../../model/user';
 import {UserDetails} from '../../model/user-details';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class SignupComponent implements OnInit {
   user: User = new User();
   loading = false;
   returnUrl: string;
@@ -59,8 +59,8 @@ export class RegisterComponent implements OnInit {
     this.profilePhoto = inputElement.files[0];
   }
   
-  register(registerForm) {
-    if (registerForm.form.valid  && (this.user.password === this.user.passwordConfirm)) {
+  signup(signupForm) {
+    if (signupForm.form.valid  && (this.user.password === this.user.passwordConfirm)) {
 
       alert("here");
       const formWrapper = new FormData();

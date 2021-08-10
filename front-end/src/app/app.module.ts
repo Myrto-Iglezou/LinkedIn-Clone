@@ -18,7 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor} from './auth/helpers/error.interceptor';
 import { JwtInterceptor} from './auth/helpers/jwt.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RegisterComponent } from './auth/register/register.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 
@@ -29,20 +29,22 @@ const appRoutes: Routes = [
     pathMatch: 'full',
   },
   { path: 'users', children: [
-    {path: ':id' , children: [
+    {path: ':id' , 
+    children: [
         {path: '', component: UserDetailsComponent},
         // {path: 'passwordchange', component: ChangePasswordComponent, canActivate: [UserGuard]},
         // {path: 'edit', component: UserEditComponent, canActivate: [UserGuard]},
         // { path: 'messages', component: MessagePageComponent, canActivate: [UserGuard]}
         ] }
-  ] },
+    ] 
+  },
   {
     path: 'login',
     component: LoginComponent,
   },
   {
     path: 'signup',
-    component: RegisterComponent,
+    component: SignupComponent,
   },
   { path: 'admin', children: [
     {path: '', component: AdminComponent},
@@ -56,7 +58,7 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     FooterComponent,
-    RegisterComponent,
+    SignupComponent,
     AdminComponent,
     UserDetailsComponent,
   ],
