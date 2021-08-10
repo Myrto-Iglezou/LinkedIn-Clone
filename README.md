@@ -37,7 +37,7 @@
 
 
 ### Network
-- PUT https://localhost:8443/in/{id}/add-connection/{newUserId}
+- PUT https://localhost:8443/in/{id}/new-connection/{newUserId}
 
 
 ### Jobs
