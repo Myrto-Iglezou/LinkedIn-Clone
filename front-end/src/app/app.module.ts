@@ -22,6 +22,9 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FeedComponent } from './feed/feed.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ProfileCardComponent } from './profile-card/profile-card.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 const appRoutes: Routes = [
   {
@@ -67,6 +70,9 @@ const appRoutes: Routes = [
     AdminComponent,
     UserDetailsComponent,
     FeedComponent,
+    NavbarComponent,
+    ProfileCardComponent,
+    CreatePostComponent,
   ],
   imports: [
     BrowserModule,
