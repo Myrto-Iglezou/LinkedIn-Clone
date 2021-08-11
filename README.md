@@ -2,9 +2,9 @@
 
 Execution:
 
-__Front:__  ```ng serve```
+__Front:__  ```ng serve```  ✅ 
 
-__Back:__   ```JetBrains run```
+__Back:__   ```JetBrains run``` ☑️
 
 !! SSL/TLS browser security must be disabled for localhost: ```chrome://flags/#allow-insecure-localhost```
 
@@ -12,14 +12,14 @@ __Back:__   ```JetBrains run```
 ---
 
 ## User credentials and info
-- POST: https://localhost:8443/login  ✅ ☑️
+- POST: https://localhost:8443/login  ☑️
 ```json
   {
       "username":"n_withpic@mail.com",
       "password":"012345"
   }
   ```
-- POST: https://localhost:8443/signup
+- POST: https://localhost:8443/signup ☑️
   ```json
   {
       "username":"n_withpic@mail.com",
@@ -31,8 +31,9 @@ __Back:__   ```JetBrains run```
       "imageFile": { }
   }
   ```
-- GET:  https://localhost:8443/in/{id} : Returns user id 2 info
-```json
+  
+- GET:  https://localhost:8443/in/{id} ☑️ : Returns user id 2 info 
+```json 
 {
     "id": 6,
     "username": "user4@mail.com",
@@ -64,8 +65,8 @@ __Back:__   ```JetBrains run```
     "chats": []
 }
 ```
-- PUT https://localhost:8443in/{id}/settings
-```json
+- PUT https://localhost:8443in/{id}/settings ☑️
+```json 
 {
     "currentPassword":"012345",
     "newPassword":"0123",
@@ -75,9 +76,19 @@ __Back:__   ```JetBrains run```
 }
 ```
 
+- GET:  https://localhost:8443/in/{id}/profile  
+```json
+}
+```
+
+- PUT:  https://localhost:8443/in/{id}/profile/new-user-details 
+```json
+}
+```
+
 ## Feed-Posts
 
-- GET https://localhost:8443/in/{id}/feed
+- GET https://localhost:8443/in/{id}/feed  ☑️  __[BONUS]__
 ```json
 {
     "userDetails": {
@@ -114,17 +125,17 @@ __Back:__   ```JetBrains run```
     "connectedUsers": []
 }
 ```
-- POST https://localhost:8443/in/{id}/feed/new-post
+- POST https://localhost:8443/in/{id}/feed/new-post ☑️
 ```json
 {
   "content":"post bla bla"
 }
 ```
 
-- PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId}
+- PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId} ☑️
 No json needed, only url ids
 
-- PUT https://localhost:8443/in/{id}/feed/comment/{postdId}
+- PUT https://localhost:8443/in/{id}/feed/comment/{postdId} ☑️
 ```json
 {
   "content":"comment bla bla"
@@ -132,8 +143,23 @@ No json needed, only url ids
 ```
 
 ## Network
-- PUT https://localhost:8443/in/{id}/new-connection/{newUserId}
+- PUT https://localhost:8443/in/{id}/new-connection/{newUserId} ☑️
 ```json
+```
+
+- GET https://localhost:8443/in/{id}/network
+```json
+
+```
+
+- GET https://localhost:8443/in/{id}/search
+```json
+
+```
+
+- GET https://localhost:8443/in/{id}/profile/{userId}: Other user profile
+```json
+
 ```
 
 ## Jobs
@@ -141,11 +167,51 @@ No json needed, only url ids
 ```json
 ```
 
-## Admin
+- GET https://localhost:8443/in/{id}/jobs  __[BONUS]__
 ```json
 ```
 
+- PUT https://localhost:8443/in/{id}/jobs/make-application/{jobId}
+```json
+```
+
+- GET https://localhost:8443/in/{id}/jobs/{jobId}/applicants
+```json
+```
+
+
+## Admin
+
+- GET https://localhost:8443/admin/users
+```json
+```
+
+- GET https://localhost:8443/admin/users/{userId}/profile
+```json
+```
+
+- GET https://localhost:8443/admin/users/export
+```json
+```
+
+
 ## Chat
+- GET https://localhost:8443/in/{id}/chats
+```json
+```
+
+- GET https://localhost:8443/in/{id}/chat/{otherUserId}
+```json
+```
+
+- POST https://localhost:8443/in/{id}/chat/{otherUserId}/new-message
+```json
+```
+
+## Notifications
+- GET https://localhost:8443/in/{id}/notifications
+```json
+```
 
 ---
 
