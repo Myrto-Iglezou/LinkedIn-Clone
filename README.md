@@ -1,11 +1,17 @@
 # LinkedIn-Clone
 
-SSL/TLS browser security must be disabled for localhost: ```chrome://flags/#allow-insecure-localhost```
+Execution:
+
+__Front:__  ```ng serve```
+
+__Back:__   ```JetBrains run```
+
+!! SSL/TLS browser security must be disabled for localhost: ```chrome://flags/#allow-insecure-localhost```
 
 
-## To do
+---
 
-### User credentials and info
+## User credentials and info
 - POST: https://localhost:8443/login  ✅ ☑️
 ```json
   {
@@ -26,211 +32,123 @@ SSL/TLS browser security must be disabled for localhost: ```chrome://flags/#allo
   }
   ```
 - GET:  https://localhost:8443/in/{id} : Returns user id 2 info
+```json
+{
+    "id": 6,
+    "username": "user4@mail.com",
+    "password": "$2a$10$dgcMG3SqpaShA1hQtG8k9e8HVSw1nyEmP7IGYL/jkIg21WGfG/5kS",
+    "passwordConfirm": null,
+    "name": "name4",
+    "surname": "surname4",
+    "phoneNumber": null,
+    "city": null,
+    "currentJob": null,
+    "currentCompany": null,
+    "profilePicture": null,
+    "roles": [
+        {
+            "id": 2,
+            "name": "PROFESSIONAL"
+        }
+    ],
+    "info": [],
+    "usersFollowing": [],
+    "userFollowedBy": [],
+    "posts": [],
+    "comments": [],
+    "notifications": [],
+    "interestReactions": [],
+    "jobsCreated": [],
+    "jobApplied": [],
+    "messages": [],
+    "chats": []
+}
+```
 - PUT https://localhost:8443in/{id}/settings
+```json
+{
+    "currentPassword":"012345",
+    "newPassword":"0123",
+    "passwordConfirm":"0123",
+    "currentUsername": "user@mail.com",
+    "newUsername": "newuser@mail.com"
+}
+```
 
-### Feed-Posts
+## Feed-Posts
+
 - GET https://localhost:8443/in/{id}/feed
-
-
-
+```json
+{
+    "userDetails": {
+        "id": 6,
+        "username": "user4@mail.com",
+        "password": "$2a$10$dgcMG3SqpaShA1hQtG8k9e8HVSw1nyEmP7IGYL/jkIg21WGfG/5kS",
+        "passwordConfirm": null,
+        "name": "name4",
+        "surname": "surname4",
+        "phoneNumber": null,
+        "city": null,
+        "currentJob": null,
+        "currentCompany": null,
+        "profilePicture": null,
+        "roles": [
+            {
+                "id": 2,
+                "name": "PROFESSIONAL"
+            }
+        ],
+        "info": [],
+        "usersFollowing": [],
+        "userFollowedBy": [],
+        "posts": [],
+        "comments": [],
+        "notifications": [],
+        "interestReactions": [],
+        "jobsCreated": [],
+        "jobApplied": [],
+        "messages": [],
+        "chats": []
+    },
+    "posts": [],
+    "connectedUsers": []
+}
+```
 - POST https://localhost:8443/in/{id}/feed/new-post
+```json
+{
+  "content":"post bla bla"
+}
+```
 
 - PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId}
+No json needed, only url ids
+
 - PUT https://localhost:8443/in/{id}/feed/comment/{postdId}
+```json
+{
+  "content":"comment bla bla"
+}
+```
 
-
-### Network
+## Network
 - PUT https://localhost:8443/in/{id}/new-connection/{newUserId}
+```json
+```
 
-
-### Jobs
+## Jobs
 - POST https://localhost:8443/in/{id}/new-job
+```json
+```
 
+## Admin
+```json
+```
 
-### Admin
+## Chat
 
-
+---
 
 ## Missing
-
-- Images/audio/video
-
-
-
-## Back-end
-
-<table>
-<tr>
-  <td> Request </td> <td> JSON </td>  <td> Finished </td> 
-</tr>
-<tr>
-<td> POST: https://localhost:8443/login </td>
-  <td>
-
-  ```json
-  {
-    "username": "user@mail.com",
-    "password": "012345"
-  }
-  ```
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-
-</tr>
-<tr>
-<td> POST: https://localhost:8443/signup </td>
-  <td>
-
-  ```json
-  {
-      "username":"n_withpic@mail.com",
-      "name": "new",
-      "surname":"user",
-      "password":"012345",
-      "passwordConfirm":"012345",
-      "roles":[],
-      "imageFile": { }
-  }
-  ```
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> PUT: https://localhost:8443/user/2/settings </td>
-  <td>
-
-  ```json
-  {
-      "currentPassword":"012345",
-      "newPassword":"0123",
-      "passwordConfirm":"0123",
-      "currentUsername": "user@mail.com",
-      "newUsername": "newuser@mail.com"
-  }
-  ```
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> GET: https://localhost:8443/admin </td>
-  <td>
-
-  ```json
-  {
-    [
-      "user" : {
-    
-      },
-      "user" : {
-    
-      },
-      ...    
-    ]
-  }
-  ```
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> GET: https://localhost:8443/feed </td>
-  <td>
-
-  ```json
-  {
-    "user_info" : {
-
-    },
-    "posts" : {
-      [
-        "post": {
-        
-        }
-      ]
-
-    },
-  }
-  ```
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
- <tr>
-<td> POST: https://localhost:8443/feed/newpost </td>
-  <td>
-
-  ```json
-  {
-    "post" : {
-
-    }
-  }
-  ```
-  </td>
-   <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
- <tr>
-<td> POST: https://localhost:8443/feed/comment/{postid} </td>
-  <td>
-  </td>
-   <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> POST: https://localhost:8443/feed/interest/{postid} </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> GET: https://localhost:8443/feed/network </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
-<tr>
-<td> GET: https://localhost:8443/in/{userid} </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>
- <tr>
-<td> GET: https://localhost:8443/chats </td>
-  <td>
-  </td>
-   <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>  
-<tr>
-<td> GET: https://localhost:8443/chats/{userid} </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>  
-<tr>
-  <td> GET: https://localhost:8443/jobs </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr>  
-<tr>
-<td> POST: https://localhost:8443/newjob/{jobid} </td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr> 
-<tr>
-<td> GET: https://localhost:8443/notifications</td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr> 
-<tr>
-<td> GET: https://localhost:8443/user/info</td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr> 
-<tr>
-<td> POST: https://localhost:8443/user/infoupdate</td>
-  <td>
-  </td>
-  <td> <ul><li>- [ ] front</li><li>- [ ] back</li></ul> </td> 
-</tr> 
-</table>
+1. Media files (image,video,audio)
+2. Timestamps??
