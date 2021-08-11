@@ -34,7 +34,7 @@ export class ErrorComponent implements OnInit {
         this.router.navigate(['/in']);
       }
       else( this.hasRole('ADMIN')) {
-        this.router.navigate(['/adminpage']);
+        this.router.navigate(['/admin']);
       }
 
   }
