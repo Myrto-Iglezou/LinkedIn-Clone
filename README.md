@@ -133,7 +133,7 @@ __Back:__   ```JetBrains run``` ☑️
 ```
 
 - PUT https://localhost:8443/in/{id}/feed/post-interested/{postdId} ☑️
-No json needed, only url ids
+```No json needed, only url ids```
 
 - PUT https://localhost:8443/in/{id}/feed/comment/{postdId} ☑️
 ```json
@@ -144,8 +144,8 @@ No json needed, only url ids
 
 ## Network
 - PUT https://localhost:8443/in/{id}/new-connection/{newUserId} ☑️
-```json
-```
+```No json needed, only url ids```
+
 
 - GET https://localhost:8443/in/{id}/network
 ```json
