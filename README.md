@@ -146,10 +146,21 @@ __Back:__   ```JetBrains run``` ☑️
 - PUT https://localhost:8443/in/{id}/new-connection/{newUserId} ☑️
 ```No json needed, only url ids```
 
+- PUT https://localhost:8443/in/{id}/notifications/{connectionId}/accept-connection ☑️
+```No json needed, only url ids```
 
-- GET https://localhost:8443/in/{id}/network
+
+- GET https://localhost:8443/in/{id}/network  ☑️
 ```json
-
+[
+    {
+        "id": 5,
+        "name": "name3",
+        "surname": "surname3",
+        "position": null,
+        "company": null
+    }
+]
 ```
 
 - GET https://localhost:8443/in/{id}/search
@@ -209,8 +220,13 @@ __Back:__   ```JetBrains run``` ☑️
 ```
 
 ## Notifications
-- GET https://localhost:8443/in/{id}/notifications
+- GET https://localhost:8443/in/{id}/notifications ☑️
 ```json
+{
+    "connectionsPending": [],
+    "interestReactions": [],
+    "comments": []
+}
 ```
 
 ---
