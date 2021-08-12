@@ -1,5 +1,6 @@
 package com.linkedin.linkedinclone.services;
 
+import com.linkedin.linkedinclone.dto.NetworkUserDTO;
 import com.linkedin.linkedinclone.dto.PostDTO;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -64,4 +66,24 @@ public class UserService {
         }
         commentRepository.save(comment);
     }
+
+    public Set<User> getUserNetwork(User user) {
+        Set<User> network = new HashSet<>();
+
+        Set<Connection> connectionsFollowing = user.getUsersFollowing();
+        for(Connection con: connectionsFollowing) {
+            if(con.getIsAccepted()){
+                network.add(con.getUserFollowing(););
+            }
+        }
+
+        Set<Connection> connectionsFollowedBy = user.getUserFollowedBy();
+        for(Connection con: connectionsFollowedBy) {
+            if(con.getIsAccepted()){
+                network.add(con.getUserFollowing(););
+            }
+        }
+        return network;
+    }
+
 }

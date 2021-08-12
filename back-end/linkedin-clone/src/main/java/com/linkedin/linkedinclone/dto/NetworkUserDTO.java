@@ -1,6 +1,7 @@
 package com.linkedin.linkedinclone.dto;
 
 
+import com.linkedin.linkedinclone.model.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class NetworkUserDTO {
     private String company;
 
     // IMAGE MISSING
+    // private Picture picture;
 }

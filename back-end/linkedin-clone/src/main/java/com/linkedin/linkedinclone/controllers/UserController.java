@@ -46,7 +46,7 @@ public class UserController {
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signup(@RequestBody User user, @RequestPart(value = "imageFile",required = false) MultipartFile file) throws IOException {
 
-        System.out.println("NEW USER");
+
         if(userRepository.findUserByUsername(user.getUsername()) == null) {
             if (user.getPassword().equals(user.getPasswordConfirm())) {
                 user.setPassword(encoder.encode(user.getPassword()));
@@ -59,6 +59,7 @@ public class UserController {
                     user.setProfilePicture(pic);
                 }
                 userRepository.save(user);
+                System.out.println("> New user signup");
             } else
                 throw new PasswordsNotSameException();
         } else
@@ -72,6 +73,7 @@ public class UserController {
         responseHeaders.set(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
         responseHeaders.set("Content-Type","application/json");
         user.setPassword(null);
+
         return ResponseEntity.ok().headers(responseHeaders).body(user);
     }
 
@@ -80,8 +82,6 @@ public class UserController {
     @GetMapping("/in/{id}")
     public User getProfile(@PathVariable Long id) {
         User userDetails = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-
-
 
         return userDetails;
     }
@@ -95,7 +95,7 @@ public class UserController {
         User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
 
 
-        System.out.println("HERE");
+        System.out.println("> changePasswordOrUsername");
         String responseMessage = new String();
         //User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
         if(encoder.matches(info.getCurrentPassword(),user.getPassword())){
