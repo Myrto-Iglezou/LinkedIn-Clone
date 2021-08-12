@@ -174,19 +174,19 @@ __Back:__   ```JetBrains run``` ☑️
 ```
 
 ## Jobs
-- POST https://localhost:8443/in/{id}/new-job
+- POST https://localhost:8443/in/{id}/new-job ☑️
 ```json
 ```
 
-- GET https://localhost:8443/in/{id}/jobs  __[BONUS]__
+- GET https://localhost:8443/in/{id}/jobs ☑️ __[BONUS]__  
 ```json
 ```
 
-- PUT https://localhost:8443/in/{id}/jobs/make-application/{jobId}
+- PUT https://localhost:8443/in/{id}/jobs/make-application/{jobId} ☑️
 ```json
 ```
 
-- GET https://localhost:8443/in/{id}/jobs/{jobId}/applicants
+- GET https://localhost:8443/in/{id}/jobs/{jobId}/applicants ☑️
 ```json
 ```
 
