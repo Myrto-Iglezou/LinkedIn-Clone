@@ -7,6 +7,7 @@ import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.Connection;
 import com.linkedin.linkedinclone.model.InterestReaction;
 import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.repositories.ConnectionRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
@@ -30,6 +31,7 @@ public class NetworkController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ConnectionRepository connectionRepository;
 
 
     @CrossOrigin(origins = "*")
@@ -41,11 +43,23 @@ public class NetworkController {
         User currentUser = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
 
         Set<NetworkUserDTO> network = new HashSet<>();
-        Set<Connection> connections = currentUser.getUsersFollowing();
-        for(Connection con: connections) {
-            User userinNetwork = con.getUserFollowing();
-            NetworkUserDTO netuser = new NetworkUserDTO(userinNetwork.getId(),userinNetwork.getName(),userinNetwork.getSurname(),userinNetwork.getCurrentJob(),userinNetwork.getCurrentCompany());
-            network.add(netuser);
+
+        Set<Connection> connectionsFollowing = currentUser.getUsersFollowing();
+        for(Connection con: connectionsFollowing) {
+            if(con.getIsAccepted()){
+                User userinNetwork = con.getUserFollowing();
+                NetworkUserDTO netuser = new NetworkUserDTO(userinNetwork.getId(),userinNetwork.getName(),userinNetwork.getSurname(),userinNetwork.getCurrentJob(),userinNetwork.getCurrentCompany());
+                network.add(netuser);
+            }
+        }
+
+        Set<Connection> connectionsFollowedBy = currentUser.getUserFollowedBy();
+        for(Connection con: connectionsFollowedBy) {
+            if(con.getIsAccepted()){
+                User userinNetwork = con.getUserFollowed();
+                NetworkUserDTO netuser = new NetworkUserDTO(userinNetwork.getId(),userinNetwork.getName(),userinNetwork.getSurname(),userinNetwork.getCurrentJob(),userinNetwork.getCurrentCompany());
+                network.add(netuser);
+            }
         }
 
         return network;
@@ -63,6 +77,21 @@ public class NetworkController {
 
 
         return ResponseEntity.ok("\"New connection added with success!\"");
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @PutMapping("/in/{id}/notifications/{connectionId}/accept-connection")
+    public ResponseEntity acceptConnection(@PathVariable Long id,@PathVariable Long connectionId) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+
+        Connection conn = connectionRepository.findById(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
+        conn.setIsAccepted(true);
+        connectionRepository.save(conn);
+
+        return ResponseEntity.ok("\"Connection accepted with success!\"");
     }
 
 /*    @CrossOrigin(origins = "*")

@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "interest_reaction")
 public class InterestReaction {
@@ -17,7 +16,7 @@ public class InterestReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "timestamp", nullable = false) @NonNull
+    @Column(name = "timestamp")
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
