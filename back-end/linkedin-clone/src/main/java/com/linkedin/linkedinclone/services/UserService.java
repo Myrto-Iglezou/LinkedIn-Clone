@@ -73,14 +73,14 @@ public class UserService {
         Set<Connection> connectionsFollowing = user.getUsersFollowing();
         for(Connection con: connectionsFollowing) {
             if(con.getIsAccepted()){
-                network.add(con.getUserFollowing(););
+                network.add(con.getUserFollowing());
             }
         }
 
         Set<Connection> connectionsFollowedBy = user.getUserFollowedBy();
         for(Connection con: connectionsFollowedBy) {
             if(con.getIsAccepted()){
-                network.add(con.getUserFollowing(););
+                network.add(con.getUserFollowing());
             }
         }
         return network;

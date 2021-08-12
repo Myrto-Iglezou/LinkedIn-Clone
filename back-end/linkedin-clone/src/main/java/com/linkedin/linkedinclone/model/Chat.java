@@ -24,13 +24,13 @@ public class Chat {
     private Timestamp timestamp;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("jobApplied")
+    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="chat")
-    @JsonIgnoreProperties("chat")
+    @JsonIgnoreProperties(value = {"chat","jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Set<Message> messages = new HashSet<>();
 
 
