@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
+
 <div class="container" id="feedcards">
     <div class="card-group col-xs-12">
         <div class="col-sm-3">
@@ -18,23 +18,43 @@
         <div class="col-sm-5">
         <div class="card" id="postCard">
             <div class="card text-white  text-center">
-            <div class="card-body ">
-                <div class="input-group text-box">
-                    <textarea class="form-control text-post" placeholder="Start a post" name="content" maxlength="280"></textarea>
+                <div class="card-body ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="input-group text-box">
+                                <textarea class="form-control text-post" placeholder="Start a post" name="content" maxlength="280"></textarea>
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center" id="media">
+                            <div class="col">
+                                
+                                <button type="button" class="btn btn-light">
+                                    <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-light">
+                                    <i class="fab fa-youtube" style="color:rgb(149, 235, 141);"></i> Video
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button"  class="btn btn-light">
+                                    <i class="fas fa-music" style="color:pink;"></i> Sound
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                   
                 </div>
-               
-            </div>
             </div>
         </div>
         </div>
     
         <div class="col-sm-4">
-        <div class="card">
+        <div class="card" id="diversCard">
             <div class="card text-white h-100 text-center">
-            <div class="card-body bg-warning">
-                <i class="fa fa-twitter fa-3x"></i>
-                <h6>Spotkania</h6>
-                <h1 class="display-4">134</h1>
+            <div class="card-body">
+               
             </div>
             </div>
         </div>

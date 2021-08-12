@@ -7,11 +7,19 @@
     width: 80%;
 }
 
+#diversCard {
+    margin-left: 20%;
+}
+
 #profile-image{
     width: 50%;
     border-radius: 50%;
     margin-top: 5%;
 
+}
+
+#media{
+    padding-top: 10px;
 }
 
 #postCard{
@@ -24,3 +32,9 @@
     border-radius: 15px;
     background-color:rgb(240, 240, 240);
 }
+
+.text-post:focus,.text-post:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none;
+  }

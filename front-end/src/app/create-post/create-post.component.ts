@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-create-post',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatePostComponent implements OnInit {
 
-  constructor() { }
+  @Output() messageEvent = new EventEmitter<string>();
 
-  ngOnInit(): void {
+  userId = localStorage.getItem('userID');
+  userToken = localStorage.getItem('userToken');
+
+  content: string;
+  fileToUpload: File;
+  image: string;
+  fileName;
+
+  postShared = false;
+  alerts: string;
+  type: 'success';
+
+  postID;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient) { }
+
+  ngOnInit() {
+
   }
+
+
 
 }

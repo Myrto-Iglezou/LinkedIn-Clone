@@ -26,6 +26,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 const appRoutes: Routes = [
   {
@@ -87,6 +88,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatGridListModule,
     RouterModule.forRoot(appRoutes),
+    TooltipModule.forRoot(),
     NgbModule,
   ],
   providers:  [
