@@ -20,8 +20,10 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "timestamp", nullable = false) @NonNull
+    @Column(name = "timestamp")
     private Timestamp timestamp;
+
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)

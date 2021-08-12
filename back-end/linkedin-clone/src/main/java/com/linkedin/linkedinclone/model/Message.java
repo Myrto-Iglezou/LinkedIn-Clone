@@ -22,10 +22,10 @@ public class Message {
     private Timestamp timestamp;
 
     @ManyToOne
-    @JsonIgnoreProperties("chat")
+    @JsonIgnoreProperties(value = {"chat","jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Chat chat;
 
     @ManyToOne
-    @JsonIgnoreProperties("messages")
+    @JsonIgnoreProperties(value = {"messages","chat","jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private User userMadeBy;
 }
