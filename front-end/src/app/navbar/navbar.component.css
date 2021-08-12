@@ -1,6 +1,10 @@
 #mylogo{
-    padding-right: 8px;
-    
+    padding-right: 8px;  
+}
+
+.btn:focus,.btn:active {
+  outline: none !important;
+  box-shadow: none;
 }
 
 .navbar{
@@ -11,6 +15,10 @@
     font-size: 18px;
 }
 
+#set-btn{
+  color: #262626;
+  text-decoration: none;
+}
 /* Color of the links BEFORE scroll */
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon,

@@ -36,28 +36,18 @@
           <li class="nav-item">
             <a class="nav-link d-flex flex-column text-center" aria-current="page" href="/notifications"><i class="fas fa-bell fa-lg"></i><span class="small">Notifications</span></a>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle d-flex align-items-center"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <img
-                src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg"
-                class="rounded-circle"
-                height="30"
-                alt=""
-                loading="lazy"
-              />
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">My profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
+          <li class="nav-item dropdown"  ngbDropdown>
+            
+          <li class="nav-item text-center">
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+               <img  src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" class="rounded-circle" height="30" alt="" loading="lazy"/>
+              </button>
+              <div ngbDropdownMenu id="mydropdown">
+                <button ngbDropdownItem ><a aria-current="page" href="/settings" id="set-btn">Settings</a></button>
+                <button ngbDropdownItem>Logout</button>
+              </div>
+            </div>
           </li>
               
         </ul>

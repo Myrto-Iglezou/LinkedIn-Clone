@@ -1,18 +1,46 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
-<app-profile-card></app-profile-card>
-<!-- <mat-grid-list cols="3" class="feed-components">
-    <mat-grid-tile>
-        <app-profile-card></app-profile-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <app-create-post></app-create-post>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        
-    </mat-grid-tile>
-</mat-grid-list> -->
-
+<div class="container" id="feedcards">
+    <div class="card-group col-xs-12">
+        <div class="col-sm-3">
+            <div class="card"  id="profileCard">
+                <div style= "text-align:center">
+                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" id="profile-image" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-sm-5">
+        <div class="card" id="postCard">
+            <div class="card text-white  text-center">
+            <div class="card-body ">
+                <div class="input-group text-box">
+                    <textarea class="form-control text-post" placeholder="Start a post" name="content" maxlength="280"></textarea>
+                </div>
+               
+            </div>
+            </div>
+        </div>
+        </div>
+    
+        <div class="col-sm-4">
+        <div class="card">
+            <div class="card text-white h-100 text-center">
+            <div class="card-body bg-warning">
+                <i class="fa fa-twitter fa-3x"></i>
+                <h6>Spotkania</h6>
+                <h1 class="display-4">134</h1>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 
 <app-footer></app-footer>
 
