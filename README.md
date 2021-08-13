@@ -76,12 +76,12 @@ __Back:__   ```JetBrains run``` ☑️
 }
 ```
 
-- GET:  https://localhost:8443/in/{id}/profile  
+- GET:  https://localhost:8443/in/{id}/profile  ☑️ 
 ```json
 }
 ```
 
-- PUT:  https://localhost:8443/in/{id}/profile/new-user-details 
+- PUT:  https://localhost:8443/in/{id}/profile/new-info ☑️ 
 ```json
 }
 ```
