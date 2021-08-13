@@ -10,6 +10,19 @@ export class User {
   passwordConfirm: string;
   roles: Array<Role> = new Array<Role>();
   phoneNumber: string;
-  imageFile: Image;
-  accepted: boolean;
+  profilePicture: Image;
+  city: string;
+  currentJob: string;
+  currentCompany: string;
+  usersFollowing:  Array<User> = new Array<User>();
+  userFollowedBy:  Array<User> = new Array<User>();
+  // posts: Array<Post> = new Array<Post>();
+  // comments: Array<Comment> = new Array<Comment>();
+  // notifications: Array<Notification> = new Array<Notification>();
+  // "interestReactions": [],
+  // "jobsCreated": [],
+  // "jobApplied": [],
+  // "messages": [],
+  // "chats": []
+
 }
