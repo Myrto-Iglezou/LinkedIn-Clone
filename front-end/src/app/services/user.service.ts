@@ -16,10 +16,10 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
 
-    return this.http.get<User[]>('https://localhost:8443/users/');
+    return this.http.get<User[]>('https://localhost:8443/admin/users');
   }
 
   getUser(id: string): Observable<User> {
-    return this.http.get<User>('https://localhost:8443/users/' + id);
+    return this.http.get<User>('https://localhost:8443/in/' + id);
   }
 }

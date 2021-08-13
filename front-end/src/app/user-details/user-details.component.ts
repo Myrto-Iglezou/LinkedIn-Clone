@@ -35,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
             location.reload();
           });
         else
-          this.router.navigate(['/homepage']).then(() => {
+          this.router.navigate(['/feed']).then(() => {
             location.reload();
           });
       }
@@ -53,5 +53,6 @@ export class UserDetailsComponent implements OnInit {
 
     return str.slice(0, -1);
   }
+
 
 }
