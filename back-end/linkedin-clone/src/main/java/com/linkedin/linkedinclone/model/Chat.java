@@ -12,7 +12,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Table(name = "chat")
 public class Chat {
 
@@ -22,7 +21,6 @@ public class Chat {
 
     @Column(name = "timestamp")
     private Timestamp timestamp;
-
 
 
     @ManyToMany(fetch = FetchType.EAGER)

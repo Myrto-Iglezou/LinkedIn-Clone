@@ -37,7 +37,7 @@ export class HostGuard implements CanActivate {
           user => {
             this.user = user;
             if( this.userHasRole('PROFESSIONAL')) {
-              this.router.navigate(['/in']);
+              this.router.navigate(['/feed']);
               return  false;
             }
             else if( this.userHasRole('ADMIN')) {

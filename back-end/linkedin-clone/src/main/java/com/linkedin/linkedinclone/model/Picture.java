@@ -16,13 +16,13 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type") @NonNull
     private String type;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name") @NonNull
     private String name;
 
-    @Column(name = "bytes", nullable = false,length = 200000)
+    @Column(name = "bytes", length = 1000) @NonNull
     private byte[] bytes;
 
     // ---------- RELATIONS ---------- //
@@ -35,6 +35,13 @@ public class Picture {
 
 
     // ---------- CONSTRUCTORS ---------- //
+    public Picture(Long id, String name, String type, byte[] bytes){
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.bytes = bytes;
+    }
+
     public Picture(String name, String type, byte[] bytes){
         this.name = name;
         this.type = type;

@@ -25,7 +25,7 @@ export class UserGuard implements CanActivate {
     }
     else if(Number(next.paramMap.get('id')) !== this.userDetails.id) {
       const str = state.url.substring(7, state.url.length);
-      this.router.navigate(['/in/' + this.userDetails.id.toString() + str.substring(str.indexOf('/', 0 ))]);
+      this.router.navigate(['/feed/' + this.userDetails.id.toString() + str.substring(str.indexOf('/', 0 ))]);
       return false;
     }
     else
