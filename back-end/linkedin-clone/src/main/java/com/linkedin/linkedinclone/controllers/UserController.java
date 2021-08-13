@@ -3,6 +3,7 @@ package com.linkedin.linkedinclone.controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.linkedin.linkedinclone.dto.NewUserInfo;
+import com.linkedin.linkedinclone.dto.SkillsDTO;
 import com.linkedin.linkedinclone.model.SkillsAndExperience;
 import com.linkedin.linkedinclone.enumerations.RoleType;
 import com.linkedin.linkedinclone.exceptions.EmailExistsAlreadyException;
@@ -88,6 +89,37 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @GetMapping("/in/{id}/profile")
+    public User getPersonalProfile(@PathVariable Long id) {
+        User userDetails = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        return userDetails;
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @PutMapping("/in/{id}/profile/new-info")
+    public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsDTO skills) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        user.getEducation().addAll(skills.getEducation());
+        user.getWorkExperience().addAll(skills.getWorkExperience());
+        user.getSkills().addAll(skills.getSkills());
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("\"All changes made with success!\"");
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @GetMapping("/in/{id}/profile/{otherUserId}")
+    public User showProfile(@PathVariable Long id, @PathVariable Long otherUserId) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        User userPreview = userRepository.findById(otherUserId).orElseThrow(() -> new UserNotFoundException("User with id "+otherUserId+"doesn't exist"));
+        return userPreview;
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @PutMapping("in/{id}/settings")
     public ResponseEntity changePasswordOrUsername(@RequestBody NewUserInfo info) {
 
@@ -116,13 +148,4 @@ public class UserController {
 
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
-
-    //@CrossOrigin(origins = "*")
-    //@PutMapping("/in/{id}/info")
-    //public ResponseEntity editSkills(@PathVariable Long id , @RequestBody SkillsAndExperience info) {
-
-    //}
-
-
-
 }

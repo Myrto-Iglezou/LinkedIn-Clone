@@ -54,6 +54,7 @@ public class User {
 
     @Column(name = "currentCompany")
     private String currentCompany;
+
     // ------------ DATA MEMBERS WITH RELATIONS ------------------ //
 
     @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
@@ -64,9 +65,21 @@ public class User {
     @JsonIgnoreProperties("users")
     private Set<Role> roles = new HashSet<>();
 
+    /* ----------- SKILLS/EDUCATION/EXPERIENCE ----------- */
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
     @JsonIgnoreProperties("user")
-    private Set<SkillsAndExperience> info = new HashSet<>();
+    private Set<SkillsAndExperience> education = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("user")
+    private Set<SkillsAndExperience> workExperience = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
+    @JsonIgnoreProperties("user")
+    private Set<SkillsAndExperience> skills = new HashSet<>();
+
+    /* ----------- NETWORK ----------- */
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userFollowing")
     @JsonIgnoreProperties("userFollowing")
@@ -75,6 +88,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userFollowed")
     @JsonIgnoreProperties("userFollowed")
     private Set<Connection> userFollowedBy = new HashSet<>();
+
+    /* ----------- FEED ----------- */
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="owner")
     @JsonIgnoreProperties("owner")
@@ -92,6 +107,8 @@ public class User {
     @JsonIgnoreProperties("usersInterested")
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
+    /* ----------- JOBS ----------- */
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
     @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
     private Set<Job> jobsCreated = new HashSet<>();
@@ -99,6 +116,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
     private Set<Job> jobApplied = new HashSet<>();
+
+
+    /* ----------- CHAT ----------- */
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
     @JsonIgnoreProperties("userMadeBy")
