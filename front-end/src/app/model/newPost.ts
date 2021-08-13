@@ -1,4 +1,4 @@
-export class  NewPost{
-    id: number
+export class Post{
+    id: number;
     content: string;
 }
