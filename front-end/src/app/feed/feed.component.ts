@@ -3,6 +3,9 @@ import { CreatePostComponent } from '../create-post/create-post.component';
 import { UserDetails } from '../model/user-details';
 import {AuthenticationService} from '../authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import { Post } from '../model/newPost';
+import { User } from '../model/user';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -12,15 +15,32 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class FeedComponent implements OnInit {
 
-  userDetails: UserDetails = new UserDetails();
+  posts: Post[] = new  Array<Post>();
+  user: User = new User();
+  userDetails: UserDetails;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService, private userService: UserService, private route: ActivatedRoute/* , private postService: PostService */ ) { }
 
   ngOnInit(): void {
-  //   this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
-  //     Object.assign(this.userDetails, userDetails);}
+    this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
+      this.userDetails = userDetails;
+    });
 
-  // }
+    this.userService.getUser(this.userDetails.id.toString()).subscribe(
+      (user) => {
+        Object.assign(this.user , user);
+      },
+      error => {
+        if(this.userDetails)
+          this.router.navigate(['/in', this.userDetails.id.toString()]).then(() =>{
+            location.reload();
+          });
+        else
+          this.router.navigate(['/feed']).then(() => {
+            location.reload();
+          });
+      }
+    );
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewPost } from '../model/newPost';
+import { Post } from '../model/newPost';
 
 @Component({
   selector: 'app-create-post',
@@ -15,7 +15,7 @@ export class CreatePostComponent implements OnInit {
   userId = localStorage.getItem('userID');
   userToken = localStorage.getItem('userToken');
 
-  newPost = new NewPost();
+  newPost = new Post();
 
   constructor(
     private route: ActivatedRoute,
