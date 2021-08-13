@@ -1,62 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {FormControl, Validators,FormGroup} from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '../../authentication.service';
-import {NgForm} from '@angular/forms';
-import {User} from '../../model/user';
-import {UserDetails} from '../../model/user-details';
+import { NgForm } from '@angular/forms';
+import { User } from '../../model/user';
+import { UserDetails } from '../../model/user-details';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  user: User;
+  model: any = {};
+  loading = false;
+  returnUrl: string;
+  loginerror: any;
+  loginmsg: string;
+  dangerBox = false;
+  submitattempt = false;
 
-    user: User;
-    model: any = {};
-    loading = false;
-    returnUrl: string;
-    loginerror: any ;
-    loginmsg: string;
-    dangerBox = false;
-    submitattempt = false;
-    
-    constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private authenticationService: AuthenticationService
-  ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
-      document.body.className = "selector";
-      this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-      this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
-        if (userDetails) {
-          this.router.navigate([this.makeRedirectUrl(userDetails)]);
-        }
-      });
+    document.body.className = 'selector';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
+      if (userDetails) {
+        this.router.navigate([this.makeRedirectUrl(userDetails)]);
+      }
+    });
   }
 
-  makeRedirectUrl(userDetails: UserDetails): string{
+  makeRedirectUrl(userDetails: UserDetails): string {
     let redirectUrl: string = null;
-    if(this.hasRole('PROFESSIONAL', userDetails))
-      redirectUrl = '/in';
-    else if(this.hasRole('ADMIN', userDetails))
-      redirectUrl = '/admin';
-    else
-      redirectUrl = '/login';
+    if (this.hasRole('PROFESSIONAL', userDetails)) redirectUrl = '/in';
+    else if (this.hasRole('ADMIN', userDetails)) redirectUrl = '/admin';
+    else redirectUrl = '/login';
 
     return redirectUrl;
   }
 
-  hasRole(rolename: string , userDetails: UserDetails): boolean{
+  hasRole(rolename: string, userDetails: UserDetails): boolean {
     let flag = false;
-    if(userDetails) {
+    if (userDetails) {
       userDetails.roles.forEach((role) => {
-        if (role === rolename)
-          flag = true;
+        if (role === rolename) flag = true;
       });
     }
     return flag;
@@ -65,32 +60,30 @@ export class LoginComponent implements OnInit {
   login(loginform) {
     if (loginform.form.valid) {
       this.loading = true;
-      this.authenticationService.login(this.model.username, this.model.password)
+      this.authenticationService
+        .login(this.model.username, this.model.password)
         .subscribe(
-          response => {
+          (response) => {
             const userDetails = new UserDetails();
             this.user = response.body;
             userDetails.id = this.user.id;
             userDetails.token = response.headers.get('Authorization');
-            this.user.roles.forEach( (role) => {
-              if (role.name === 'PROFESSIONAL')
-                this.returnUrl = '/in';
-              else if(role.name === 'ADMIN')
-                this.returnUrl = '/admin';
+            this.user.roles.forEach((role) => {
+              if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';
+              else if (role.name === 'ADMIN') this.returnUrl = '/admin';
               userDetails.roles.push(role.name);
-
-            } );
+            });
             this.authenticationService.setLoggedInUser(userDetails);
 
             this.route.queryParams.subscribe((params) => {
-              if(params && params.returnUrl){
-                this.router.navigate([params.returnUrl]).then(() => { location.reload(); });
-              }
-              else
-                this.router.navigate([this.makeRedirectUrl(userDetails)]);
+              if (params && params.returnUrl) {
+                this.router.navigate([params.returnUrl]).then(() => {
+                  location.reload();
+                });
+              } else this.router.navigate([this.makeRedirectUrl(userDetails)]);
             });
           },
-          error => {
+          (error) => {
             this.loading = false;
             this.loginerror = error;
             if (error.error.message === 'Bad credentials') {
@@ -100,12 +93,9 @@ export class LoginComponent implements OnInit {
             this.submitattempt = true;
           }
         );
-    }
-    else{
+    } else {
       this.submitattempt = true;
       this.dangerBox = false;
     }
-
   }
-  
 }

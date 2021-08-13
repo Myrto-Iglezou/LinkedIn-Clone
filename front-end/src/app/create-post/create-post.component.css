@@ -1,0 +1,17 @@
+
+.text-post{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 15px;
+    background-color:rgb(240, 240, 240);
+}
+
+.text-post:focus,.text-post:active  {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none;
+  }
+
+#media{
+    padding-top: 10px;
+}

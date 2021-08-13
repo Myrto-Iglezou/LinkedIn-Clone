@@ -1,7 +1,32 @@
-<div class="card" id="mycard">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
+<div class="card text-white  text-center">
+  <div class="card-body ">
+      <div class="container">
+          <div class="row">
+              <div class="input-group text-box">
+                  <textarea class="form-control text-post" [(ngModel)]="newPost.content" name="content" placeholder="Start a post" name="content" maxlength="280"></textarea>
+              </div>
+          </div>
+          <div class="row justify-content-md-center" id="media">
+              <div class="col">
+                  
+                  <button type="button" class="btn btn-light">
+                      <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo
+                  </button>
+              </div>
+              <div class="col">
+                  <button type="button" class="btn btn-light">
+                      <i class="fab fa-youtube" style="color:rgb(149, 235, 141);"></i> Video
+                  </button>
+              </div>
+              <div class="col">
+                  <button type="button"  class="btn btn-light">
+                      <i class="fas fa-music" style="color:pink;"></i> Sound
+                  </button>
+              </div>                            
+              <div class="col">
+                  <button  [disabled]="!newPost.content" type="button" class="btn post-btn" style="background-color:#158eff; color:white;" (click)="createNewPost()">Post</button>
+              </div>
+          </div>
+      </div>  
+  </div>
 </div>

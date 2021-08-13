@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CreatePostComponent } from '../create-post/create-post.component';
 
 
 @Component({

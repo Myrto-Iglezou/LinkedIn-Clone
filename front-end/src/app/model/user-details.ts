@@ -2,7 +2,6 @@ export class UserDetails {
   id: number;
   token: string;
   roles: Array<string> = new Array<string>();
-  accepted: boolean;
 
   hasRole(rolename: string): boolean {
     let flag = false;

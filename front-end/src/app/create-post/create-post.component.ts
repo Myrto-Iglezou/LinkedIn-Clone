@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { NewPost } from '../model/newPost';
 
 @Component({
   selector: 'app-create-post',
@@ -15,16 +15,7 @@ export class CreatePostComponent implements OnInit {
   userId = localStorage.getItem('userID');
   userToken = localStorage.getItem('userToken');
 
-  content: string;
-  fileToUpload: File;
-  image: string;
-  fileName;
-
-  postShared = false;
-  alerts: string;
-  type: 'success';
-
-  postID;
+  newPost = new NewPost();
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +26,9 @@ export class CreatePostComponent implements OnInit {
 
   }
 
+  createNewPost(){
+    
+  }
 
 
 }
