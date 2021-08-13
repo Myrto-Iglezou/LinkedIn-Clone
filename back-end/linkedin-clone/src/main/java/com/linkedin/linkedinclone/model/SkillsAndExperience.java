@@ -30,8 +30,8 @@ public class SkillsAndExperience {
     @Column(name = "isPublic") @NonNull
     private boolean isPublic;
 
-    @ManyToOne
-    @JsonIgnoreProperties("info")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"info","notification","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;

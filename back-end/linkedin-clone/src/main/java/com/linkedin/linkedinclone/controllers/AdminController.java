@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class AdminController {
 
     @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
+    @GetMapping("/admin/users")
     public List<User> all() {
         return userRepository.findAll();
     }

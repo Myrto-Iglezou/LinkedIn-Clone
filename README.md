@@ -76,12 +76,12 @@ __Back:__   ```JetBrains run``` ☑️
 }
 ```
 
-- GET:  https://localhost:8443/in/{id}/profile  
+- GET:  https://localhost:8443/in/{id}/profile  ☑️ 
 ```json
 }
 ```
 
-- PUT:  https://localhost:8443/in/{id}/profile/new-user-details 
+- PUT:  https://localhost:8443/in/{id}/profile/new-info ☑️ 
 ```json
 }
 ```
@@ -174,19 +174,19 @@ __Back:__   ```JetBrains run``` ☑️
 ```
 
 ## Jobs
-- POST https://localhost:8443/in/{id}/new-job
+- POST https://localhost:8443/in/{id}/new-job ☑️
 ```json
 ```
 
-- GET https://localhost:8443/in/{id}/jobs  __[BONUS]__
+- GET https://localhost:8443/in/{id}/jobs ☑️ __[BONUS]__  
 ```json
 ```
 
-- PUT https://localhost:8443/in/{id}/jobs/make-application/{jobId}
+- PUT https://localhost:8443/in/{id}/jobs/make-application/{jobId} ☑️
 ```json
 ```
 
-- GET https://localhost:8443/in/{id}/jobs/{jobId}/applicants
+- GET https://localhost:8443/in/{id}/jobs/{jobId}/applicants ☑️
 ```json
 ```
 
