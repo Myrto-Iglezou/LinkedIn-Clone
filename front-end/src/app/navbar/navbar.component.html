@@ -45,7 +45,7 @@
               </button>
               <div ngbDropdownMenu id="mydropdown">
                 <button ngbDropdownItem ><a aria-current="page" href="/settings" id="set-btn">Settings</a></button>
-                <button ngbDropdownItem>Logout</button>
+                <button ngbDropdownItem (click)="logout()">Logout</button>
               </div>
             </div>
           </li>
