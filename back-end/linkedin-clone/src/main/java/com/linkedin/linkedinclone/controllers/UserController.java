@@ -13,12 +13,14 @@ import com.linkedin.linkedinclone.exceptions.WrongPasswordException;
 import com.linkedin.linkedinclone.model.Picture;
 import com.linkedin.linkedinclone.model.Role;
 import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.repositories.PictureRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.security.SecurityConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -31,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
-import static com.linkedin.linkedinclone.utils.PictureSave.compressBytes;
+import static com.linkedin.linkedinclone.utils.PictureSave.*;
 
 @RestController
 @AllArgsConstructor
@@ -39,15 +41,14 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
     private final BCryptPasswordEncoder encoder;
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/signup")
-    public ResponseEntity<?> signup(@RequestBody User user, @RequestPart(value = "imageFile",required = false) MultipartFile file) throws IOException {
-
-
+    @PostMapping(value = "/signup", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> signup(@RequestPart("object") User user, @RequestPart(value = "imageFile", required=false) MultipartFile file) throws IOException {
         if(userRepository.findUserByUsername(user.getUsername()) == null) {
             if (user.getPassword().equals(user.getPasswordConfirm())) {
                 user.setPassword(encoder.encode(user.getPassword()));
@@ -58,9 +59,10 @@ public class UserController {
                 if(file!=null){
                     Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
                     user.setProfilePicture(pic);
+                    pictureRepository.save(pic);
                 }
                 userRepository.save(user);
-                System.out.println("> New user signup");
+                System.out.println("> New user signed up");
             } else
                 throw new PasswordsNotSameException();
         } else
@@ -82,17 +84,26 @@ public class UserController {
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}")
     public User getProfile(@PathVariable Long id) {
-        User userDetails = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-
-        return userDetails;
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        Picture pic = user.getProfilePicture();
+        if(pic != null){
+            Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+            user.setProfilePicture(tempPicture);
+        }
+        return user;
     }
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/profile")
     public User getPersonalProfile(@PathVariable Long id) {
-        User userDetails = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-        return userDetails;
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        Picture pic = user.getProfilePicture();
+        if(pic != null){
+            Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+            user.setProfilePicture(tempPicture);
+        }
+        return user;
     }
 
     @CrossOrigin(origins = "*")
@@ -105,7 +116,7 @@ public class UserController {
         user.getSkills().addAll(skills.getSkills());
 
         userRepository.save(user);
-
+        System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
 
@@ -115,6 +126,11 @@ public class UserController {
     public User showProfile(@PathVariable Long id, @PathVariable Long otherUserId) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         User userPreview = userRepository.findById(otherUserId).orElseThrow(() -> new UserNotFoundException("User with id "+otherUserId+"doesn't exist"));
+        Picture pic = userPreview.getProfilePicture();
+        if(pic != null){
+            Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+            userPreview.setProfilePicture(tempPicture);
+        }
         return userPreview;
     }
 
@@ -145,7 +161,7 @@ public class UserController {
             userRepository.save(user);
         }else
             throw new WrongPasswordException();
-
+        System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
 }

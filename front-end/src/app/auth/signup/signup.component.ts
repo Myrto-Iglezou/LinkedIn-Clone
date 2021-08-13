@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
   redirect(userDetails: UserDetails): string{
     let redirectUrl: string = null;
     if(this.hasRole('PROFESSIONAL', userDetails)) 
-      redirectUrl = '/in';
+      redirectUrl = '/feed';
     else if(this.hasRole('ADMIN', userDetails))
       redirectUrl = '/admin';
 

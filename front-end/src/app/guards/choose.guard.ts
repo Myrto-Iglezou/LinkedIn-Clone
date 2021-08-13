@@ -25,7 +25,7 @@ export class ChooseGuard implements CanActivate {
     if (this.hasRole('PROFESSIONAL') && this.hasRole('ADMIN'))
       return true;
     else if (this.hasRole('PROFESSIONAL')) {
-      this.router.navigate(['/in']);
+      this.router.navigate(['/feed']);
       return false;
     }
     else if (this.hasRole('ADMIN')) {

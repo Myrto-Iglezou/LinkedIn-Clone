@@ -45,12 +45,12 @@
                     <input matInput type="text" name="phoneNumber" id="phoneNumber" placeholder="Phonenumber" [(ngModel)]="user.phoneNumber" #phone="ngModel" required
                       [class.is-invalid]="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm">
                 </mat-form-field> <br>
-                <!-- <div>
+                <div>
                   <label for="profilephoto" style="display: block"><span>Profile photo </span> <span class="text-danger" >*</span></label>
                   <input #profilephoto id="profilephoto" type="file" accept=".jpg,.jpeg,.png" style="display: block" (change)="setProfilePhoto(profilephoto)" >
                   <small *ngIf="profilePhoto && (profilePhoto.type !='image/jpeg' && profilePhoto.type !='image/png') && submitattempt " >Image file must be jpeg or png</small>
                   <small *ngIf="!profilePhoto && submitattempt" style="color: red;">Please choose profile photo</small>
-                </div> -->
+                </div>
                 <button class="sign-in-btn btn btn-primary" [disabled]="!signupForm.valid" type="submit" >Sign up</button>
             </form>
             <div class="join-now">Already have an account? <a href="\login" class="join-now-btn"><b>Sign in</b></a></div>

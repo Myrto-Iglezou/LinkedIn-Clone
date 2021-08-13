@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   makeRedirectUrl(userDetails: UserDetails): string {
     let redirectUrl: string = null;
-    if (this.hasRole('PROFESSIONAL', userDetails)) redirectUrl = '/in';
+    if (this.hasRole('PROFESSIONAL', userDetails)) redirectUrl = '/feed';
     else if (this.hasRole('ADMIN', userDetails)) redirectUrl = '/admin';
     else redirectUrl = '/login';
 

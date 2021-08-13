@@ -30,7 +30,7 @@ export class AdminGuard implements CanActivate {
     //   return false;
     // }
     else if (this.hasRole('PROFESSIONAL')) {
-      this.router.navigate(['/in']);
+      this.router.navigate(['/feed']);
       return false;
     } //else if (this.hasRole('ROLE_TENANT')) {
     //   this.router.navigate(['/homepage']);
