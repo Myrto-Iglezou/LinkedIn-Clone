@@ -1,1 +1,57 @@
-<p>postsinfeed works!</p>
+<!-- <p>postsinfeed works!</p> -->
+
+<!-- <div  *ngFor="let booking of bookings  | paginate: { id: 'deplist',
+                                                      itemsPerPage: 5,
+                                                      currentPage: page,
+                                                      totalItems: bookings.length }">
+
+<pagination-controls  *ngIf="bookings && bookings.length > 5" style="position: relative; right: 40px"   id="deplist" (pageChange)="page = $event"></pagination-controls> -->
+
+<div class="card">
+    <div class="card-body ">
+        <div class="container">
+            <div class="row container box box-widget">
+                <div class="box-header with-border">
+                    <div class="user-block">
+                         <img class="img-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" alt="User Image">
+                         <span class="username"><a href="#" data-abc="true">Henery German</a></span> <br>
+                         <span class="description">Public - 7:30 PM Today</span> 
+                    </div>
+                    <div class="box-tools"> 
+                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> 
+                            <i class="fa fa-circle-o"></i>
+                        </button>  
+                    </div>
+                </div>
+                <div class="box-body"> 
+                    <div class="content">
+                        <h3>Hey</h3>
+                    </div>
+                    <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">
+                    <p>Look at the beach photo i clicked</p> 
+
+
+                    <button type="button" class="btn btn-default btn-xs">
+                        <i class="fas fa-thumbs-up"></i> Interesting
+                    </button> 
+                    <span class="pull-right text-muted">127 likes - 3 comments</span>
+                </div>
+                <div class="box-footer box-comments">
+                    <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
+                        <div class="comment-text"> <span class="username"> Tina Domiaz <span class="text-muted pull-right">8:03 PM Today</span> </span> For what reason would it be advisable for me to think about business content? </div>
+                    </div>
+                    <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="User Image">
+                        <div class="comment-text"> <span class="username"> Smith helm <span class="text-muted pull-right">8:03 PM Today</span> </span> That might be little bit risky to have crew member like them. </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <form action="#" method="post"> <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
+                        <div class="img-push"> <input type="text" class="form-control input-sm" placeholder="Press enter to post comment"> </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>  
+    </div>
+</div>

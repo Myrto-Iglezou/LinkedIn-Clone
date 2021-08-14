@@ -12,9 +12,16 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class CreatePostService {
+export class FeedService {
 
   constructor(private http: HttpClient) {}
 
-  // createNewPost(){}
+  addPost(formWrapper: FormData,userId: number): Observable<HttpResponse<string>>{
+    return this.http.post<string>('https://localhost:8443/in/' + userId.toString() + '/feed/new-post', formWrapper, {observe : 'response'});
+  }
+
+  getFeedPosts(userId: number): Observable<Post[]>{
+    return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
+  }
+
 }

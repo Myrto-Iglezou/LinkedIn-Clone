@@ -67,6 +67,72 @@ public class FeedController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/in/{id}/feed-posts")
+    public Set<Post> getFeedPosts(@PathVariable Long id) {
+
+        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+
+        // Get authenticated user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+
+
+        Set<Post> feedPosts = new HashSet<>();
+        feedPosts.addAll(user.getPosts());
+
+        Set<User> network = new HashSet<>();
+
+        // Posts from users connections
+        Set<Connection> connections = currentUser.getUsersFollowing();
+        for(Connection con: connections) {
+            User userFollowing = con.getUserFollowing();
+            network.add(userFollowing);
+            feedPosts.addAll(userFollowing.getPosts());
+
+            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+            for(InterestReaction ir: interestReactions){
+                feedPosts.add(ir.getPost());
+            }
+        }
+
+        return feedPosts;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/in/{id}/feed-network")
+    public Set<User> getFeedNetwork(@PathVariable Long id) {
+
+        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+
+        // Get authenticated user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+
+
+        Set<Post> feedPosts = new HashSet<>();
+        feedPosts.addAll(user.getPosts());
+
+        Set<User> network = new HashSet<>();
+
+        // Posts from users connections
+        Set<Connection> connections = currentUser.getUsersFollowing();
+        for(Connection con: connections) {
+            User userFollowing = con.getUserFollowing();
+            network.add(userFollowing);
+            feedPosts.addAll(userFollowing.getPosts());
+
+            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+            for(InterestReaction ir: interestReactions){
+                feedPosts.add(ir.getPost());
+            }
+        }
+
+        return network;
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/in/{id}/feed/new-post")
     public ResponseEntity newPost(@PathVariable Long id,@RequestBody Post post) {
 
