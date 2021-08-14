@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import { Post } from '../model/Post';
+import { Post } from '../model/post';
 
 
 const httpOptions = {

@@ -3,7 +3,7 @@ import { CreatePostComponent } from '../create-post/create-post.component';
 import { UserDetails } from '../model/user-details';
 import {AuthenticationService} from '../authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Post } from '../model/newPost';
+import { Post } from '../model/post';
 import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 
