@@ -7,10 +7,28 @@
                 <div style= "text-align:center">
                     <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" id="profile-image" class="card-img-top" alt="...">
                 </div>
-                <div class="card-body">
-                  <h5 class="card-title">{{user.name}}</h5>
-                  <p class="card-text"></p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card-body" style= "text-align:center">
+                  <h5 class="card-title" style= "font-size: 20px;"><b>{{user.name}} {{user.surname}}</b></h5>
+                  <p class="card-text">{{user.currentJob}} at {{user.currentCompany}}</p>
+                  <hr style="height:1px; color:#8f9299;">
+                    <p style= "text-align:left; padding-left:15px;">
+                        <b>Connections: </b> {{user.numOfConnections}}</p>
+                  <hr style="height:1px; color:#8f9299;">
+                  <a href="#" class="btn profile-btn">View my profile</a>
+                </div>
+            </div>
+
+            <div class="card"  id="networkCard">
+                <div style= "text-align:center">
+                    <h2 style= "padding-top: 10%;">My Network</h2>
+                </div>
+                <div class="card-body" style= "text-align:center">
+                    <ng-template ngFor let-item [ngForOf]="user.usersFollowing" let-i="index" >
+                        <hr style="height:1px; color:#8f9299;">
+                        <li></li>
+                        <hr style="height:1px; color:#8f9299;">
+                    </ng-template>
+                  <a href="\network" class="btn profile-btn">View my Network</a>
                 </div>
             </div>
         </div>
