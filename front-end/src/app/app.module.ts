@@ -27,6 +27,7 @@ import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PostsinfeedComponent } from './postsinfeed/postsinfeed.component';
 
 const appRoutes: Routes = [
   {
@@ -75,6 +76,7 @@ const appRoutes: Routes = [
     NavbarComponent,
     ProfileCardComponent,
     CreatePostComponent,
+    PostsinfeedComponent,
   ],
   imports: [
     BrowserModule,

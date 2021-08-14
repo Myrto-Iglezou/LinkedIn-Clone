@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import { NewPost } from '../model/newPost';
+import { Post } from '../model/Post';
 
 
 const httpOptions = {
@@ -16,5 +16,5 @@ export class CreatePostService {
 
   constructor(private http: HttpClient) {}
 
-  createNewPost(){}
+  // createNewPost(){}
 }

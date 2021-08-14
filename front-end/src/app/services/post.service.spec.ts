@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CreatePostService } from './create-post.service';
+import { CreatePostService } from './post.service';
 
 describe('CreatePostService', () => {
   let service: CreatePostService;
