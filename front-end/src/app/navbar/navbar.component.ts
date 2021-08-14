@@ -43,4 +43,10 @@ export class NavbarComponent implements OnInit {
     }
     return flag;
   }
+
+  goToProfile(){
+    this.router.navigate(['/users/' + this.userDetails.id.toString()]).then(() => {
+      location.reload();
+    });
+  }
 }

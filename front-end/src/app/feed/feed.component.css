@@ -5,6 +5,13 @@
 
 #profileCard{
     width: 80%;
+    font-family: 'Helvetica';
+}
+
+#networkCard{
+    width: 80%;
+    font-family: 'Helvetica';
+    margin-top:5%;
 }
 
 #diversCard {
@@ -18,6 +25,9 @@
 
 }
 
+.profile-btn{
+    background-color: rgb(167, 211, 247);
+}
 #postCard{
     background-color: white;
 }

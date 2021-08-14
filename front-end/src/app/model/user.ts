@@ -1,4 +1,4 @@
-import { Image } from './image';
+import { Photo } from './image';
 import { Role } from './role';
 
 export class User {
@@ -10,12 +10,13 @@ export class User {
   passwordConfirm: string;
   roles: Array<Role> = new Array<Role>();
   phoneNumber: string;
-  profilePicture: Image;
+  profilePicture: Photo;
   city: string;
   currentJob: string;
   currentCompany: string;
   usersFollowing:  Array<User> = new Array<User>();
   userFollowedBy:  Array<User> = new Array<User>();
+  numOfConnections: number;
   // posts: Array<Post> = new Array<Post>();
   // comments: Array<Comment> = new Array<Comment>();
   // notifications: Array<Notification> = new Array<Notification>();
