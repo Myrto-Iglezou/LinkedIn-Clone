@@ -11,11 +11,14 @@ import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -133,13 +136,15 @@ public class FeedController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/in/{id}/feed/new-post")
-    public ResponseEntity newPost(@PathVariable Long id,@RequestBody Post post) {
+    @PostMapping(value="/in/{id}/feed/new-post", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity newPost(@PathVariable Long id,@RequestPart("object") Post post,@RequestPart(value = "imageFile", required=false) MultipartFile file) throws IOException {
 
         // AUDIO IMAGES AND VIDEO TO BE DONEEE
-        System.out.println(post);
+
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         userService.newPost(currentUser,post);
+        System.out.println("> New post made with success");
+        System.out.println(post);
         return ResponseEntity.ok("\"Post created with success!\"");
     }
 

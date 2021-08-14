@@ -14,7 +14,7 @@ export class PostsinfeedComponent implements OnInit {
 
   userId = localStorage.getItem('userID');
   userToken = localStorage.getItem('userToken');
-
+  page = 1;
   userDetails: UserDetails;
   posts: Post[] = new Array<Post>();
 
@@ -35,5 +35,16 @@ export class PostsinfeedComponent implements OnInit {
       }
     );
   }
+
+  // refreshPosts(id: number){
+  //   this.feedService.getFeedPosts(id).subscribe(
+  //     (posts) => {
+  //       Object.assign(this.posts , posts);
+  //     }
+  //   );
+  // }
+
+
+
 
 }

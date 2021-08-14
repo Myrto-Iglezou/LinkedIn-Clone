@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CreatePostComponent } from '../create-post/create-post.component';
 import { UserDetails } from '../model/user-details';
 import {AuthenticationService} from '../authentication.service';
@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Post } from '../model/post';
 import { User } from '../model/user';
 import { UserService } from '../services/user.service';
+import { PostsinfeedComponent } from '../postsinfeed/postsinfeed.component';
 
 
 @Component({
@@ -14,6 +15,9 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
+
+  @ViewChild(PostsinfeedComponent) child;
+  message: string;
 
   posts: Post[] = new  Array<Post>();
   user: User = new User();
@@ -41,6 +45,21 @@ export class FeedComponent implements OnInit {
           });
       }
     );
+  }
+
+  async recieveRefreshCommand($event) {
+    // alert("recieveRefreshCommand")
+    this.message = $event;
+    // alert($event);
+    await this.delay(1500);
+    if (this.message == '1') {
+      // alert("ngOnInit")
+      this.child.ngOnInit();
+    }
+  }
+
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }

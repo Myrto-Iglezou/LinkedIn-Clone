@@ -1,6 +1,7 @@
 <div class="card text-white  text-center">
   <div class="card-body ">
       <div class="container">
+        <form name="form" #postform="ngForm" (ngSubmit)="createNewPost(postform)">
           <div class="row">
               <div class="input-group text-box">
                   <textarea class="form-control text-post" [(ngModel)]="newPost.content" name="content" placeholder="Start a post" name="content" maxlength="280"></textarea>
@@ -24,9 +25,10 @@
                   </button>
               </div>                            
               <div class="col">
-                  <button  [disabled]="!newPost.content" type="button" class="btn post-btn" style="background-color:#158eff; color:white;" (click)="createNewPost()">Post</button>
+                  <button  [disabled]="!newPost.content" type="submit"  class="btn post-btn" style="background-color:#158eff; color:white;">Post</button>
               </div>
           </div>
+        </form>
       </div>  
   </div>
 </div>

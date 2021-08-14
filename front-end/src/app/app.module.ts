@@ -28,6 +28,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PostsinfeedComponent } from './postsinfeed/postsinfeed.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 const appRoutes: Routes = [
   {
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     PostsinfeedComponent,
   ],
   imports: [
+    NgxPaginationModule,
     BrowserModule,
     MatSliderModule,
     AppRoutingModule,

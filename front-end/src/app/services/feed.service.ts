@@ -24,4 +24,5 @@ export class FeedService {
     return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
   }
 
+
 }
