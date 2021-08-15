@@ -17,6 +17,11 @@ export class User {
   usersFollowing:  Array<User> = new Array<User>();
   userFollowedBy:  Array<User> = new Array<User>();
   numOfConnections: number;
+  education: string;
+  website: string;
+  twitter: string;
+  github: string;
+  skills:[];
   // posts: Array<Post> = new Array<Post>();
   // comments: Array<Comment> = new Array<Comment>();
   // notifications: Array<Notification> = new Array<Notification>();

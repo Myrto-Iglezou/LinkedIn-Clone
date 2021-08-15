@@ -29,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PostsinfeedComponent } from './postsinfeed/postsinfeed.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { UsersettingsComponent } from './usersettings/usersettings.component';
 
 const appRoutes: Routes = [
   {
@@ -63,6 +64,7 @@ const appRoutes: Routes = [
     // {path: 'exportdata', component: AppDataExportComponent }
    ] //, canActivate: [AdminGuard]
   },
+  { path: 'settings', component: UsersettingsComponent},
 ];
 
 @NgModule({
@@ -78,6 +80,7 @@ const appRoutes: Routes = [
     ProfileCardComponent,
     CreatePostComponent,
     PostsinfeedComponent,
+    UsersettingsComponent,
   ],
   imports: [
     NgxPaginationModule,

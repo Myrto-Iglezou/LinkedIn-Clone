@@ -45,7 +45,7 @@
               </button>
               <div ngbDropdownMenu id="mydropdown">
                 <button ngbDropdownItem *ngIf="userDetails" type="button" class="btn" (click)="goToProfile()" > Profile </button>
-                <button ngbDropdownItem ><a aria-current="page" href="/settings" id="set-btn">Settings</a></button>
+                <button ngbDropdownItem ><a aria-current="page"[routerLink]="['/settings']" id="set-btn">Settings</a></button>
                 <button ngbDropdownItem (click)="logout()">Logout</button>
               </div>
             </div>

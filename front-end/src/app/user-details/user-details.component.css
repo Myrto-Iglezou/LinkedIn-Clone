@@ -62,3 +62,12 @@ body{
 .shadow-none {
     box-shadow: none!important;
 }
+
+.btn-info{
+    background-color: #158eff;
+    color: white;
+}
+
+h5{
+    font-family: 'Helvetica';
+}

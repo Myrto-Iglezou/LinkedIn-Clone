@@ -62,4 +62,10 @@ export class FeedComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  goToProfile(){
+    this.router.navigate(['/users/' + this.userDetails.id.toString()]).then(() => {
+      location.reload();
+    });
+  }
+
 }

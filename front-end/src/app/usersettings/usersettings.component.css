@@ -1,0 +1,16 @@
+#settingsCard{
+    margin-top: 15%;
+    margin-left: 50%;
+    margin-bottom: 10%;
+
+}
+
+.btn-settings{
+    background-color: #158eff;
+    color: white;
+    margin-top: 20px;
+}
+
+.pswd-item{
+    margin-top: 10px;
+}
