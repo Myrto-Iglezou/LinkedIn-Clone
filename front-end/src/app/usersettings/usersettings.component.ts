@@ -21,12 +21,17 @@ export class UsersettingsComponent implements OnInit {
   submiterror: any ;
   submitmsg: string;
   currPswdInput: any = {};
+  userDetails: UserDetails;
 
   constructor(private userService: UserService, private route: ActivatedRoute , private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.userService.getUser(this.route.snapshot.paramMap.get('id')).subscribe((user) => {
-      this.usersettings.id = user.id;
+    this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
+      this.userDetails = userDetails;
+    });
+
+    this.userService.getUser(this.userDetails.id.toString()).subscribe((user) => {
+        this.usersettings.id = user.id;
         this.usersettings.currentPassword = user.password;
         this.usersettings.currentUsername = user.username;
       }
