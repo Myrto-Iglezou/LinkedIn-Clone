@@ -147,21 +147,19 @@ public class UserController {
         System.out.println(info.getCurrentPassword());
         System.out.println(user.getPassword());
         //User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
-        if(encoder.matches(info.getCurrentPassword(),user.getPassword())){
-            if(info.getNewPassword()!=null){
-                if (info.getNewPassword().equals(info.getPasswordConfirm())) {
-                    user.setPassword(encoder.encode(info.getNewPassword()));
-                    responseMessage += "Password updated\n";
-                    System.out.println("Password updated");
-                }
+        if(info.getNewPassword()!=null){
+            if (info.getNewPassword().equals(info.getPasswordConfirm())) {
+                user.setPassword(encoder.encode(info.getNewPassword()));
+                responseMessage += "Password updated\n";
+                System.out.println("Password updated");
             }
-            if(info.getNewUsername()!=null){
-                user.setUsername(info.getNewUsername());
-                responseMessage += "Username updated\n";
-            }
-            userRepository.save(user);
-        }else
-            throw new WrongPasswordException();
+        }
+        if(info.getNewUsername()!=null){
+            user.setUsername(info.getNewUsername());
+            responseMessage += "Username updated\n";
+        }
+        userRepository.save(user);
+
         System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
