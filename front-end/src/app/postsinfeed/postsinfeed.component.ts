@@ -43,6 +43,7 @@ export class PostsinfeedComponent implements OnInit {
   displayPhoto(pic: Picture): any{
 
     if (pic.type === 'image/png') {
+      // alert(this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes));
       return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes);
     }
     else if (pic.type === 'image/jpeg') {

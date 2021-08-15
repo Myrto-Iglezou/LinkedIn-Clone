@@ -119,8 +119,8 @@
 .user-block .username,
 .user-block .description,
 .user-block .comment {
+    margin-left: 20px;
     display: block;
-    margin-left: 20px
 }
 
 .user-block:after {

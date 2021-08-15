@@ -22,7 +22,7 @@ public class Picture {
     @Column(name = "name") @NonNull
     private String name;
 
-    @Column(name = "bytes", length = 1000) @NonNull
+    @Column(name = "bytes", length = 200000) @NonNull
     private byte[] bytes;
 
     // ---------- RELATIONS ---------- //

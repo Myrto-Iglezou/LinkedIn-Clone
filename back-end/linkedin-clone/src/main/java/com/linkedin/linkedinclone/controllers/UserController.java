@@ -142,9 +142,10 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
 
-
         System.out.println("> changePasswordOrUsername");
         String responseMessage = new String();
+        System.out.println(info.getCurrentPassword());
+        System.out.println(user.getPassword());
         //User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
         if(encoder.matches(info.getCurrentPassword(),user.getPassword())){
             if(info.getNewPassword()!=null){
