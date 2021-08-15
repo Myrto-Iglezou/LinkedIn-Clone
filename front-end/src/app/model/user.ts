@@ -1,4 +1,4 @@
-import { Photo } from './image';
+import { Picture } from './picture';
 import { Role } from './role';
 
 export class User {
@@ -10,7 +10,7 @@ export class User {
   passwordConfirm: string;
   roles: Array<Role> = new Array<Role>();
   phoneNumber: string;
-  profilePicture: Photo;
+  profilePicture: Picture;
   city: string;
   currentJob: string;
   currentCompany: string;

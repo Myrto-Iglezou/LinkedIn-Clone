@@ -76,7 +76,7 @@ export class CreatePostComponent implements OnInit {
     // alert("here");
 
     if(postform.form.valid) {
-      
+      this.newPost.timestamp = new Date();
       const formWrapper = new FormData();
       const postBlob = new Blob([JSON.stringify(this.newPost)], { type: 'application/json'});
       if (this.mainPhoto) {

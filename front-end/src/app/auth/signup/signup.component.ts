@@ -91,6 +91,7 @@ export class SignupComponent implements OnInit {
             this.dangerBox = true;
             this.user.roles = [];
             this.submitattempt = true;
+            alert(error.message);
           }
         );
     }
