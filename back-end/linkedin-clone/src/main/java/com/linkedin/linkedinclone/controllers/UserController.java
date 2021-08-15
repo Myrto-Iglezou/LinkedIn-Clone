@@ -111,9 +111,12 @@ public class UserController {
     @PutMapping("/in/{id}/profile/new-info")
     public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsDTO skills) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-        user.getEducation().addAll(skills.getEducation());
-        user.getWorkExperience().addAll(skills.getWorkExperience());
-        user.getSkills().addAll(skills.getSkills());
+        if(skills.getEducation().size() != 0)
+            user.getEducation().addAll(skills.getEducation());
+        if(skills.getWorkExperience().size() != 0)
+            user.getWorkExperience().addAll(skills.getWorkExperience());
+        if(skills.getSkills().size() != 0)
+            user.getSkills().addAll(skills.getSkills());
 
         userRepository.save(user);
         System.out.println("> All changes made with success!");
