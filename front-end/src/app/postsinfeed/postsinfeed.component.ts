@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
+import { Picture } from '../model/picture';
 import { Post } from '../model/post';
 import { UserDetails } from '../model/user-details';
 import { FeedService } from '../services/feed.service';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-postsinfeed',
@@ -21,7 +24,8 @@ export class PostsinfeedComponent implements OnInit {
   constructor(
     private feedService: FeedService, 
     private authenticationService: AuthenticationService,
-    private router: Router 
+    private router: Router,
+    private domSanitizer: DomSanitizer 
   ) {}
 
   ngOnInit(): void {
@@ -36,15 +40,28 @@ export class PostsinfeedComponent implements OnInit {
     );
   }
 
-  // refreshPosts(id: number){
-  //   this.feedService.getFeedPosts(id).subscribe(
-  //     (posts) => {
-  //       Object.assign(this.posts , posts);
-  //     }
-  //   );
-  // }
+  displayPhoto(pic: Picture): any{
 
+    if (pic.type === 'image/png') {
+      return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes);
+    }
+    else if (pic.type === 'image/jpeg') {
+      return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + pic.bytes);
+    }
+    alert("null");
+    return null;
+  }
 
+  newTab(photo: Picture){
+    const image = new Image();
+    if (photo.type === 'image/png') {
+      image.src = 'data:image/png;base64,' + photo.bytes;
+    }
+    else if (photo.type === 'image/jpeg') {
+      image.src = 'data:image/jpeg;base64,' + photo.bytes;
+    }
 
-
+    const w = window.open(  '_blank');
+    w.document.write(image.outerHTML);
+  }
 }

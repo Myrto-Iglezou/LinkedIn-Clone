@@ -3,9 +3,9 @@ import {User} from '../model/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Photo} from '../model/image';
 import {AuthenticationService} from '../authentication.service';
 import {UserDetails} from '../model/user-details';
+import { Picture } from '../model/picture';
 
 @Component({
   selector: 'app-user-details',
@@ -72,7 +72,7 @@ export class UserDetailsComponent implements OnInit {
     return null;
   }
 
-  newTab(photo: Photo ){
+  newTab(photo: Picture ){
     const image = new Image();
     if (photo.type === 'image/png') {
       image.src = 'data:image/png;base64,' + photo.bytes;

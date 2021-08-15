@@ -1,16 +1,18 @@
 <!-- <p>postsinfeed works!</p> -->
 
 <div class="posts" id="posts" >
-    <div  *ngFor="let post of posts  | paginate: { id: 'deplist',itemsPerPage: 5,currentPage: page,totalItems: posts.length }">
+    <div  *ngFor="let post of posts">
+        <!-- <div  *ngFor="let post of posts  | paginate: { id: 'deplist',itemsPerPage: 5,currentPage: page,totalItems: posts.length }"> -->
         <div class="card">
             <div class="card-body ">
                 <div class="container">
                     <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                 <img class="img-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" alt="User Image">
-                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
-                                 <span class="description">{{post.date}}</span> 
+                                <img (click)="newTab(post.owner.profilePicture)" *ngIf="post.owner.profilePicture" [src]="displayPhoto(post.owner.profilePicture)" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                                <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://img.icons8.com/office/36/000000/person-male.png" alt="User Image">
+                                <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
+                                <span class="description">{{post.timestamp | date:'d MMMM y, h:mm a'}}</span> 
                             </div>
                             <div class="box-tools"> 
                                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> 
@@ -30,6 +32,16 @@
                             <span class="pull-right text-muted">{{post.interestReactions.length}} users are interested - {{post.comments.length}} comments</span>
                         </div>
                         <div class="box-footer box-comments">
+                            <div  *ngFor="let comment of post.comments">
+                                <div class="box-comment"> 
+                                    <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
+                                    <div class="comment-text"> 
+                                        <span class="username"> {{comment.userMadeBy.name}} {{comment.userMadeBy.surname}}
+                                            <span class="text-muted pull-right">{{comment.timestamp}}</span> 
+                                        </span> {{comment.content}}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
                                 <div class="comment-text"> <span class="username"> Tina Domiaz <span class="text-muted pull-right">8:03 PM Today</span> </span> For what reason would it be advisable for me to think about business content? </div>
                             </div>
@@ -38,18 +50,19 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <form action="#" method="post"> <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
-                                <div class="img-push"> <input type="text" class="form-control input-sm" placeholder="Press enter to post comment"> </div>
+                            <form action="#" method="post"> 
+                                <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
+                                <div class="img-push"> 
+                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment"> 
+                                </div>
                             </form>
                         </div>
                     </div>
-        
-        
                 </div>  
             </div>
         </div>
-    <pagination-controls  *ngIf="posts && posts.length > 5" style="position: relative; right: 40px"  id="deplist" (pageChange)="page = $event">
-    </pagination-controls>
+    <!-- <pagination-controls  *ngIf="posts && posts.length > 5" style="position: relative; right: 40px"  id="deplist" (pageChange)="page = $event">
+    </pagination-controls> -->
 </div>
 
 
