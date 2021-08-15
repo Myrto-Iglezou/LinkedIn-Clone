@@ -1,40 +1,37 @@
 
-.text-post{
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 15px;
-    background-color:rgb(240, 240, 240);
-}
-
-.text-post:focus,.text-post:active  {
-    outline: none !important;
-    box-shadow: none !important;
+.posts {
+    /* padding-top: 40px; */
+    background-color:transparent;
+    /* margin-bottom: 50px; */
     border-color: none;
-}
-
-#media{
-    padding-top: 40px;
+    border: none;
 }
 
 
+.card {
+    /* border: none; */
+    background-color:rgb(255, 255, 255);
+    width: 100%;
+    margin-bottom: 10%;
+    /* border-radius: 0%; */
+    border-color: rgb(224, 224, 224);
+    border-width: 2px;
+}
 
-
-
-
+.card-body {
+    width:100%;
+    /* padding: 0%; */
+    position: relative;
+}
 
 .container {
-    margin-bottom: 500px
+    /* margin-bottom: 10px; */
+    border: none;
 }
 
 .stretch-card>.card {
     width: 100%;
     min-width: 100%
-}
-
-body {
-    /* background-color: #f9f9fa */
-    margin-top: 20px;
-    
 }
 
 .flex {
@@ -66,12 +63,13 @@ body {
 
 .box {
     position: relative;
-    border-radius: 3px;
+    /* border-radius: 3px; */
     background: #ffffff;
     /* border-top: 3px solid #d2d6de; */
-    margin-bottom: 20px;
+    /* margin-bottom: 30px; */
     width: 100%;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+    border: none;
+    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) */
 }
 
 .box-header.with-border {
@@ -135,6 +133,10 @@ body {
     display: table
 }
 
+.box-body .content {
+    padding: 5px;
+}
+
 .box-header>.box-tools {
     position: absolute;
     right: 10px;
@@ -166,11 +168,8 @@ body {
 }
 
 .box-body {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    padding: 10px
+    border: none;
+    /* padding: 10px */
 }
 
 .pad {
@@ -292,11 +291,11 @@ p {
 }
 
 .box-footer {
-    border-top-left-radius: 0;
+    /* border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-    border-top: 1px solid #f4f4f4;
+    border-top: 1px solid #f4f4f4; */
     padding: 10px
 }
 

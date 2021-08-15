@@ -25,9 +25,16 @@
 
 }
 
+#allPosts{
+    margin-bottom: 15%;
+    /* padding-left: 2%; */
+
+}
+
 .profile-btn{
     background-color: rgb(167, 211, 247);
 }
+
 #postCard{
     background-color: white;
 }

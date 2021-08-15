@@ -33,14 +33,14 @@
             </div>
         </div>
     
-        <div class="col-sm-6">
-            <div class="card" id="postCard">
+        <div class="col-md-6">
+            <div class="card" id="addPost">
                 <app-create-post (updateView)="recieveRefreshCommand($event)" ></app-create-post>
             </div>
             <br>
             <hr style="height:1px; color:#8f9299;">
             <br>
-            <div class="card" id="postCard">
+            <div id="allPosts">
                 <app-postsinfeed></app-postsinfeed>
             </div>
         </div>

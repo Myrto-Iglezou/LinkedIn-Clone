@@ -1,16 +1,16 @@
 <!-- <p>postsinfeed works!</p> -->
 
-<div id="posts" >
+<div class="posts" id="posts" >
     <div  *ngFor="let post of posts  | paginate: { id: 'deplist',itemsPerPage: 5,currentPage: page,totalItems: posts.length }">
         <div class="card">
             <div class="card-body ">
                 <div class="container">
-                    <div class="row container box box-widget">
+                    <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
                                  <img class="img-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" alt="User Image">
-                                 <span class="username"><a href="#" data-abc="true">Henery German</a></span> <br>
-                                 <span class="description">Public - 7:30 PM Today</span> 
+                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
+                                 <span class="description">{{post.date}}</span> 
                             </div>
                             <div class="box-tools"> 
                                 <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read"> 
@@ -20,16 +20,14 @@
                         </div>
                         <div class="box-body"> 
                             <div class="content">
-                                <h3>Hey</h3>
+                                <h3>{{post.content}}</h3>
                             </div>
-                            <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">
-                            <p>Look at the beach photo i clicked</p> 
-        
+                            <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">        
         
                             <button type="button" class="btn btn-default btn-xs">
                                 <i class="fas fa-thumbs-up"></i> Interesting
                             </button> 
-                            <span class="pull-right text-muted">127 likes - 3 comments</span>
+                            <span class="pull-right text-muted">{{post.interestReactions.length}} users are interested - {{post.comments.length}} comments</span>
                         </div>
                         <div class="box-footer box-comments">
                             <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
