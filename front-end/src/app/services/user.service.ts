@@ -26,7 +26,7 @@ export class UserService {
 
   editUserSettings(usersettings: UserSettings): Observable<HttpResponse<any>>{
 
-    return this.http.put<any>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings', usersettings, {observe : 'response'});
+    return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings', usersettings, {observe : 'response'});
 
   }
 }
