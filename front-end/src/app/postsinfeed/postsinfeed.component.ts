@@ -6,6 +6,8 @@ import { Post } from '../model/post';
 import { UserDetails } from '../model/user-details';
 import { FeedService } from '../services/feed.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { User } from '../model/user';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -20,12 +22,14 @@ export class PostsinfeedComponent implements OnInit {
   page = 1;
   userDetails: UserDetails;
   posts: Post[] = new Array<Post>();
+  tempUser: User = new User();
 
   constructor(
     private feedService: FeedService, 
     private authenticationService: AuthenticationService,
     private router: Router,
-    private domSanitizer: DomSanitizer 
+    private domSanitizer: DomSanitizer,
+    private userService: UserService 
   ) {}
 
   ngOnInit(): void {
@@ -40,29 +44,30 @@ export class PostsinfeedComponent implements OnInit {
     );
   }
 
-  displayPhoto(pic: Picture): any{
+  displayProfilePhoto(user: User): any{
 
-    if (pic.type === 'image/png') {
-      // alert(this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes));
-      return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes);
+    this.userService.getUser(user.id.toString()).subscribe(
+      (postUser) => {
+        Object.assign(this.tempUser , postUser);
+      },
+      error => {
+        if(this.userDetails)
+          this.router.navigate(['/in', this.userDetails.id.toString()]).then(() =>{
+            location.reload();
+          });
+        else
+          this.router.navigate(['/feed']).then(() => {
+            location.reload();
+          });
+      }
+    );
+
+    if(this.tempUser.profilePicture) {
+      if (this.tempUser.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + this.tempUser.profilePicture.bytes);
+      else if (this.tempUser.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.tempUser.profilePicture.bytes);
     }
-    else if (pic.type === 'image/jpeg') {
-      return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + pic.bytes);
-    }
-    alert("null");
     return null;
-  }
-
-  newTab(photo: Picture){
-    const image = new Image();
-    if (photo.type === 'image/png') {
-      image.src = 'data:image/png;base64,' + photo.bytes;
-    }
-    else if (photo.type === 'image/jpeg') {
-      image.src = 'data:image/jpeg;base64,' + photo.bytes;
-    }
-
-    const w = window.open(  '_blank');
-    w.document.write(image.outerHTML);
   }
 }
