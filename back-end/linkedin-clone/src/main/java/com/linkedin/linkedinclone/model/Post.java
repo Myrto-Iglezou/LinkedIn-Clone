@@ -2,6 +2,10 @@ package com.linkedin.linkedinclone.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -31,12 +35,13 @@ public class Post {
     @ToString.Exclude
     private User owner;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="post", orphanRemoval=true)
     @JsonIgnoreProperties(value = {"post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"postsInterested","post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="post", orphanRemoval=true)
+    @JsonIgnoreProperties(value = {"post"},allowSetters = true)
+    @Fetch(value = FetchMode.SELECT)
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
     public Post(String content) {

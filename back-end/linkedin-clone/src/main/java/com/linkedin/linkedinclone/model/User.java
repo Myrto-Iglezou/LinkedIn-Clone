@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -103,8 +105,9 @@ public class User {
     @JsonIgnoreProperties("user")
     private Set<Notification> notifications = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("usersInterested")
+    @Fetch(value = FetchMode.SELECT)
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
     /* ----------- JOBS ----------- */

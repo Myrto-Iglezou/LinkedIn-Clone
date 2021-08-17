@@ -9,7 +9,7 @@
                     <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <img (click)="newTab(post.owner.profilePicture)" *ngIf="post.owner.profilePicture" [src]="displayPhoto(post.owner.profilePicture)" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                                <img (click)="newTab(post.owner.profilePicture)" *ngIf="post.owner.profilePicture" [src]="displayPhoto(post.owner.profilePicture)" width="20px" height="20px" webkitallowfullscreen mozallowfullscreen allowfullscreen>
                                 <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://img.icons8.com/office/36/000000/person-male.png" alt="User Image">
                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
                                 <span class="description">{{post.timestamp | date:'d MMMM y, h:mm a'}}</span> 
@@ -24,36 +24,36 @@
                             <div class="content">
                                 <h3>{{post.content}}</h3>
                             </div>
-                            <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">        
-        
-                            <button type="button" class="btn btn-default btn-xs">
-                                <i class="fas fa-thumbs-up"></i> Interesting
+                            <!-- <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">         -->
+
+                            <button *ngIf="!userIsInterested(post)" type="button" class="btn btn-primary btn-xs" (click)="setUserInterested(post)">
+                                <i class="fas fa-thumbs-up"></i> Interesting!
+                            </button> 
+                            <button *ngIf="userIsInterested(post)" type="button" class="btn btn-outline-primary btn-xs" (click)="setUserInterested(post)">
+                                <i class="fas fa-thumbs-up"></i> Undo Interesting!
                             </button> 
                             <span class="pull-right text-muted">{{post.interestReactions.length}} users are interested - {{post.comments.length}} comments</span>
                         </div>
-                        <div class="box-footer box-comments">
+                        <div *ngIf="post.comments.length" class="box-footer box-comments">
                             <div  *ngFor="let comment of post.comments">
-                                <div class="box-comment"> 
+                                <div class="box-comment">
                                     <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
                                     <div class="comment-text"> 
                                         <span class="username"> {{comment.userMadeBy.name}} {{comment.userMadeBy.surname}}
-                                            <span class="text-muted pull-right">{{comment.timestamp}}</span> 
+                                            <span class="text-muted pull-right">{{comment.timestamp | date:'d MMMM y, h:mm a'}}</span> 
                                         </span> {{comment.content}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
-                                <div class="comment-text"> <span class="username"> Tina Domiaz <span class="text-muted pull-right">8:03 PM Today</span> </span> For what reason would it be advisable for me to think about business content? </div>
-                            </div>
-                            <div class="box-comment"> <img class="img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="User Image">
-                                <div class="comment-text"> <span class="username"> Smith helm <span class="text-muted pull-right">8:03 PM Today</span> </span> That might be little bit risky to have crew member like them. </div>
-                            </div>
                         </div>
                         <div class="box-footer">
-                            <form action="#" method="post"> 
+                            <form name="form" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
                                 <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
-                                <div class="img-push"> 
-                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment"> 
+                                <div class="img-push "> 
+                                    <textarea name="content" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
+                                    <button [disabled]="!newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">
+                                        Submit
+                                    </button>
                                 </div>
                             </form>
                         </div>

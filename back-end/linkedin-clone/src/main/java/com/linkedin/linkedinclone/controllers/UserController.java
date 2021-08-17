@@ -48,7 +48,7 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/signup", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> signup(@RequestPart("object") User user, @RequestPart(value = "imageFile", required=false) MultipartFile file) throws IOException {
+    public ResponseEntity<?> signup(@RequestPart("object") User user, @RequestPart(value = "imageFile") MultipartFile file) throws IOException {
         if(userRepository.findUserByUsername(user.getUsername()) == null) {
             if (user.getPassword().equals(user.getPasswordConfirm())) {
                 user.setPassword(encoder.encode(user.getPassword()));
@@ -59,7 +59,11 @@ public class UserController {
                 if(file!=null){
                     Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
                     user.setProfilePicture(pic);
+                    System.out.println("> Picture saved");
+
+/*
                     pictureRepository.save(pic);
+*/
                 }
                 userRepository.save(user);
                 System.out.println("> New user signed up");

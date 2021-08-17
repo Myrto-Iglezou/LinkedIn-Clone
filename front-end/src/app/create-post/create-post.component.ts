@@ -103,6 +103,7 @@ export class CreatePostComponent implements OnInit {
              this.successBox = true;
              this.dangerBox = false;
              this.updateView.emit();
+             location.reload();
             //  alert("emit made");
             },
             error => {

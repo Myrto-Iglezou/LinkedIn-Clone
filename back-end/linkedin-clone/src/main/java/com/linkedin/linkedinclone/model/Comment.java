@@ -25,19 +25,19 @@ public class Comment {
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User userMadeBy;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Post post;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"comments","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     private Notification notification;
 
     public Comment(@NonNull String content, User userMadeBy, Post post) {
