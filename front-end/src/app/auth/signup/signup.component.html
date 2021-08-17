@@ -46,7 +46,9 @@
                       [class.is-invalid]="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm">
                 </mat-form-field> <br>
                 <div>
-                  <label for="profilephoto" style="display: block"><span>Profile photo </span> <span class="text-danger" >*</span></label>
+                  <label for="profilephoto" style="display: block">
+                    <span>Profile photo </span> <span class="text-danger" >*</span>
+                  </label>
                   <input #profilephoto id="profilephoto" type="file" accept=".jpg,.jpeg,.png" style="display: block" (change)="setProfilePhoto(profilephoto)" >
                   <small *ngIf="profilePhoto && (profilePhoto.type !='image/jpeg' && profilePhoto.type !='image/png') && submitattempt " >Image file must be jpeg or png</small>
                   <small *ngIf="!profilePhoto && submitattempt" style="color: red;">Please choose profile photo</small>

@@ -7,6 +7,8 @@ import { UserDetails } from '../model/user-details';
 import { FeedService } from '../services/feed.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { User } from '../model/user';
+import { InterestReaction } from '../model/interestReaction';
+import { Comment } from '../model/comment';
 import { UserService } from '../services/user.service';
 
 
@@ -22,6 +24,9 @@ export class PostsinfeedComponent implements OnInit {
   page = 1;
   userDetails: UserDetails;
   posts: Post[] = new Array<Post>();
+  // commentText :string;
+  newComment = new Comment();
+  booleanButton=false;
   tempUser: User = new User();
 
   constructor(
@@ -49,6 +54,9 @@ export class PostsinfeedComponent implements OnInit {
     this.userService.getUser(user.id.toString()).subscribe(
       (postUser) => {
         Object.assign(this.tempUser , postUser);
+      },
+      error => {
+        alert(error.message);
       }
     );
 
@@ -59,5 +67,50 @@ export class PostsinfeedComponent implements OnInit {
         return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.tempUser.profilePicture.bytes);
     }
     return null;
+  }
+
+  
+  setUserInterested(post: Post) {
+    this.feedService.addPostReaction(post.id,this.userDetails.id).subscribe(
+      response => {
+          location.reload();
+        },
+        error => {
+          alert(error.message);
+        }
+    );
+  }
+
+
+  userIsInterested(post: Post): boolean {
+    // alert("heyyyy")
+    for(let i=0; i<post.interestReactions.length; i++){
+      if(post.interestReactions[i].userMadeBy.id == this.userDetails.id)
+        return true;
+    }
+    return false;
+  
+  }
+
+  addNewComment(postid: number,commentform) {
+    alert("here");
+
+    if(commentform.form.valid) {
+      this.newComment.timestamp = new Date();
+      this.feedService.addNewComment(this.userDetails.id,postid,this.newComment)
+        .subscribe(
+          response => {
+              location.reload();
+            },
+            error => {
+              alert(error.message);
+            }
+        );
+    }
+    else{
+      alert("Not valid data");
+    }
+
+
   }
 }

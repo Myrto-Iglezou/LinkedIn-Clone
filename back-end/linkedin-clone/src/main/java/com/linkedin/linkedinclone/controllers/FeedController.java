@@ -1,11 +1,13 @@
 package com.linkedin.linkedinclone.controllers;
 
 
+import com.intellij.util.indexing.ID;
 import com.linkedin.linkedinclone.dto.FeedDTO;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.CommentRepository;
+import com.linkedin.linkedinclone.repositories.InterestReactionRepository;
 import com.linkedin.linkedinclone.repositories.PostRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
@@ -31,6 +33,7 @@ public class FeedController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final InterestReactionRepository interestReactionRepository;
 
 
     @CrossOrigin(origins = "*")
@@ -152,10 +155,52 @@ public class FeedController {
     @PutMapping("/in/{id}/feed/post-interested/{postdId}")
     public ResponseEntity newInterestedPost(@PathVariable Long id,@PathVariable Long postdId) {
 
+        System.out.println("/in/{id}/feed/post-interested/{postdId}");
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        Post post = postRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
+        Post post = postRepository.findById(postdId).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
+
+        for(InterestReaction ir: post.getInterestReactions()) {
+            if(ir.getUserMadeBy()==currentUser) {
+
+                currentUser.getInterestReactions().remove(ir);
+                currentUser.setInterestReactions(currentUser.getInterestReactions());
+                post.getInterestReactions().remove(ir);
+                post.setInterestReactions(post.getInterestReactions());
+                ir.setUserMadeBy(null);
+                ir.setPost(null);
+                userRepository.save(currentUser);
+                postRepository.save(post);
+                interestReactionRepository.delete(ir);
+                System.out.println("> Reaction deleted");
+                System.out.println(post);
+                return ResponseEntity.ok("\"Reaction deleted with success!\"");
+            }
+        }
+
         userService.newPostInterested(currentUser,post);
+        System.out.println("> New reaction made with success");
+        System.out.println(post);
         return ResponseEntity.ok("\"Interested in post created with success!\"");
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/in/{id}/feed/is-interested/{postdId}")
+    public ResponseEntity<?> isInterestedPost(@PathVariable Long id, @PathVariable Long postdId) {
+
+        System.out.println("\n> ----- Reaction search\n");
+        InterestReaction isInterested = null;
+        Post post = postRepository.findById(postdId).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
+        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+
+        for(InterestReaction ir: post.getInterestReactions()) {
+            if(ir.getUserMadeBy()==currentUser) {
+                System.out.println("> Reaction found");
+                return ResponseEntity.ok(ir);
+            }
+        }
+        System.out.println("> "+isInterested);
+        System.out.println(post);
+        return ResponseEntity.ok(null);
     }
 
     @CrossOrigin(origins = "*")
@@ -163,9 +208,11 @@ public class FeedController {
     public ResponseEntity newComment(@PathVariable Long id,@PathVariable Long postdId,@RequestBody Comment comment) {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        Post post = postRepository.findById(id).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
+        Post post = postRepository.findById(postdId).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
         userService.newPostComment(currentUser,post,comment);
-
+        System.out.println("> New comment made with success");
+        System.out.println(comment);
+        System.out.println(post);
         return ResponseEntity.ok("\"Comment in post created with success!\"");
     }
 }

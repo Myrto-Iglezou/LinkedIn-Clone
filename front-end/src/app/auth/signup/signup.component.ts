@@ -99,6 +99,5 @@ export class SignupComponent implements OnInit {
       this.submitattempt = true;
       this.dangerBox = false;
     }
-
   }
 }
