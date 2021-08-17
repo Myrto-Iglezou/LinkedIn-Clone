@@ -49,16 +49,6 @@ export class PostsinfeedComponent implements OnInit {
     this.userService.getUser(user.id.toString()).subscribe(
       (postUser) => {
         Object.assign(this.tempUser , postUser);
-      },
-      error => {
-        if(this.userDetails)
-          this.router.navigate(['/in', this.userDetails.id.toString()]).then(() =>{
-            location.reload();
-          });
-        else
-          this.router.navigate(['/feed']).then(() => {
-            location.reload();
-          });
       }
     );
 

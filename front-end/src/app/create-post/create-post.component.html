@@ -9,23 +9,24 @@
           </div>
           <div class="row justify-content-md-center" id="media">
               <div class="col">
-                  
-                  <button type="button" class="btn btn-light">
-                      <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo
-                  </button>
+                <!-- <label class="btn btn-light">
+                    <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo
+                    
+                </label> -->
+                <label for="upload-photo">  <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo</label>
+                <input class="btn btn-light" name="photo" id="upload-photo" type="file" accept=".jpg,.jpeg,.png">
+
               </div>
               <div class="col">
-                  <button type="button" class="btn btn-light">
-                      <i class="fab fa-youtube" style="color:rgb(149, 235, 141);"></i> Video
-                  </button>
+                    <label for="upload-video">  <i class="fab fa-youtube" style="color:rgb(149, 235, 141);"></i> Video</label>
+                    <input class="btn btn-light" name="video" id="upload-video" type="file" accept=".jpg,.jpeg,.png">
               </div>
               <div class="col">
-                  <button type="button"  class="btn btn-light">
-                      <i class="fas fa-music" style="color:pink;"></i> Sound
-                  </button>
+                    <label for="upload-sound">  <i class="fas fa-music" style="color:pink;"></i> Sound</label>
+                    <input class="btn btn-light" name="sound" id="upload-sound" type="file" accept=".jpg,.jpeg,.png">
               </div>                            
               <div class="col">
-                  <button  [disabled]="!newPost.content" type="submit"  class="btn post-btn" style="background-color:#158eff; color:white;">Post</button>
+                  <button  [disabled]="!newPost.content" type="submit"  class="btn post-btn" >Post</button>
               </div>
           </div>
         </form>
