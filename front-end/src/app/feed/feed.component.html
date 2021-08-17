@@ -5,7 +5,7 @@
         <div class="col-sm-4">
             <div class="card"  id="profileCard">
                 <div style= "text-align:center">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" id="profile-image" class="card-img-top" alt="...">
+                    <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
                 </div>
                 <div class="card-body" style= "text-align:center">
                   <h5 class="card-title" style= "font-size: 20px;"><b>{{user.name}} {{user.surname}}</b></h5>

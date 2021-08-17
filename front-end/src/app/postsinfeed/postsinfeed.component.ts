@@ -9,6 +9,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 import { User } from '../model/user';
 import { InterestReaction } from '../model/interestReaction';
 import { Comment } from '../model/comment';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -26,12 +27,14 @@ export class PostsinfeedComponent implements OnInit {
   // commentText :string;
   newComment = new Comment();
   booleanButton=false;
+  tempUser: User = new User();
 
   constructor(
     private feedService: FeedService, 
     private authenticationService: AuthenticationService,
     private router: Router,
-    private domSanitizer: DomSanitizer 
+    private domSanitizer: DomSanitizer,
+    private userService: UserService 
   ) {}
 
   ngOnInit(): void {
@@ -46,19 +49,27 @@ export class PostsinfeedComponent implements OnInit {
     );
   }
 
-  displayPhoto(pic: Picture): any{
+  displayProfilePhoto(user: User): any{
 
-    if (pic != null && pic.type === 'image/png') {
-      // alert(this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes));
-      return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes);
+    this.userService.getUser(user.id.toString()).subscribe(
+      (postUser) => {
+        Object.assign(this.tempUser , postUser);
+      },
+      error => {
+        alert(error.message);
+      }
+    );
+
+    if(this.tempUser.profilePicture) {
+      if (this.tempUser.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + this.tempUser.profilePicture.bytes);
+      else if (this.tempUser.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.tempUser.profilePicture.bytes);
     }
-    else if (pic != null && pic.type === 'image/jpeg') {
-      return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + pic.bytes);
-    }
-    alert("null");
     return null;
   }
 
+  
   setUserInterested(post: Post) {
     this.feedService.addPostReaction(post.id,this.userDetails.id).subscribe(
       response => {
@@ -79,24 +90,6 @@ export class PostsinfeedComponent implements OnInit {
     }
     return false;
   
-  }
-
-  // newComment(postid: number) {
-  //   alert(userid);alert(postid);
-  //   this.feedService.addPostReaction(postid,userid);
-  // }
-
-  newTab(photo: Picture){
-    const image = new Image();
-    if (photo.type === 'image/png') {
-      image.src = 'data:image/png;base64,' + photo.bytes;
-    }
-    else if (photo.type === 'image/jpeg') {
-      image.src = 'data:image/jpeg;base64,' + photo.bytes;
-    }
-
-    const w = window.open(  '_blank');
-    w.document.write(image.outerHTML);
   }
 
   addNewComment(postid: number,commentform) {

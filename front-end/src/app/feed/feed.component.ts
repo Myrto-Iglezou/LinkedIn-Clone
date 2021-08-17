@@ -7,6 +7,7 @@ import { Post } from '../model/post';
 import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { PostsinfeedComponent } from '../postsinfeed/postsinfeed.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class FeedComponent implements OnInit {
   user: User = new User();
   userDetails: UserDetails;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private userService: UserService, private route: ActivatedRoute/* , private postService: PostService */ ) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService, private userService: UserService, private route: ActivatedRoute, private domSanitizer: DomSanitizer/* , private postService: PostService */ ) { }
 
   ngOnInit(): void {
     this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
@@ -67,5 +68,16 @@ export class FeedComponent implements OnInit {
       location.reload();
     });
   }
+
+  displayProfilePhoto(): any{
+    if(this.user.profilePicture) {
+      if (this.user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + this.user.profilePicture.bytes);
+      else if (this.user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.user.profilePicture.bytes);
+    }
+    return null;
+  }
+
 
 }

@@ -9,7 +9,7 @@
                     <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <img (click)="newTab(post.owner.profilePicture)" *ngIf="post.owner.profilePicture" [src]="displayPhoto(post.owner.profilePicture)" width="20px" height="20px" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                                <img *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
                                 <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://img.icons8.com/office/36/000000/person-male.png" alt="User Image">
                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
                                 <span class="description">{{post.timestamp | date:'d MMMM y, h:mm a'}}</span> 

@@ -41,7 +41,7 @@
           <li class="nav-item text-center">
             <div ngbDropdown class="d-inline-block">
               <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-               <img  src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" class="rounded-circle" height="30" alt="" loading="lazy"/>
+               <img  [src]="displayProfilePhoto()" class="rounded-circle" height="40" alt="" loading="lazy"/>
               </button>
               <div ngbDropdownMenu id="mydropdown">
                 <button ngbDropdownItem *ngIf="userDetails" type="button" class="btn" (click)="goToProfile()" > Profile </button>
