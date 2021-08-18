@@ -232,5 +232,11 @@ __Back:__   ```JetBrains run``` ☑️
 ---
 
 ## Missing
-1. Media files (image,video,audio)
-2. Timestamps??
+
+### Feed - posts
+1. textarea writes in all
+2. post users images
+3. post images
+4. post new image/audio/video
+
+
