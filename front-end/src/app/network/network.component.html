@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+
+<p>network works!</p>
+
+
+<div id="searchbar" class="container col-sm-6 justify-content-center" style="margin-top: 6%;"  >
+    <div class="input-group rounded form-outline">
+        <input type="search" class="form-control rounded" placeholder="Search network" aria-label="Search"
+            aria-describedby="search-addon" />
+            <button  class="btn btn-info btn-lg search-button" type="button" (click)="search()" data-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fas fa-search" style="color: white;"></i>
+        </button>
+    </div>
+</div>
+
+<div id="searchResults">
+    <div class="row text-center p-5">
+        <h1 style="font-weight:bold; font-size: 30px;">Search results</h1>
+    </div>
+</div>
+<div id="network">
+    <div class="row text-center p-5">
+        <h1 style="font-weight:bold; font-size: 30px;">Your network</h1>
+    </div>
+    <div class="container" id="main-container">
+        <div class="row">
+          <!-- <div *ngFor="let employee of employees" class="col-md-6 col-xl-3"> -->
+            <div class="col-md-6 col-xl-3">
+             <div class="card m-b-30">
+                <div class="card-body row">
+                   <div class="col-6">
+                      <a href="">
+                          <img src="" alt="" class="img-fluid rounded-circle w-60"></a>
+                   </div>
+                   <div class="col-6 card-title align-self-center mb-0">
+                      <h5>employee.nam</h5>
+                      <p class="m-0">loyee.jobTitle</p>
+                   </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                   <li class="list-group-item">
+                       email
+                    </li>
+                   <li class="list-group-item">
+                       Phone : employee?.phone
+                    </li>
+                </ul>
+                <div class="card-body align-self-center" >
+                   <div class="btn-group btn-group-sm p-1" >
+                       <button type="button" class="btn btn-primary m-1" >Add connection</button>
+                       <button type="button" class="btn btn-success m-1" >Send message</button>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+</div>
+
+<app-footer></app-footer> 

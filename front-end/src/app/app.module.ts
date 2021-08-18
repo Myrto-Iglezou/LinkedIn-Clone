@@ -30,6 +30,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PostsinfeedComponent } from './postsinfeed/postsinfeed.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { UsersettingsComponent } from './usersettings/usersettings.component';
+import { NetworkComponent } from './network/network.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { JobsComponent } from './jobs/jobs.component';
 
 const appRoutes: Routes = [
   {
@@ -65,6 +68,9 @@ const appRoutes: Routes = [
    ] //, canActivate: [AdminGuard]
   },
   { path: 'settings', component: UsersettingsComponent},
+  { path: 'network', component: NetworkComponent},
+  { path: 'notifications', component: NotificationsComponent},
+  { path: 'jobs', component: JobsComponent},
 ];
 
 @NgModule({
@@ -81,6 +87,9 @@ const appRoutes: Routes = [
     CreatePostComponent,
     PostsinfeedComponent,
     UsersettingsComponent,
+    NetworkComponent,
+    NotificationsComponent,
+    JobsComponent,
   ],
   imports: [
     NgxPaginationModule,

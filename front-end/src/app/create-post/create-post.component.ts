@@ -97,14 +97,12 @@ export class CreatePostComponent implements OnInit {
           response => {
             // alert(this.userDetails.id);
             this.sendRefreshMessage();
-            //  this.postsinFeedComponent.ngOnInit();
              this.loading = false;
              this.submitmsg = response.body;
              this.successBox = true;
              this.dangerBox = false;
              this.updateView.emit();
              location.reload();
-            //  alert("emit made");
             },
             error => {
               this.loading = false;

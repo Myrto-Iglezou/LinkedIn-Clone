@@ -2,7 +2,6 @@
 
 <div class="posts" id="posts" >
     <div  *ngFor="let post of posts">
-        <!-- <div  *ngFor="let post of posts  | paginate: { id: 'deplist',itemsPerPage: 5,currentPage: page,totalItems: posts.length }"> -->
         <div class="card">
             <div class="card-body ">
                 <div class="container">
@@ -61,8 +60,6 @@
                 </div>  
             </div>
         </div>
-    <!-- <pagination-controls  *ngIf="posts && posts.length > 5" style="position: relative; right: 40px"  id="deplist" (pageChange)="page = $event">
-    </pagination-controls> -->
 </div>
 
 

@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
+
 @RestController
 @AllArgsConstructor
 public class FeedController {
@@ -75,13 +77,8 @@ public class FeedController {
     @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/feed-posts")
     public Set<Post> getFeedPosts(@PathVariable Long id) {
-
-        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-
-        // Get authenticated user
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
-
+        System.out.println("\n\n\n ------------------- Get feed posts");
+        User user = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
 
         Set<Post> feedPosts = new HashSet<>();
         feedPosts.addAll(user.getPosts());
@@ -89,7 +86,7 @@ public class FeedController {
         Set<User> network = new HashSet<>();
 
         // Posts from users connections
-        Set<Connection> connections = currentUser.getUsersFollowing();
+        Set<Connection> connections = user.getUsersFollowing();
         for(Connection con: connections) {
             User userFollowing = con.getUserFollowing();
             network.add(userFollowing);
@@ -101,6 +98,17 @@ public class FeedController {
                 feedPosts.add(ir.getPost());
             }
         }
+
+/*        for(Post p: feedPosts) {
+            User owner = p.getOwner();
+            Picture pic = owner.getProfilePicture();
+            if(pic != null){
+                Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                p.getOwner().setProfilePicture(tempPicture);
+            }
+            System.out.println(owner);
+            System.out.println(p);
+        }*/
 
         return feedPosts;
     }
@@ -146,8 +154,9 @@ public class FeedController {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         userService.newPost(currentUser,post);
-        System.out.println("> New post made with success");
+        System.out.println("\n\n\n> New post made with success");
         System.out.println(post);
+        System.out.println(currentUser);
         return ResponseEntity.ok("\"Post created with success!\"");
     }
 
