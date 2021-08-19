@@ -51,20 +51,11 @@ export class PostsinfeedComponent implements OnInit {
 
   displayProfilePhoto(user: User): any{
 
-    this.userService.getUser(user.id.toString()).subscribe(
-      (postUser) => {
-        Object.assign(this.tempUser , postUser);
-      },
-      error => {
-        alert(error.message);
-      }
-    );
-
-    if(this.tempUser.profilePicture) {
-      if (this.tempUser.profilePicture.type === 'image/png')
-        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + this.tempUser.profilePicture.bytes);
-      else if (this.tempUser.profilePicture.type === 'image/jpeg')
-        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + this.tempUser.profilePicture.bytes);
+    if(user.profilePicture) {
+      if (user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
+      else if (user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
     }
     return null;
   }
