@@ -1,6 +1,7 @@
 import { InterestReaction } from "./interestReaction";
 import { User } from "./user";
 import { Comment } from "./comment";
+import { Connection } from "./connection";
 
 
 export class Notification {
@@ -8,7 +9,7 @@ export class Notification {
     isShown: boolean;
     type: string;
     userMadeBy: User;
-    connection_request: User;
+    connection_request: Connection;
     new_comment: Comment;
     new_interest: InterestReaction;
   }

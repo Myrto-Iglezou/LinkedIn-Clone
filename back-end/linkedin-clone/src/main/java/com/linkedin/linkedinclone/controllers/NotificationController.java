@@ -37,28 +37,23 @@ public class NotificationController {
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/notifications")
-    public NotificationsDTO getNotifications(@PathVariable Long id) {
+    public Set<Notification> getNotifications(@PathVariable Long id) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
-        Set<NetworkUserDTO> usersPending = new HashSet<>();
-        Set<InterestReaction> interestReactions = new HashSet<>();
-        Set<Comment> comments = new HashSet<>();
-
+        Set<Notification> notificationsActive = new HashSet<>();
         for(Notification not: currentUser.getNotifications()){
             if(!not.getIsShown() && not.getType() == COMMENT ) {
                 Connection con = not.getConnection_request();
-                if(!con.getIsAccepted()){
-                    User userinNetwork = con.getUserFollowing();
-                    usersPending.add(new NetworkUserDTO(userinNetwork.getId(),userinNetwork.getName(),userinNetwork.getSurname(),userinNetwork.getCurrentJob(),userinNetwork.getCurrentCompany()));
-                }
+                if(!con.getIsAccepted())
+                    notificationsActive.add(not);
             } else if (!not.getIsShown() && not.getType() == INTEREST) {
-                interestReactions.add(not.getNew_interest());
+                notificationsActive.add(not);
             } else if (!not.getIsShown() && not.getType() == CONNECTION_REQUEST) {
-                comments.add(not.getNew_comment());
+                notificationsActive.add(not);
             } else;
         }
 
-        return new NotificationsDTO(usersPending,interestReactions,comments);
+        return notificationsActive;
     }
 }

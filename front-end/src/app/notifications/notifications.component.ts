@@ -57,7 +57,9 @@ export class NotificationsComponent implements OnInit {
     );
   }
 
-  acceptConnection(user: User) {}
+  acceptConnection(user: User) {
+    this.notificationService.acceptConnection(this.userDetails.id,user.id);
+  }
 
   goToProfile(user: User) {  }
 

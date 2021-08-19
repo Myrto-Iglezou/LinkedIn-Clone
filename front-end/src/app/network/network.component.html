@@ -2,7 +2,7 @@
 
 <div id="searchbar" class="container col-sm-6 justify-content-center" style="margin-top: 6%;"  >
     <div class="input-group rounded form-outline">
-        <input type="search" class="form-control rounded" placeholder="Search network" aria-label="Search"
+        <input type="text" ([ngModel])="userQuery" class="form-control rounded" placeholder="Search network" aria-label="Search"
             aria-describedby="search-addon" />
             <button  class="btn btn-info btn-lg search-button" type="button" (click)="search()" data-toggle="dropdown"
                 aria-expanded="false">
@@ -12,17 +12,60 @@
 </div>
 
 
-<div *ngIf="searchResults" id="searchResults">
+<div *ngIf="searchResults.length != 0" id="searchResults">
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;">Search results</h1>
     </div>
+    <div *ngIf="searchResults.length == 0" class="text-center">
+        <p style="font-size: 20px;">No results</p>
+    </div>
+    <div *ngIf="searchResults.length" class="container" id="main-container">
+        <div class="row">
+            <div *ngFor="let user of searchResults" class="col-md-6 col-xl-3">
+                <div class="card m-b-30">
+                    <div class="card-body row">
+                        <div class="col-6">
+                            <a (onClick)="goToProfile(user)">
+                                <img  [src]="displayProfilePhoto(user)" class="rounded-circle" alt="" loading="lazy"/>
+                            </a>
+                        </div>
+                        <div class="col-6 card-title align-self-center mb-0">
+                            <h5> {{user.name}} </h5>
+                            <p class="m-0"> {{user.surname}} </p>
+                        </div>
+                        
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {{user.currentJob}}
+                            </li>
+                            <li class="list-group-item">
+                                {{user.currentCompany}}
+                            </li>
+                        </ul>
+                        <div class="card-body" >
+                            <div class="btn-group btn-group-sm p-1" >
+                                <button (onClick)="addConnection(user)" type="button" class="btn btn-primary m-1">Add connection</button>
+                                <button (onClick)="goToProfile(user)" type="button" class="btn btn-primary">Show profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 <div id="network">
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;">Your network</h1>
     </div>
-    <div class="container" id="main-container">
+    <div *ngIf="network.length == 0" class="text-center">
+        <p style="font-size: 20px;">No connections yet. Be more social!</p>
+    </div>
+
+    <div *ngIf="network.length" class="container" id="main-container">
         <div class="row">
             <div *ngFor="let user of network" class="col-md-6 col-xl-3">
                 <div class="card m-b-30">
@@ -45,9 +88,9 @@
                                 {{user.currentCompany}}
                             </li>
                         </ul>
-                        <div class="card-body align-self-center" >
+                        <div class="card-body" >
                             <div class="btn-group btn-group-sm p-1" >
-                                <button (onClick)="goToProfile(user)" type="button" class="btn btn-primary m-1">Add connection</button>
+                                <button (onClick)="goToProfile(user)" type="button" class="btn btn-primary m-1">Show profile</button>
                                 <button type="button" class="btn btn-success m-1" >Send message</button>
                             </div>
                         </div>

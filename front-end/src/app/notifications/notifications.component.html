@@ -6,15 +6,14 @@
         <h1 style="font-weight:bold; font-size: 30px;padding-top: 6%;">Connection requests</h1>
     </div>
     <div class="container align-self-center">
-        <ul class="list-group">
+        <ul *ngFor="let request in connRequests" class="list-group">
             <li class="list-group-item list-group-item-action list-group-item-light">
-                <span style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle">Name wants to connect with you</span>
-                <span type="button" class="btn btn-info rounded-pill align-middle" style="float:right; color: white;">View profile</span>
-                <span class="btn btn-success rounded-pill align-middle" style="float:right;color: white; margin-right: 4px;">Accept</span>
+                <span style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle">{{request.connection_request.userFollowing.name}} {{request.connection_request.userFollowing.surname}} wants to connect with you</span>
+                <span type="button" class="btn btn-info rounded-pill align-middle" style="float:right; color: white;" (onClick)="goToProfile(request.connection_request.userFollowing)">View profile</span>
+                <span class="btn btn-success rounded-pill align-middle" style="float:right;color: white; margin-right: 4px;" (onclick)="request.connection_request.userFollowing">Accept</span>
             </li>
         </ul>
     </div>
-        
 </div>
 
 <div id="network" style="padding-bottom: 5%;">
@@ -22,9 +21,17 @@
         <h1 style="font-weight:bold; font-size: 30px;">Notifications from your posts</h1>
     </div>
     <div class="container align-self-center">
-        <ul class="list-group">        
-            <li class="list-group-item list-group-item-action list-group-item-primary">A simple primary list group item</li>
-            <li class="list-group-item list-group-item-action list-group-item-info">A simple secondary list group item</li>    
+        <ul *ngFor="let n in postNotifications" class="list-group">        
+            <li *ngIf="n.type === 'COMMENT'" class="list-group-item list-group-item-action list-group-item-primary">
+                User {{n.new_comment.userMadeBy.name}} {{n.new_comment.userMadeBy.surname}} commented:
+                <span style="font-size: bold;"> {{ n.new_comment.content }} </span>
+                on your post: <br>
+                <span style="font-style: italic;" > {{n.new_comment.post.content}} </span>
+            </li>
+            <li *ngIf="n.type === 'INTEREST'" class="list-group-item list-group-item-action list-group-item-info">
+                User {{n.new_comment.userMadeBy.name}} {{n.new_comment.userMadeBy.surname}} reacted to your post:
+                <span style="font-style: italic;" > {{n.new_comment.post.content}} </span>
+            </li>    
         </ul>
     </div>
 </div>

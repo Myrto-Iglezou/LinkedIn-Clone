@@ -21,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
@@ -36,15 +38,37 @@ public class NetworkController {
     private final RoleRepository roleRepository;
     private final ConnectionRepository connectionRepository;
 
-
     @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @GetMapping("/in/{id}/search/{searchQuery}")
+    public Set<User> getNetwork(@PathVariable Long id,@PathVariable String searchQuery) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        Set<User> searchResults = new HashSet<User>();
+        List<User> allUsers = userService.getAllUsers();
+        String[] searchQueries = searchQuery.split("\\W+");
+
+        for(String s: searchQueries) {
+            String w = s.toLowerCase();
+            System.out.println(s);
+
+            for(User u: allUsers){
+                if(u.getId() != id){
+                    if (u.getName().toLowerCase(Locale.ROOT) == w || u.getSurname().toLowerCase(Locale.ROOT) == w || u.getCurrentCompany().toLowerCase(Locale.ROOT) == w || u.getCurrentJob().toLowerCase(Locale.ROOT) == w)
+                        searchResults.add(u);
+                }
+            }
+        }
+
+
+        return searchResults;
+    }
+
+        @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/network")
     public Set<User> getNetwork(@PathVariable Long id) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
-
+        User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Set<User> network = new HashSet<>();
 
         Set<Connection> connectionsFollowing = currentUser.getUsersFollowing();
@@ -80,8 +104,7 @@ public class NetworkController {
     @PutMapping("/in/{id}/new-connection/{newUserId}")
     public ResponseEntity addToConnections(@PathVariable Long id,@PathVariable Long newUserId) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
         userService.newConnection(user,newUserId);
 
@@ -94,8 +117,7 @@ public class NetworkController {
     @PutMapping("/in/{id}/notifications/{connectionId}/accept-connection")
     public ResponseEntity acceptConnection(@PathVariable Long id,@PathVariable Long connectionId) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
         Connection conn = connectionRepository.findById(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
         conn.setIsAccepted(true);

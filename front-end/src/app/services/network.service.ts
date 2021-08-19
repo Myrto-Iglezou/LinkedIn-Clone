@@ -23,12 +23,11 @@ export class NetworkService {
   }
 
   getNetwork(userId: number): Observable<User[]> {
-    return this.http.get<User[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
+    return this.http.get<User[]>('https://localhost:8443/in/' + userId.toString() + '/network');
   }
 
+  search(userId: number,searchQuery: string): Observable<User[]> {
+    return this.http.get<User[]>('https://localhost:8443/in/' + userId.toString() + '/search/'+searchQuery);
+  }
 
-
-  // search(postId: number,userId: number): Observable<HttpResponse<any>>{
-  //   return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/post-interested/'+ postId.toString(), {observe : 'response'});
-  // }
 }

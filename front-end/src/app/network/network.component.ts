@@ -17,7 +17,7 @@ export class NetworkComponent implements OnInit {
   userQuery:string;
   userDetails: UserDetails;
   network: User[] = new Array<User>();
-  searchResults: number= 0;
+  searchResults: User[] = new Array<User>();
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +40,10 @@ export class NetworkComponent implements OnInit {
     );
   }
 
+  addConnection(user: User) {
+
+  }
+
   displayProfilePhoto(user: User): any{
     if(user.profilePicture) {
       if (user.profilePicture.type === 'image/png')
@@ -52,5 +56,11 @@ export class NetworkComponent implements OnInit {
 
   goToProfile(user: User) {  }
 
-  search() { }
+  search() {
+    this.networkService.search(this.userDetails.id,this.userQuery).subscribe(
+      (searchResults) => {
+        Object.assign(this.searchResults , searchResults);
+      }
+    );
+   }
 }

@@ -26,4 +26,5 @@ export class NotificationsService {
     return this.http.get<Notification[]>('https://localhost:8443/in/' + userId.toString() + '/notifications');
   }
 
+
 }

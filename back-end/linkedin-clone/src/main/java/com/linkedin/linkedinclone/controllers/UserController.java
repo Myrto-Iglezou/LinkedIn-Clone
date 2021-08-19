@@ -144,10 +144,9 @@ public class UserController {
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @PutMapping("in/{id}/settings")
-    public ResponseEntity changePasswordOrUsername(@RequestBody NewUserInfo info) {
+    public ResponseEntity changePasswordOrUsername(@PathVariable Long id,@RequestBody NewUserInfo info) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
         System.out.println("> changePasswordOrUsername");
         String responseMessage = new String();
