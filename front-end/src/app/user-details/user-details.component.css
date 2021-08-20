@@ -13,7 +13,8 @@ body{
     margin-top:20px;
     color: #1a202c;
     text-align: left;
-    background-color: #e2e8f0;    
+    background-color: #e2e8f0; 
+    font-family: 'Helvetica';   
 }
 .main-body {
     padding: 15px;
@@ -70,4 +71,26 @@ body{
 
 h5{
     font-family: 'Helvetica';
+}
+
+#profile-image{
+    width: 50%;
+    border-radius: 50%;
+    margin-top: 5%;
+
+}
+
+.btn-save{
+    background-color: #158eff;
+    color: white;
+}
+
+.btn-save:hover{
+    background-color: #017ff5;
+}
+
+.btn-save:focus, .btn-save:active  {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none;
 }

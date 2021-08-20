@@ -1,52 +1,71 @@
 <app-navbar></app-navbar>
 <div class="settings-content">
+
     <div class="container">
         <div class="main-body"> 
             <div class="row gutters-sm" justify-content-center>
-                <div class="col-md-8 mb-3">
-                    <div class="card" id="settingsCard">
-                        <div class="card-body" >
-                            <h5 class="card-title" style= "font-size: 20px; text-align: center;"><b>User Settings</b></h5>
-                            <form name="form" #usereditform="ngForm" (ngSubmit)="submit(usereditform)">
+                <div class="col-md-6 mb-3">
+                    <div class="card settings-card" id="leftCard">
+                      <div class="card-body">
+                            <h5 class="card-title" style= "font-size: 20px; text-align: center;"><b>Change Email</b></h5>
+                            <form name="emailform" #emailform="ngForm" (ngSubmit)="emailSubmit(emailform)">
                                 <hr>
-                                <h3 style="color:#158eff;">Change Email</h3>
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" placeholder="New Email" [(ngModel)]="usersettings.newUsername" name="emailinput" #email="ngModel" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|&quot(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*&quot)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
-                                           [class.is-invalid]="email.invalid && submitattempt">
-                                    <div *ngIf="email.invalid && submitattempt">
+                                           [class.is-invalid]="email.invalid && submitattempt_1" required>
+                                    <div *ngIf="email.invalid && submitattempt_1">
                                       <small *ngIf="email.errors.pattern" class="text-danger">Invalid email address</small>
                                     </div>
                                 </div>
-                                <hr>
-                                <h3 style="color:#158eff;">Change Password</h3>
                                 <div class="form-group" >
-                                    <label for="pwd" class="pswd-item"><span>Current Password </span></label>
-                                    <input type="password" class="form-control" id="pwd" placeholder="Enter current password" [(ngModel)]="currPswdInput.currentPassword" name="passwordinput" #password="ngModel"
-                                           [class.is-invalid]="submitattempt && (currPswdInput.currentPassword !== usersettings.currentPassword)">
-                                    <small *ngIf="submitattempt && (currPswdInput.currentPassword !== usersettings.currentPassword)" class="text-danger">This is not your current password</small>
+                                    <label for="pwd_1" class="pswd-item"><span>Current Password </span></label>
+                                    <input type="password" class="form-control" id="pwd_1" placeholder="Enter current password" [(ngModel)]="currPwd_1" name="currPwd_1" #pwd_1="ngModel"
+                                           [class.is-invalid]="submitattempt_1 && (currPwd_1 !== usersettings.currentPassword)" required>
+                                    <small *ngIf="submitattempt_1 && (currPwd_1 !== usersettings.currentPassword)" class="text-danger">This is not your current password</small>
                                 </div>
-                                <div class="form-group" >
-                                    <label for="newpwd" class="pswd-item"><span>New Password </span></label>
-                                    <input type="password" class="form-control" id="newpwd" placeholder="Enter new password" [(ngModel)]="usersettings.newPassword" name="newpasswordinput" #newpassword="ngModel"
-                                            [class.is-invalid]="newpassword.invalid && submitattempt">
-                                    <!-- <small *ngIf="newpassword.invalid && submitattempt" class="text-danger">New password is required field</small> -->
-                                </div>
-                                <div class="form-group" >
-                                    <label for="pwdconf" class="pswd-item">Confirm New Password</label>
-                                    <input type="password" class="form-control" id="pwdconf" placeholder="Enter password confirm" [(ngModel)]="usersettings.passwordConfirm" name="passwordconfirminput"  #passwordconf="ngModel"
-                                            [class.is-invalid]="submitattempt && (usersettings.passwordConfirm || usersettings.newPassword) && usersettings.newPassword !== usersettings.passwordConfirm">
-                                    <small *ngIf="submitattempt && (usersettings.passwordConfirm || usersettings.newPassword) && usersettings.newPassword !== usersettings.passwordConfirm" class="text-danger">Passwords do not match</small>
-                                
-                                </div>
-                                <div>
-                                    <button  [disabled]="loading" type="submit" class="btn btn-settings">Submit</button>
-                                    <div  *ngIf="loading" class="spinner-border spinner-border-sm" role="status"></div>
+                              
+                                <div >
+                                    <button [disabled]="loading_1" type="submit" class="btn btn-settings">Submit</button>
+                                    <div  *ngIf="loading_1" class="spinner-border spinner-border-sm" role="status"></div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card settings-card" id="rightCard">
+                        <div class="card-body">
+                            <h5 class="card-title" style= "font-size: 20px; text-align: center;"><b>Change Password</b></h5>
+                            <form name="pwdform" #pwdform="ngForm" (ngSubmit)="pwdSubmit(pwdform)">
+                                <hr>
+                                <div class="form-group" >
+                                    <label for="pwd_2" class="pswd-item"><span>Current Password </span></label>
+                                    <input type="password" class="form-control" id="pwd_2" placeholder="Enter current password" [(ngModel)]="currPwd_2" name="currPwd_2" #pwd_2="ngModel"
+                                           [class.is-invalid]="submitattempt_2 && (currPwd_2 !== usersettings.currentPassword)" required>
+                                    <small *ngIf="submitattempt_2 && (currPwd_2 !== usersettings.currentPassword)" class="text-danger">This is not your current password</small>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="newpwd" class="pswd-item"><span>New Password </span></label>
+                                    <input type="password" class="form-control" id="newpwd" placeholder="Enter new password" [(ngModel)]="usersettings.newPassword" name="newpasswordinput" #newpwd="ngModel"
+                                            [class.is-invalid]="newpwd.invalid && submitattempt_2" required>
+                                    <small *ngIf="newpwd.invalid && submitattempt_2" class="text-danger">New password is required field</small>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="pwdconf" class="pswd-item">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="pwdconf" placeholder="Enter password confirm" [(ngModel)]="usersettings.passwordConfirm" name="passwordconfirminput"  #pwdconf="ngModel"
+                                            [class.is-invalid]="submitattempt_2 && (usersettings.passwordConfirm || usersettings.newPassword) && usersettings.newPassword !== usersettings.passwordConfirm" required>
+                                    <small *ngIf="submitattempt_2 && (usersettings.passwordConfirm || usersettings.newPassword) && usersettings.newPassword !== usersettings.passwordConfirm" class="text-danger">Passwords do not match</small>
+                                
+                                </div>
+                                <div>
+                                    <button  [disabled]="loading_2" type="submit" class="btn btn-settings">Submit</button>
+                                    <div  *ngIf="loading_2" class="spinner-border spinner-border-sm" role="status"></div>
+                                </div>
+                            </form>
+                        </div> 
+                    </div>
+                </div>    
             </div>
         </div>
     </div>
