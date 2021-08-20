@@ -1,5 +1,7 @@
 package com.linkedin.linkedinclone.controllers;
 
+
+import com.intellij.util.containers.MultiMap;
 import com.linkedin.linkedinclone.dto.NetworkUserDTO;
 import com.linkedin.linkedinclone.dto.NewUserInfo;
 import com.linkedin.linkedinclone.dto.UserNetworkDTO;
@@ -12,20 +14,22 @@ import com.linkedin.linkedinclone.repositories.ConnectionRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
+import com.linkedin.linkedinclone.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
+import static com.google.common.collect.Lists.reverse;
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
+import static com.linkedin.linkedinclone.utils.Utils.minDistance;
 
 @RestController
 @AllArgsConstructor
@@ -41,26 +45,39 @@ public class NetworkController {
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/search/{searchQuery}")
-    public Set<User> getNetwork(@PathVariable Long id,@PathVariable String searchQuery) {
+    public List<User> search(@PathVariable Long id,@PathVariable String searchQuery) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-        Set<User> searchResults = new HashSet<User>();
+        List<User> searchResults = new ArrayList<User>();
         List<User> allUsers = userService.getAllUsers();
         String[] searchQueries = searchQuery.split("\\W+");
+        MultiValueMap<Integer,User> map = new LinkedMultiValueMap<>();
 
         for(String s: searchQueries) {
             String w = s.toLowerCase();
-            System.out.println(s);
+            System.out.println(">>> Lemma: " + s);
 
             for(User u: allUsers){
-                if(u.getId() != id){
-                    if (u.getName().toLowerCase(Locale.ROOT) == w || u.getSurname().toLowerCase(Locale.ROOT) == w || u.getCurrentCompany().toLowerCase(Locale.ROOT) == w || u.getCurrentJob().toLowerCase(Locale.ROOT) == w)
-                        searchResults.add(u);
+                if((u.getId() != id) && (!u.getName().equals("admin"))){
+                    int dist;
+                    System.out.println(u.getName());
+                    if ( (dist = minDistance(w, u.getName().toLowerCase(Locale.ROOT))) < 10){
+                        System.out.println("- "+u.getName()+" "+dist);
+                        map.add(dist, u);
+                    } else if ((dist = minDistance(w,u.getSurname().toLowerCase(Locale.ROOT))) < 10) {
+                        System.out.println("- "+u.getSurname()+" "+dist);
+                        map.add(dist,u);
+                    }else if( (u.getCurrentCompany()!=null && u.getCurrentCompany().toLowerCase(Locale.ROOT) == w) ||  (u.getCurrentJob()!=null && u.getCurrentJob().toLowerCase(Locale.ROOT) == w)) {
+                        map.add(1,u);
+                    }
                 }
             }
         }
+        for(Map.Entry m: map.entrySet()){
+            System.out.println("-- "+m.getValue());
+            searchResults.addAll((List<User>)  m.getValue());
+        }
 
-
-        return searchResults;
+        return reverse(searchResults);
     }
 
         @CrossOrigin(origins = "*")

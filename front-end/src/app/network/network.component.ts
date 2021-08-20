@@ -14,6 +14,8 @@ import { NetworkService } from '../services/network.service';
 })
 export class NetworkComponent implements OnInit {
 
+  startPage : number;
+  paginationLimit:number; 
   userQuery:string;
   userDetails: UserDetails;
   network: User[] = new Array<User>();
@@ -38,10 +40,13 @@ export class NetworkComponent implements OnInit {
         Object.assign(this.network , network);
       }
     );
+
+    this.startPage = 0;
+    this.paginationLimit = 8;
   }
 
   addConnection(user: User) {
-
+    this.networkService.addNewConnection(this.userDetails.id,user.id);
   }
 
   displayProfilePhoto(user: User): any{
@@ -54,9 +59,22 @@ export class NetworkComponent implements OnInit {
     return null;
   }
 
-  goToProfile(user: User) {  }
+  goToProfile(user: User) {
+    alert(user.id);
+    this.router.navigate(['/users/' + user.id.toString()]).then(() => {
+      location.reload();
+    });   
+  }
+
+
+   
+  showMoreItems(){
+      this.paginationLimit = Number(this.paginationLimit) + 4;        
+  }
 
   search() {
+    alert(this.userQuery);
+    // this.searchResults = null;
     this.networkService.search(this.userDetails.id,this.userQuery).subscribe(
       (searchResults) => {
         Object.assign(this.searchResults , searchResults);
