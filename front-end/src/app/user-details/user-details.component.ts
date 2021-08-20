@@ -6,6 +6,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {AuthenticationService} from '../authentication.service';
 import {UserDetails} from '../model/user-details';
 import { Picture } from '../model/picture';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { SkillsAndExperience } from '../model/skills-experience';
+
 
 @Component({
   selector: 'app-user-details',
@@ -25,9 +28,10 @@ export class UserDetailsComponent implements OnInit {
   networkButton = false;
 
   hideElements = false;
+  closeResult = '';
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private domSanitizer: DomSanitizer, private authService: AuthenticationService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private domSanitizer: DomSanitizer, private authService: AuthenticationService,private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.authService.getLoggedInUser().subscribe((userDetails) => {
@@ -72,18 +76,6 @@ export class UserDetailsComponent implements OnInit {
     return null;
   }
 
-  newTab(photo: Picture ){
-    const image = new Image();
-    if (photo.type === 'image/png') {
-      image.src = 'data:image/png;base64,' + photo.bytes;
-    }
-    else if (photo.type === 'image/jpeg') {
-      image.src = 'data:image/jpeg;base64,' + photo.bytes;
-    }
-
-    const w = window.open(  '_blank');
-    w.document.write(image.outerHTML);
-  }
 
     
   hasRole(rolename: string): boolean {
@@ -95,4 +87,24 @@ export class UserDetailsComponent implements OnInit {
     }
     return flag;
   }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
 }

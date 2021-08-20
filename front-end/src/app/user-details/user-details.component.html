@@ -1,28 +1,4 @@
-<!-- <div class="card" style="width: 30rem; margin: 100px auto;">
-    <div style= "text-align:center">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" id="profile-image" class="card-img-top" alt="...">
-    </div>
-  
-    <div class="card-body" style= "text-align:center">
-      <h2 class="card-title">{{user.name}} {{user.surname}}</h2>
-      <p class="card-text">{{user.currentJob}} at {{user.currentCompany}}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <h2>Education</h2>
-      <li class="list-group-item" >Role: {{getRoles()}}</li>
-      <li class="list-group-item">Phone: {{user.phoneNumber}}</li>
-    </ul>
-    <div class="card-body">
-      <a *ngIf="user.id && userDetails && userDetails.id == user.id" class="float-left" [routerLink]="'/users/'+ user.id.toString() +'/edit'">Edit Profile</a>
-      <a *ngIf="user.id && userDetails && userDetails.id == user.id" class="float-right" [routerLink]="'/users/'+ user.id.toString() +'/passwordchange'">Change password</a>
-      <div *ngIf="hasRole('ROLE_ADMIN')">
-        
-      </div>
-  
-    </div>
-</div>
-  
-   -->
+ 
    <app-navbar></app-navbar>
    
    <div class="container"  id="profilecards">
@@ -32,7 +8,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9).jpg" alt="Admin" class="rounded-circle" width="150">
+                    <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
                     <div class="mt-3">
                       <h3>{{user.name}} {{user.surname}}</h3>
                       <p class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
@@ -94,15 +70,23 @@
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h3 class="d-flex align-items-center mb-3">Work Experience</h3>
-                    
+                    <div class="container" id="main-container">
+                      <div class="row">
+                        <div class="col-sm-10 col-12">
+                          <h1>Work Experience</h1>
+                        </div>
+                        <div class="col-sm-2 col-12">
+                            <button type="button" class="btn btn-outline-primary pull-right" (click)="open(content)"> <i class="fas fa-plus"></i> Add</button>
+                        </div>  
+                      </div>                   
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h3 class="d-flex align-items-center mb-3">Education</h3>
+                    <h1 class="d-flex align-items-center mb-3">Education</h1>
                     
                   </div>
                 </div>
@@ -111,7 +95,7 @@
                 <div class="col-md-12 mb-3">
                   <div class="card">
                     <div class="card-body">
-                      <h3 class="d-flex align-items-center mb-3">Skills</h3>
+                      <h1 class="d-flex align-items-center mb-3">Skills</h1>
                       <ul>
                           <!-- <li>{{skill}}</li> -->
                       </ul>
@@ -125,4 +109,28 @@
         </div>
     </div>
 
-    <app-footer></app-footer>
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Add Work Experience</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+              <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+                <mat-label>Add your work experience</mat-label>
+                <input matInput type="text" name="work" id="work" placeholder="Work Experience"  required>
+              </mat-form-field> <br>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-save" (click)="modal.close('Save click')">Save</button>
+      </div>
+    </ng-template>
+
+
+
+<app-footer></app-footer>
