@@ -31,19 +31,19 @@ public class Notification {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"notification","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"notification"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Connection connection_request = null;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"notification","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"notification"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Comment new_comment = null;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"notification","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"notification"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private InterestReaction new_interest = null;

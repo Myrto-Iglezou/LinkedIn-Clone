@@ -31,10 +31,14 @@ public class UserService {
     /* --------- NETWORK --------- */
 
     public void newConnection(User user,Long userFollowingId) {
+        System.out.println(user.getId()+" wants to connect with "+userFollowingId);
         User userToBeFollowed = userRepository.findById(userFollowingId).orElseThrow(()-> new UserNotFoundException("Id: "+userFollowingId));
         Connection newConnection = new Connection(user,userToBeFollowed);
         Notification notification = new Notification(CONNECTION_REQUEST,userToBeFollowed,newConnection);
 
+        System.out.println("Save connection");
+        System.out.println(notification);
+        System.out.println(newConnection);
         notificationRepository.save(notification);
         connectionRepository.save(newConnection);
     }

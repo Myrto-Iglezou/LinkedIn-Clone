@@ -32,7 +32,7 @@ public class Connection {
     private User userFollowed;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"connection_request","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"connection_request"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Notification notification;

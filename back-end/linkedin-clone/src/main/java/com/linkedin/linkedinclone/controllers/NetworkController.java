@@ -121,10 +121,12 @@ public class NetworkController {
     @PutMapping("/in/{id}/new-connection/{newUserId}")
     public ResponseEntity addToConnections(@PathVariable Long id,@PathVariable Long newUserId) {
 
+        System.out.println("New connection request:");
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
         userService.newConnection(user,newUserId);
 
+        System.out.println("New connection added with success!");
 
         return ResponseEntity.ok("\"New connection added with success!\"");
     }

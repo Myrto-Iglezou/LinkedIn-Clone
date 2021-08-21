@@ -19,7 +19,8 @@ export class NetworkService {
   constructor(private http: HttpClient) {}
 
   addNewConnection(userId: number,connId: number): Observable<string> {
-    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/feed/new-connection/'+connId.toString(), {observe : 'response'});
+    alert("here");
+    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/new-connection/' + connId.toString(), {observe : 'response'});
   }
 
   getNetwork(userId: number): Observable<User[]> {

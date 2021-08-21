@@ -46,7 +46,20 @@ export class NetworkComponent implements OnInit {
   }
 
   addConnection(user: User) {
-    this.networkService.addNewConnection(this.userDetails.id,user.id);
+    alert(user.id);
+    this.networkService.addNewConnection(this.userDetails.id,user.id).subscribe(
+      responce => {},
+      error => {
+        alert(error.message);
+      }      
+    );
+
+    this.networkService.getNetwork(this.userDetails.id).subscribe(
+      (network) => {
+        Object.assign(this.network , network);
+      }
+    );
+      
   }
 
   displayProfilePhoto(user: User): any{

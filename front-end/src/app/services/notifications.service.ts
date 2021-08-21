@@ -23,6 +23,7 @@ export class NotificationsService {
   }
 
   getNotifications(userId: number): Observable<Notification[]> {
+    alert("get not");
     return this.http.get<Notification[]>('https://localhost:8443/in/' + userId.toString() + '/notifications');
   }
 

@@ -38,10 +38,19 @@ export class NotificationsComponent implements OnInit {
     this.notificationService.getNotifications(this.userDetails.id).subscribe(
       (notifications) => {
         Object.assign(this.notifications , notifications);
+        this.notifications.forEach(
+          (notif) => {
+            if(notif.type === 'CONNECTION_REQUEST') {
+              alert("he-e");
+              this.connRequests.push(notif);
+            } else if (notif.type === 'COMMENT' || notif.type === 'INTEREST'){
+              this.postNotifications.push(notif);
+            } 
+          }
+        );
       }
     );
-    
-    this.filterNotifications();
+
 
   }
 
@@ -49,6 +58,7 @@ export class NotificationsComponent implements OnInit {
     this.notifications.forEach(
       (notif) => {
         if(notif.type === 'CONNECTION_REQUEST') {
+          alert("he--e");
           this.connRequests.push(notif);
         } else if (notif.type === 'COMMENT' || notif.type === 'INTEREST'){
           this.postNotifications.push(notif);

@@ -2,6 +2,7 @@ package com.linkedin.linkedinclone.controllers;
 
 import com.linkedin.linkedinclone.dto.NetworkUserDTO;
 import com.linkedin.linkedinclone.dto.NotificationsDTO;
+import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.ConnectionRepository;
 import com.linkedin.linkedinclone.repositories.NotificationRepository;
@@ -38,11 +39,11 @@ public class NotificationController {
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/notifications")
     public Set<Notification> getNotifications(@PathVariable Long id) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
+        System.out.println("GET notifications");
+        User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Set<Notification> notificationsActive = new HashSet<>();
         for(Notification not: currentUser.getNotifications()){
+            System.out.println(not);
             if(!not.getIsShown() && not.getType() == COMMENT ) {
                 Connection con = not.getConnection_request();
                 if(!con.getIsAccepted())
