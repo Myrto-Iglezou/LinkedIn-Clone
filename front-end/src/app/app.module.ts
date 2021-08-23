@@ -11,6 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 
@@ -103,6 +104,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatFormFieldModule,
     MatGridListModule,
+    MatRadioModule,
     RouterModule.forRoot(appRoutes),
     TooltipModule.forRoot(),
     NgbModule,

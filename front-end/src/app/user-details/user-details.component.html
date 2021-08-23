@@ -116,19 +116,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form>
+      <form name="form" #skillsForm="ngForm" (ngSubmit)="informSkillsAndExperience(skillsForm,'EXPERIENCE')">
+        
+        <div class="modal-body">
           <div class="form-group">
               <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
                 <mat-label>Add your work experience</mat-label>
-                <input matInput type="text" name="work" id="work" placeholder="Work Experience"  required>
+                <input matInput type="text" name="work" id="work" placeholder="Work Experience" [(ngModel)]="skillsexperience.description" required>
               </mat-form-field> <br>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-save" (click)="modal.close('Save click')">Save</button>
-      </div>
+          <hr>
+          <div class="form-group" style="margin-top: 20px;">
+            <h3>Privacy</h3>
+            <mat-radio-group [(ngModel)]="skillsexperience.isPublic" aria-label="Select an option" id="radioprivacy">
+              <mat-radio-button value="1" style="margin-right: 10px;">Public</mat-radio-button>
+              <mat-radio-button value="0">Private</mat-radio-button>
+            </mat-radio-group>
+          </div>
+       
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+        </div>
+      </form>
     </ng-template>
 
 

@@ -1,3 +1,4 @@
+import { SkillsAndExperience } from './../model/skills-experience';
 import { Component, OnInit } from '@angular/core';
 import {User} from '../model/user';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,8 +8,7 @@ import {AuthenticationService} from '../authentication.service';
 import {UserDetails} from '../model/user-details';
 import { Picture } from '../model/picture';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { SkillsAndExperience } from '../model/skills-experience';
-
+import { SkillsExperienceService } from '../services/skills-experience.service';
 
 @Component({
   selector: 'app-user-details',
@@ -18,6 +18,7 @@ import { SkillsAndExperience } from '../model/skills-experience';
 export class UserDetailsComponent implements OnInit {
 
   user: User = new User();
+  skillsexperience: SkillsAndExperience = new SkillsAndExperience();
   validprofphoto = true;
   changeButton = false;
   userDetails: UserDetails;
@@ -31,7 +32,15 @@ export class UserDetailsComponent implements OnInit {
   closeResult = '';
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService, private domSanitizer: DomSanitizer, private authService: AuthenticationService,private modalService: NgbModal) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router, 
+    private userService: UserService, 
+    private domSanitizer: DomSanitizer, 
+    private authService: AuthenticationService,
+    private modalService: NgbModal,
+    private skillsexperienceService:SkillsExperienceService
+    ) { }
 
   ngOnInit(): void {
     this.authService.getLoggedInUser().subscribe((userDetails) => {
@@ -106,5 +115,30 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
+  informSkillsAndExperience(skillsForm,model: string){
+    if(skillsForm.form.valid) {
+      // modal.close('Save click');
+      if(model == 'EXPERIENCE'){
+        this.skillsexperience.type = 'EXPERIENCE';
+      }else if(model == 'SKILL'){
+        this.skillsexperience.type = 'SKILL';
+      }else if(model == 'EDUCATION'){
+        this.skillsexperience.type = 'EDUCATION';
+      }
+      const formWrapper = new FormData();
+      const postBlob = new Blob([JSON.stringify(this.skillsexperience)], { type: 'application/json'});
+      formWrapper.append('object', postBlob );
 
+
+      this.skillsexperienceService.addSkill(formWrapper,this.userDetails.id)
+        .subscribe(
+          response => {
+            // alert(this.userDetails.id);
+            
+            }
+        );
+    }
+  }
+
+  
 }
