@@ -19,11 +19,11 @@ export class NotificationsService {
   constructor(private http: HttpClient) {}
 
   acceptConnection(userId: number,connId: number): Observable<string>{
-    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/feed/accept-connection/' + connId.toString(), {observe : 'response'});
+    alert('https://localhost:8443/in/' + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection');
+    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection', {observe : 'response'});
   }
 
   getNotifications(userId: number): Observable<Notification[]> {
-    alert("get not");
     return this.http.get<Notification[]>('https://localhost:8443/in/' + userId.toString() + '/notifications');
   }
 

@@ -6,11 +6,9 @@ import com.linkedin.linkedinclone.dto.NetworkUserDTO;
 import com.linkedin.linkedinclone.dto.NewUserInfo;
 import com.linkedin.linkedinclone.dto.UserNetworkDTO;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
-import com.linkedin.linkedinclone.model.Connection;
-import com.linkedin.linkedinclone.model.InterestReaction;
-import com.linkedin.linkedinclone.model.Picture;
-import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.ConnectionRepository;
+import com.linkedin.linkedinclone.repositories.NotificationRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
@@ -41,6 +39,7 @@ public class NetworkController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ConnectionRepository connectionRepository;
+    private final NotificationRepository notificationRepository;
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
@@ -136,11 +135,17 @@ public class NetworkController {
     @PutMapping("/in/{id}/notifications/{connectionId}/accept-connection")
     public ResponseEntity acceptConnection(@PathVariable Long id,@PathVariable Long connectionId) {
 
+        System.out.println("\n\n\n---------");
+
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
+        System.out.println(user.getName() + " will accept connection id"+ connectionId);
         Connection conn = connectionRepository.findById(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
         conn.setIsAccepted(true);
         connectionRepository.save(conn);
+        Notification not = notificationRepository.findByConnectionId(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
+        not.setIsShown(true);
+        notificationRepository.save(not);
 
         return ResponseEntity.ok("\"Connection accepted with success!\"");
     }

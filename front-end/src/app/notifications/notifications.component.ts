@@ -41,7 +41,6 @@ export class NotificationsComponent implements OnInit {
         this.notifications.forEach(
           (notif) => {
             if(notif.type === 'CONNECTION_REQUEST') {
-              alert("he-e");
               this.connRequests.push(notif);
             } else if (notif.type === 'COMMENT' || notif.type === 'INTEREST'){
               this.postNotifications.push(notif);
@@ -58,8 +57,7 @@ export class NotificationsComponent implements OnInit {
     this.notifications.forEach(
       (notif) => {
         if(notif.type === 'CONNECTION_REQUEST') {
-          alert("he--e");
-          this.connRequests.push(notif);
+           this.connRequests.push(notif);
         } else if (notif.type === 'COMMENT' || notif.type === 'INTEREST'){
           this.postNotifications.push(notif);
         } 
@@ -67,8 +65,15 @@ export class NotificationsComponent implements OnInit {
     );
   }
 
-  acceptConnection(user: User) {
-    this.notificationService.acceptConnection(this.userDetails.id,user.id);
+  acceptConnection(conId: number) {
+    
+    this.notificationService.acceptConnection(this.userDetails.id,conId).subscribe(
+      responce => {},
+      error => {
+        alert(error.message);
+      }      
+    );
+    // location.reload();
   }
 
   goToProfile(user: User) {  }
