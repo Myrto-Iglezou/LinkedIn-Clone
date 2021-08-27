@@ -5,5 +5,4 @@ export class SkillsAndExperience{
     type: string;
     description: string;
     isPublic: boolean;
-    user: User;
 }
