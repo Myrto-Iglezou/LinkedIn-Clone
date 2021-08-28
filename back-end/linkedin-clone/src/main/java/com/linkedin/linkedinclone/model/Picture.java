@@ -16,6 +16,9 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "isCompressed") @NonNull
+    private boolean isCompressed=false;
+
     @Column(name = "type") @NonNull
     private String type;
 

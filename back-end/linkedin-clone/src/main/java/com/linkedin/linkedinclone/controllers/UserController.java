@@ -58,12 +58,9 @@ public class UserController {
                 user.setRoles(roles);
                 if(file!=null){
                     Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
+                    pic.setCompressed(true);
                     user.setProfilePicture(pic);
                     System.out.println("> Picture saved");
-
-/*
-                    pictureRepository.save(pic);
-*/
                 }
                 userRepository.save(user);
                 System.out.println("> New user signed up");
@@ -90,8 +87,9 @@ public class UserController {
     public User getProfile(@PathVariable Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Picture pic = user.getProfilePicture();
-        if(pic != null){
+        if(pic != null && pic.isCompressed()){
             Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+            pic.setCompressed(false);
             user.setProfilePicture(tempPicture);
         }
         return user;
@@ -103,8 +101,9 @@ public class UserController {
     public User getPersonalProfile(@PathVariable Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Picture pic = user.getProfilePicture();
-        if(pic != null){
+        if(pic != null && pic.isCompressed()){
             Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+            pic.setCompressed(false);
             user.setProfilePicture(tempPicture);
         }
         return user;
@@ -134,9 +133,10 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         User userPreview = userRepository.findById(otherUserId).orElseThrow(() -> new UserNotFoundException("User with id "+otherUserId+"doesn't exist"));
         Picture pic = userPreview.getProfilePicture();
-        if(pic != null){
+        if(pic != null && pic.isCompressed()){
             Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
             userPreview.setProfilePicture(tempPicture);
+            pic.setCompressed(false);
         }
         return userPreview;
     }

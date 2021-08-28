@@ -93,5 +93,7 @@ export class NetworkComponent implements OnInit {
         Object.assign(this.searchResults , searchResults);
       }
     );
-   }
+    this.ngOnInit();
+
+  }
 }

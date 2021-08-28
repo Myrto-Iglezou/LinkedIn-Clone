@@ -83,32 +83,51 @@ public class FeedController {
         Set<Post> feedPosts = new HashSet<>();
         feedPosts.addAll(user.getPosts());
 
-        Set<User> network = new HashSet<>();
 
         // Posts from users connections
         Set<Connection> connections = user.getUsersFollowing();
         for(Connection con: connections) {
-            User userFollowing = con.getUserFollowing();
-            network.add(userFollowing);
-            feedPosts.addAll(userFollowing.getPosts());
+            if(con.getIsAccepted()){
+                User userFollowing = con.getUserFollowing();
+                feedPosts.addAll(userFollowing.getPosts());
 
-            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
 
-            for(InterestReaction ir: interestReactions){
-                feedPosts.add(ir.getPost());
+                for(InterestReaction ir: interestReactions){
+                    feedPosts.add(ir.getPost());
+                }
             }
         }
 
-/*        for(Post p: feedPosts) {
+/*        // Posts from users connections
+        Set<Connection> connections2 = user.getUserFollowedBy();
+        for(Connection con: connections2) {
+            if(con.getIsAccepted()){
+                User userFollowing = con.getUserFollowing();
+                feedPosts.addAll(userFollowing.getPosts());
+
+                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+                for(InterestReaction ir: interestReactions){
+                    feedPosts.add(ir.getPost());
+                }
+            }
+        }*/
+
+        for(Post p: feedPosts) {
             User owner = p.getOwner();
+
             Picture pic = owner.getProfilePicture();
             if(pic != null){
-                Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
-                p.getOwner().setProfilePicture(tempPicture);
+                if(pic.isCompressed()){
+                    Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                    pic.setCompressed(false);
+                    owner.setProfilePicture(tempPicture);
+                }
             }
-            System.out.println(owner);
-            System.out.println(p);
-        }*/
+/*            System.out.println(owner);
+            System.out.println(p);*/
+        }
 
         return feedPosts;
     }
@@ -153,10 +172,13 @@ public class FeedController {
         // AUDIO IMAGES AND VIDEO TO BE DONEEE
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        userService.newPost(currentUser,post);
+
+        post.setOwner(currentUser);
+        postRepository.save(post);
+
         System.out.println("\n\n\n> New post made with success");
         System.out.println(post);
-        System.out.println(currentUser);
+        System.out.println(post.getOwner());
         return ResponseEntity.ok("\"Post created with success!\"");
     }
 

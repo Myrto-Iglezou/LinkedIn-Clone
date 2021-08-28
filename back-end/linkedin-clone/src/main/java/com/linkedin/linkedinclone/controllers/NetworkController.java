@@ -112,6 +112,14 @@ public class NetworkController {
             }
         }
 
+        for(User u: network){
+            if(currentUser.getProfilePicture()!=null) {
+                Picture uPic = u.getProfilePicture();
+                Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
+                u.setProfilePicture(temp);
+            }
+        }
+
         return network;
     }
 

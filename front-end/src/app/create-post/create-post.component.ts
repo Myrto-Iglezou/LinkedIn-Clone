@@ -14,18 +14,9 @@ import { PostsinfeedComponent } from '../postsinfeed/postsinfeed.component';
 })
 export class CreatePostComponent implements OnInit {
 
-  @Output() updateView = new EventEmitter<string>();
 
-  userId = localStorage.getItem('userID');
-  userToken = localStorage.getItem('userToken');
   newPost = new Post();
 
-  loading = false;
-  dangerBox = false;
-  successBox = false;
-  submitattempt = false;
-  submiterror: any ;
-  submitmsg: string;
   mainPhoto: File;
   photos = new Array<File>();
   validphotos = true;
@@ -37,21 +28,12 @@ export class CreatePostComponent implements OnInit {
     private http: HttpClient,
     private authenticationService: AuthenticationService,
     private feedService: FeedService,
-    // private postsinFeedComponent: PostsinfeedComponent
   ) { }
 
   ngOnInit() {
     this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
       this.userDetails = userDetails;
     });
-  }
-
-  // share() {
-  //   this.sendRefreshMessage();
-  // }
-
-  sendRefreshMessage() {
-    this.updateView.emit('1');
   }
 
   setPhotos(inputElement){
@@ -91,36 +73,16 @@ export class CreatePostComponent implements OnInit {
       );
 
       formWrapper.append('object', postBlob );
-      this.loading = true;
       this.feedService.addPost(formWrapper,this.userDetails.id)
         .subscribe(
           response => {
-            // alert(this.userDetails.id);
-            this.sendRefreshMessage();
-             this.loading = false;
-             this.submitmsg = response.body;
-             this.successBox = true;
-             this.dangerBox = false;
-             this.updateView.emit();
              location.reload();
             },
             error => {
-              this.loading = false;
-              this.submiterror = error;
-              this.dangerBox = true;
-              this.successBox = false;
-              this.submitattempt = true;
               alert(error.message);
             }
         );
     }
-    else{
-      this.submitattempt = true;
-      this.dangerBox = false;
-      this.successBox = false;
-    }
-
-
   }
 
 
