@@ -25,7 +25,9 @@ export class PostsinfeedComponent implements OnInit {
   userDetails: UserDetails;
   posts: Post[] = new Array<Post>();
   // commentText :string;
+  newComments: Comment[] = new Array<Comment>();
   newComment = new Comment();
+  newCom = new Comment();
   booleanButton=false;
   tempUser: User = new User();
 
@@ -47,6 +49,10 @@ export class PostsinfeedComponent implements OnInit {
         Object.assign(this.posts , posts);
       }
     );
+
+    for(var i=0 ; i < this.posts.length; i++ ){ 
+      this.newComments.push(new Comment()); 
+    } 
   }
 
   displayProfilePhoto(user: User): any{

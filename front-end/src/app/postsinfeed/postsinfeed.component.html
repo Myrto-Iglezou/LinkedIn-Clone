@@ -1,14 +1,14 @@
 <!-- <p>postsinfeed works!</p> -->
 
 <div class="posts" id="posts" >
-    <div  *ngFor="let post of posts">
+    <div  *ngFor="let post of posts; let i = index">
         <div class="card">
             <div class="card-body ">
                 <div class="container">
                     <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <img *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
+                                <img class="img-circle" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
                                 <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://img.icons8.com/office/36/000000/person-male.png" alt="User Image">
                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
                                 <span class="description">{{post.timestamp | date:'d MMMM y, h:mm a'}}</span> 
@@ -36,7 +36,7 @@
                         <div *ngIf="post.comments.length" class="box-footer box-comments">
                             <div  *ngFor="let comment of post.comments">
                                 <div class="box-comment">
-                                    <img class="img-circle img-sm" src="https://img.icons8.com/office/36/000000/person-female.png" alt="User Image">
+                                    <img class="img-circle img-sm" *ngIf="comment.userMadeBy.profilePicture" [src]="displayProfilePhoto(comment.userMadeBy)">
                                     <div class="comment-text"> 
                                         <span class="username"> {{comment.userMadeBy.name}} {{comment.userMadeBy.surname}}
                                             <span class="text-muted pull-right">{{comment.timestamp | date:'d MMMM y, h:mm a'}}</span> 
@@ -46,10 +46,11 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <form name="form" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
-                                <img class="img-responsive img-circle img-sm" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="Alt Text">
+                            <form name="form-{{i}}" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
+                                
+                                <img class="img-responsive img-circle img-sm" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
                                 <div class="img-push "> 
-                                    <textarea name="content" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
+                                    <textarea id="{{i}}" name="content-{{i}}" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
                                     <button [disabled]="!newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">
                                         Submit
                                     </button>

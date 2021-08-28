@@ -125,6 +125,19 @@ public class FeedController {
                     owner.setProfilePicture(tempPicture);
                 }
             }
+
+            Set<Comment> comments = p.getComments();
+            for(Comment c: comments){
+                User commentOwner = c.getUserMadeBy();
+                Picture cpic = commentOwner.getProfilePicture();
+                if(cpic != null){
+                    if(cpic.isCompressed()){
+                        Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
+                        cpic.setCompressed(false);
+                        commentOwner.setProfilePicture(tempPicture);
+                    }
+                }
+            }
 /*            System.out.println(owner);
             System.out.println(p);*/
         }
