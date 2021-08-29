@@ -76,6 +76,15 @@ public class NetworkController {
             searchResults.addAll((List<User>)  m.getValue());
         }
 
+        for(User u: searchResults){
+            System.out.println(u.getName());
+            Picture uPic = u.getProfilePicture();
+            if(uPic!=null && uPic.isCompressed()) {
+                Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
+                u.setProfilePicture(temp);
+            }
+        }
+
         return reverse(searchResults);
     }
 
@@ -88,33 +97,29 @@ public class NetworkController {
         Set<User> network = new HashSet<>();
 
         Set<Connection> connectionsFollowing = currentUser.getUsersFollowing();
+        System.out.println("connectionsFollowing");
         for(Connection con: connectionsFollowing) {
             if(con.getIsAccepted()){
-                User userinNetwork = con.getUserFollowing();
+                User userinNetwork = con.getUserFollowed();
+                System.out.println(userinNetwork.getName());
                 network.add(userinNetwork);
             }
         }
 
         Set<Connection> connectionsFollowedBy = currentUser.getUserFollowedBy();
+        System.out.println("connectionsFollowedBy");
         for(Connection con: connectionsFollowedBy) {
             if(con.getIsAccepted()){
-                User userinNetwork = con.getUserFollowed();
+                User userinNetwork = con.getUserFollowing();
+                System.out.println(userinNetwork.getName());
                 network.add(userinNetwork);
             }
         }
 
-
-        for(User user: network){
-            Picture pic = user.getProfilePicture();
-            if(pic != null){
-                Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
-                user.setProfilePicture(tempPicture);
-            }
-        }
-
         for(User u: network){
-            if(currentUser.getProfilePicture()!=null) {
-                Picture uPic = u.getProfilePicture();
+            System.out.println(u.getName());
+            Picture uPic = u.getProfilePicture();
+            if(uPic!=null && uPic.isCompressed()) {
                 Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
                 u.setProfilePicture(temp);
             }
