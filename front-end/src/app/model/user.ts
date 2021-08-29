@@ -1,5 +1,6 @@
 import { Picture } from './picture';
 import { Role } from './role';
+import { SkillsAndExperience } from './skills-experience';
 
 export class User {
   id: number;
@@ -17,11 +18,12 @@ export class User {
   usersFollowing:  Array<User> = new Array<User>();
   userFollowedBy:  Array<User> = new Array<User>();
   numOfConnections: number;
-  education: string;
+  education: Array <SkillsAndExperience> = new Array <SkillsAndExperience>();
+  workExperience: Array <SkillsAndExperience> = new Array <SkillsAndExperience>();
+  skills: Array <SkillsAndExperience> = new Array <SkillsAndExperience>();
   website: string;
   twitter: string;
   github: string;
-  skills:[];
   // posts: Array<Post> = new Array<Post>();
   // comments: Array<Comment> = new Array<Comment>();
   // notifications: Array<Notification> = new Array<Notification>();

@@ -77,7 +77,18 @@
                         </div>
                         <div class="col-sm-2 col-12">
                             <button type="button" class="btn btn-outline-primary pull-right" (click)="open(content)"> <i class="fas fa-plus"></i> Add</button>
-                        </div>  
+                        </div> 
+                        <div *ngIf="user.workExperience.length != 0" class="container align-self-center">
+                          <ul  class="list-group">  
+                              <li>Hi</li>          
+                              <li *ngFor="let work of user.workExperience;" class="list-group-item list-group-item-action list-group-item-light">
+                                  <span *ngIf="work.isPublic" style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle"> My {{work.description}}</span>
+                              </li>
+                          </ul>
+                        </div> 
+                        <div *ngIf="user.workExperience.length == 0" class="container align-self-center">
+                          <p>No work experience</p>
+                        </div>
                       </div>                   
                     </div>
                   </div>

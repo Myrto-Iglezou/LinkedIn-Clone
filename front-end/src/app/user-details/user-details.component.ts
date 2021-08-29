@@ -125,19 +125,16 @@ export class UserDetailsComponent implements OnInit {
       }else if(model == 'EDUCATION'){
         this.skillsexperience.type = 'EDUCATION';
       }
-      const formWrapper = new FormData();
-      const postBlob = new Blob([JSON.stringify(this.skillsexperience)], { type: 'application/json'});
-      formWrapper.append('object', postBlob );
 
-
-      this.skillsexperienceService.addSkill(formWrapper,this.userDetails.id)
+      this.skillsexperienceService.addSkill(this.skillsexperience,this.userDetails.id)
         .subscribe(
-          response => {
-            // alert(this.userDetails.id);
-            
-            }
+          responce => {},
+            error => {
+              alert(error.message);
+            } 
         );
     }
+    location.reload();
   }
 
   

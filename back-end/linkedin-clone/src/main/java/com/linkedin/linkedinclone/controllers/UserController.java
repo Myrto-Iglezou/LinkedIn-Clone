@@ -16,6 +16,7 @@ import com.linkedin.linkedinclone.model.Role;
 import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.PictureRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
+import com.linkedin.linkedinclone.repositories.SkillsAndExperienceRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.security.SecurityConstants;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PictureRepository pictureRepository;
+    private final SkillsAndExperienceRepository skillsAndExperienceRepository;
 
     @Autowired
     private final BCryptPasswordEncoder encoder;
@@ -130,7 +132,7 @@ public class UserController {
             skillsList.add(skill);
             user.setEducation(skillsList);
         }
-
+        skillsAndExperienceRepository.save(skill);
         userRepository.save(user);
         System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
