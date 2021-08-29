@@ -19,15 +19,22 @@
             </div>
 
             <div class="card"  id="networkCard">
-                <div style= "text-align:center">
+                <div style= "text-align:center;margin-bottom: 10px;">
                     <h2 style= "padding-top: 10%;">My Network</h2>
                 </div>
-                <div class="card-body" style= "text-align:center">
-                    <ng-template ngFor let-item [ngForOf]="user.usersFollowing" let-i="index" >
-                        <hr style="height:1px; color:#8f9299;">
-                        <li></li>
-                        <hr style="height:1px; color:#8f9299;">
-                    </ng-template>
+                <div class="card-body" style= "text-align:center;padding-bottom: 10px;">
+                    <div *ngIf="network.length==0" style="padding-bottom: 20px;">
+                        No connections yet!
+                    </div>
+                    <div *ngIf="network.length!=0">
+                        <div *ngFor="let nuser of network">
+                            <hr style="height:1px; color:#8f9299;">
+                            <a (onclick)="goToOtherProfile(nuser)">
+                                {{nuser.name}} {{nuser.surname}}
+                            </a>
+                            <hr style="height:1px; color:#8f9299;">
+                        </div>
+                    </div>
                   <a href="\network" class="btn profile-btn">View my Network</a>
                 </div>
             </div>

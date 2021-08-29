@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.linkedin.linkedinclone.dto.NewUserInfo;
 import com.linkedin.linkedinclone.dto.SkillsDTO;
+import com.linkedin.linkedinclone.enumerations.SkillType;
 import com.linkedin.linkedinclone.model.SkillsAndExperience;
 import com.linkedin.linkedinclone.enumerations.RoleType;
 import com.linkedin.linkedinclone.exceptions.EmailExistsAlreadyException;
@@ -112,14 +113,23 @@ public class UserController {
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @PutMapping("/in/{id}/profile/new-info")
-    public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsDTO skills) {
+    public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsAndExperience skill) {
+        System.out.println("\n\n> informPersonalProfile");
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-        if(skills.getEducation().size() != 0)
-            user.getEducation().addAll(skills.getEducation());
-        if(skills.getWorkExperience().size() != 0)
-            user.getWorkExperience().addAll(skills.getWorkExperience());
-        if(skills.getSkills().size() != 0)
-            user.getSkills().addAll(skills.getSkills());
+        Set<SkillsAndExperience> skillsList;
+        if(skill.getType() == SkillType.EXPERIENCE){
+            skillsList = user.getWorkExperience();
+            skillsList.add(skill);
+            user.setWorkExperience(skillsList);
+        } else if(skill.getType() == SkillType.SKILL) {
+            skillsList = user.getSkills();
+            skillsList.add(skill);
+            user.setSkills(skillsList);
+        } else if(skill.getType() == SkillType.EDUCATION) {
+            skillsList = user.getEducation();
+            skillsList.add(skill);
+            user.setEducation(skillsList);
+        }
 
         userRepository.save(user);
         System.out.println("> All changes made with success!");

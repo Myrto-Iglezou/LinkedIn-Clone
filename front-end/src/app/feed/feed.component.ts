@@ -8,6 +8,7 @@ import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { PostsinfeedComponent } from '../postsinfeed/postsinfeed.component';
 import {DomSanitizer} from '@angular/platform-browser';
+import { NetworkService } from '../services/network.service';
 
 
 @Component({
@@ -23,8 +24,16 @@ export class FeedComponent implements OnInit {
   posts: Post[] = new  Array<Post>();
   user: User = new User();
   userDetails: UserDetails;
+  network:User[] = new Array<User>();
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private userService: UserService, private route: ActivatedRoute, private domSanitizer: DomSanitizer/* , private postService: PostService */ ) { }
+  constructor(
+    private router: Router, 
+    private authenticationService: AuthenticationService, 
+    private userService: UserService, 
+    private route: ActivatedRoute, 
+    private domSanitizer: DomSanitizer, 
+    private networkService: NetworkService
+  ) { }
 
   ngOnInit(): void {
     this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
@@ -46,6 +55,12 @@ export class FeedComponent implements OnInit {
           });
       }
     );
+
+    this.networkService.getNetwork(this.userDetails.id).subscribe(
+      (network) => {
+        Object.assign(this.network , network);
+      }
+    );
   }
 
   async recieveRefreshCommand($event) {
@@ -65,6 +80,12 @@ export class FeedComponent implements OnInit {
 
   goToProfile(){
     this.router.navigate(['/users/' + this.userDetails.id.toString()]).then(() => {
+      location.reload();
+    });
+  }
+
+  goToOtherProfile(user:User){
+    this.router.navigate(['/users/' + user.id.toString()]).then(() => {
       location.reload();
     });
   }
