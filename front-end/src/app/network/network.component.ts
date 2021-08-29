@@ -79,7 +79,14 @@ export class NetworkComponent implements OnInit {
     });   
   }
 
-
+  alreadyConnected(user: User): boolean {
+    this.network.forEach(
+      u => { 
+        if(u.name == user.name)
+          return true;
+    });
+    return false;
+  }
    
   showMoreItems(){
       this.paginationLimit = Number(this.paginationLimit) + 4;        
