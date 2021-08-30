@@ -166,7 +166,7 @@
                             <div *ngIf="user.id && userDetails && userDetails.id != user.id">
                               <ul id="skills_ul">
                                 <li *ngFor="let ed of user.skills;"  >
-                                  <span class="align-middle skill">{{ed.description}}</span>
+                                  <span *ngIf="ed.isPublic == 1" class="align-middle skill">{{ed.description}}</span>
                                 </li>
                               </ul>
                             </div>
