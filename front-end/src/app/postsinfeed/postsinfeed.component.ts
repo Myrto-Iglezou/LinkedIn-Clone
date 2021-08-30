@@ -66,6 +66,16 @@ export class PostsinfeedComponent implements OnInit {
     return null;
   }
 
+  displayPicture(pic: Picture): any{
+
+    if(pic) {
+      if (pic.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + pic.bytes);
+      else if (pic.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + pic.bytes);
+    }
+    return null;
+  }
   
   setUserInterested(post: Post) {
     this.feedService.addPostReaction(post.id,this.userDetails.id).subscribe(
