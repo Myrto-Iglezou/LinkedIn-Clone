@@ -28,7 +28,7 @@ public class SkillsAndExperience {
     private String description;
 
     @Column(name = "isPublic") @NonNull
-    private boolean isPublic;
+    private Integer isPublic;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = {"education","workExperience","skills"},allowSetters = true)

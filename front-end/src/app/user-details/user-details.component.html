@@ -78,13 +78,23 @@
                         <div class="col-sm-2 col-12">
                             <button type="button" class="btn btn-outline-primary pull-right" (click)="open(content)"> <i class="fas fa-plus"></i> Add</button>
                         </div> 
+                        <hr>
                         <div *ngIf="user.workExperience.length != 0" class="container align-self-center">
-                          <ul  class="list-group">  
-                              <li>Hi</li>          
-                              <li *ngFor="let work of user.workExperience;" class="list-group-item list-group-item-action list-group-item-light">
-                                  <span *ngIf="work.isPublic" style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle"> My {{work.description}}</span>
+                          <div *ngIf="user.id && userDetails && userDetails.id == user.id">
+                            <ul  class="list-group">
+                              <li *ngFor="let work of user.workExperience;" style="padding-top: 10px;" >
+                                <span style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle">{{work.description}}</span>
                               </li>
-                          </ul>
+                            </ul>
+
+                          </div>
+                          <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                            <ul  class="list-group">    
+                                <li *ngFor="let work of user.workExperience;">
+                                    <span *ngIf="work.isPublic == 1" style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle"> {{work.description}}</span>
+                                </li>
+                            </ul>
+                          </div>
                         </div> 
                         <div *ngIf="user.workExperience.length == 0" class="container align-self-center">
                           <p>No work experience</p>
@@ -97,8 +107,37 @@
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h1 class="d-flex align-items-center mb-3">Education</h1>
-                    
+                    <div class="container" id="main-container">
+                      <div class="row">
+                        <div class="col-sm-10 col-12">
+                          <h1>Education</h1>
+                        </div>
+                        <div class="col-sm-2 col-12">
+                          <button type="button" class="btn btn-outline-primary pull-right" (click)="open(education)"> <i class="fas fa-plus"></i> Add</button>
+                        </div> 
+                        <hr>
+                        <div *ngIf="user.education.length != 0" class="container align-self-center">
+                          <div *ngIf="user.id && userDetails && userDetails.id == user.id">
+                            <ul  class="list-group">
+                              <li *ngFor="let ed of user.education;" style="padding-top: 10px;" >
+                                <span style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle">{{ed.description}}</span>
+                              </li>
+                            </ul>
+
+                          </div>
+                          <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                            <ul  class="list-group">    
+                                <li *ngFor="let ed of user.education;">
+                                    <span *ngIf="ed.isPublic == 1" style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle"> {{ed.description}}</span>
+                                </li>
+                            </ul>
+                          </div>
+                        </div> 
+                        <div *ngIf="user.education.length == 0" class="container align-self-center">
+                          <p>No education history</p>
+                        </div>  
+                      </div>    
+                    </div>    
                   </div>
                 </div>
               </div>
@@ -106,17 +145,43 @@
                 <div class="col-md-12 mb-3">
                   <div class="card">
                     <div class="card-body">
-                      <h1 class="d-flex align-items-center mb-3">Skills</h1>
-                      <ul>
-                          <!-- <li>{{skill}}</li> -->
-                      </ul>
+                      <div class="container" id="main-container">
+                        <div class="row">
+                          <div class="col-sm-10 col-12">
+                            <h1>Skills</h1>
+                          </div>
+                          <div class="col-sm-2 col-12">
+                            <button type="button" class="btn btn-outline-primary pull-right" (click)="open(skills)"> <i class="fas fa-plus"></i> Add</button>
+                          </div> 
+                          <hr>
+                          <div *ngIf="user.skills.length != 0" class="container align-self-center" >
+                            <div *ngIf="user.id && userDetails && userDetails.id == user.id" id="mySkills">
+                              <ul id="skills_ul">
+                                <li *ngFor="let ed of user.skills;"  >
+                                  <span class="align-middle skill">{{ed.description}}</span>
+                                </li>
+                              </ul>
+  
+                            </div>
+                            <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                              <ul id="skills_ul">
+                                <li *ngFor="let ed of user.skills;"  >
+                                  <span *ngIf="ed.isPublic == 1" class="align-middle skill">{{ed.description}}</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div> 
+                          <div *ngIf="user.skills.length == 0" class="container align-self-center">
+                            <p>No skills added</p>
+                          </div>  
+                        </div>    
+                      </div>    
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
     </div>
 
@@ -128,7 +193,6 @@
         </button>
       </div>
       <form name="form" #skillsForm="ngForm" (ngSubmit)="informSkillsAndExperience(skillsForm,'EXPERIENCE')">
-        
         <div class="modal-body">
           <div class="form-group">
               <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
@@ -140,11 +204,72 @@
           <div class="form-group" style="margin-top: 20px;">
             <h3>Privacy</h3>
             <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="skillsexperience.isPublic" required>
-              <mat-radio-button  [value]=true style="margin-right: 10px;" name="public">Public</mat-radio-button>
-              <mat-radio-button  [value]=false name="private">Private</mat-radio-button>
-            </mat-radio-group>
+              <mat-radio-button  [value]=1 style="margin-right: 10px;" name="public">Public</mat-radio-button>
+              <mat-radio-button  [value]=0 name="private">Private</mat-radio-button>
+            </mat-radio-group> 
+
           </div>
        
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template #education let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Add Education</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form name="form" #skillsForm="ngForm" (ngSubmit)="informSkillsAndExperience(skillsForm,'EDUCATION')">
+        <div class="modal-body">
+          <div class="form-group">
+              <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+                <mat-label>Add education</mat-label>
+                <input matInput type="text" name="work" id="work" placeholder="Education" [(ngModel)]="skillsexperience.description" required>
+              </mat-form-field> <br>
+          </div>
+          <hr>
+          <div class="form-group" style="margin-top: 20px;">
+            <h3>Privacy</h3>
+            <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="skillsexperience.isPublic" required>
+              <mat-radio-button  [value]=1 style="margin-right: 10px;" name="public">Public</mat-radio-button>
+              <mat-radio-button  [value]=0 name="private">Private</mat-radio-button>
+            </mat-radio-group> 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template #skills let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Add Skill</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form name="form" #skillsForm="ngForm" (ngSubmit)="informSkillsAndExperience(skillsForm,'SKILL')">
+        <div class="modal-body">
+          <div class="form-group">
+              <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+                <mat-label>Add Skill</mat-label>
+                <input matInput type="text" name="work" id="work" placeholder="Skill" [(ngModel)]="skillsexperience.description" required>
+              </mat-form-field> <br>
+          </div>
+          <hr>
+          <div class="form-group" style="margin-top: 20px;">
+            <h3>Privacy</h3>
+            <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="skillsexperience.isPublic" required>
+              <mat-radio-button  [value]=1 style="margin-right: 10px;" name="public">Public</mat-radio-button>
+              <mat-radio-button  [value]=0 name="private">Private</mat-radio-button>
+            </mat-radio-group> 
+          </div>      
         </div>
         <div class="modal-footer">
           <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>

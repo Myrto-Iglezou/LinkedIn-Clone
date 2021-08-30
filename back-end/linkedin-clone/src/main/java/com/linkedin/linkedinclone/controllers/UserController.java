@@ -117,6 +117,7 @@ public class UserController {
     @PutMapping("/in/{id}/profile/new-info")
     public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsAndExperience skill) {
         System.out.println("\n\n> informPersonalProfile");
+        System.out.println(skill);
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Set<SkillsAndExperience> skillsList;
         if(skill.getType() == SkillType.EXPERIENCE){

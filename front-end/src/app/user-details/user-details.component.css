@@ -94,3 +94,27 @@ h5{
     box-shadow: none !important;
     border-color: none;
 }
+
+ul {
+    list-style: none;
+}
+
+.skill{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 15px;
+    background-color:rgb(240, 240, 240);
+    font-size: large;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#mySkills{
+    margin-left: -30px;
+}
+#skills_ul li{
+    display: inline-flex;
+    margin-right: 10px;
+    margin-top: 10px;
+
+}
