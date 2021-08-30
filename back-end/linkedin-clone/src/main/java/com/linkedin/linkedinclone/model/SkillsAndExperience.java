@@ -31,8 +31,22 @@ public class SkillsAndExperience {
     private boolean isPublic;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"info","notification","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"education","workExperience","skills"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User user;
+    private User userExp;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"education","workExperience","skills"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User userEdu;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"education","workExperience","skills"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User userSk;
+
 }

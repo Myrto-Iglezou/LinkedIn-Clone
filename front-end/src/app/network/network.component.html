@@ -3,7 +3,7 @@
 <div id="searchbar" class="container col-sm-6 justify-content-center" style="margin-top: 6%;"  >
     <div class="input-group rounded form-outline">
         <input type="text" [(ngModel)]="userQuery" class="form-control rounded" placeholder="Search network" />
-            <button  [disabled]="!userQuery"  class="btn btn-info btn-lg search-button" type="button" (click)="search()" data-toggle="dropdown"
+        <button  [disabled]="!userQuery"  class="btn btn-info btn-lg search-button" type="button" (click)="search()" data-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fas fa-search" style="color: white;"></i>
         </button>
@@ -55,7 +55,6 @@
                     Show More
                 </button>
             </div>
-
         </div>
     </div>
 </div>

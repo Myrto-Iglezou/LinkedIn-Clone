@@ -69,16 +69,16 @@ public class User {
 
     /* ----------- SKILLS/EDUCATION/EXPERIENCE ----------- */
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
-    @JsonIgnoreProperties("user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userEdu")
+    @JsonIgnoreProperties("userEdu")
     private Set<SkillsAndExperience> education = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
-    @JsonIgnoreProperties("user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userExp")
+    @JsonIgnoreProperties("userExp")
     private Set<SkillsAndExperience> workExperience = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
-    @JsonIgnoreProperties("user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="userSk")
+    @JsonIgnoreProperties("userSk")
     private Set<SkillsAndExperience> skills = new HashSet<>();
 
     /* ----------- NETWORK ----------- */

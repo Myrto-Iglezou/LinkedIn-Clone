@@ -120,20 +120,15 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Set<SkillsAndExperience> skillsList;
         if(skill.getType() == SkillType.EXPERIENCE){
-            skillsList = user.getWorkExperience();
-            skillsList.add(skill);
-            user.setWorkExperience(skillsList);
+            skill.setUserExp(user);
         } else if(skill.getType() == SkillType.SKILL) {
-            skillsList = user.getSkills();
-            skillsList.add(skill);
-            user.setSkills(skillsList);
+            skill.setUserSk(user);
         } else if(skill.getType() == SkillType.EDUCATION) {
-            skillsList = user.getEducation();
-            skillsList.add(skill);
-            user.setEducation(skillsList);
+            skill.setUserEdu(user);
         }
+
         skillsAndExperienceRepository.save(skill);
-        userRepository.save(user);
+        System.out.println(user);
         System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
