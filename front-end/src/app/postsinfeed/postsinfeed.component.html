@@ -26,7 +26,11 @@
                             <div class="content">
                                 <h3>{{post.content}}</h3>
                             </div>
-                            <!-- <img class="img-responsive pad" src="https://i.imgur.com/EAQkLS1.jpg" alt="Photo">         -->
+                            <div *ngIf="post.pictures.length!=0" >
+                                <div *ngFor="let pic of post.pictures">
+                                    <img  class="img-responsive pad" [src]="displayPicture(pic)">
+                                </div>
+                            </div>
 
                             <button *ngIf="!userIsInterested(post)" type="button" class="btn btn-primary btn-xs" (click)="setUserInterested(post)">
                                 <i class="fas fa-thumbs-up"></i> Interesting!
@@ -52,7 +56,7 @@
                             <form name="form-{{i}}" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
                                 
                                 <img class="img-responsive img-circle img-sm" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
-                                <div class="img-push "> 
+                                <div class="img-push ">
                                     <textarea id="{{i}}" name="content-{{i}}" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
                                     <button [disabled]="!newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">
                                         Submit

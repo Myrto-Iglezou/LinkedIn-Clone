@@ -21,7 +21,8 @@ export class CreatePostComponent implements OnInit {
   photos = new Array<File>();
   validphotos = true;
   userDetails: UserDetails;
-
+  submitattempt = false;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,

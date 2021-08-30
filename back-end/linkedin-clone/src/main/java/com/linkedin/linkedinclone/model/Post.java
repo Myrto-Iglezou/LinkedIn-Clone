@@ -44,6 +44,11 @@ public class Post {
     @Fetch(value = FetchMode.SELECT)
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
+    @JsonIgnoreProperties(value = {"post","user"},allowSetters = true)
+    private Set<Picture> pictures = new HashSet<>();
+
+
     public Post(String content) {
         this.content = content;
     }

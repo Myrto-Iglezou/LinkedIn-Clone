@@ -36,6 +36,11 @@ public class Picture {
     @ToString.Exclude
     private User user;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("pictures")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Post post;
 
     // ---------- CONSTRUCTORS ---------- //
     public Picture(Long id, String name, String type, byte[] bytes){

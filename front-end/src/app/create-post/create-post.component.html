@@ -14,8 +14,9 @@
                     
                 </label> -->
                 <label for="upload-photo">  <i class="fas fa-image" style="color:rgb(133, 227, 255);"></i> Photo</label>
-                <input class="btn btn-light" name="photo" id="upload-photo" type="file" accept=".jpg,.jpeg,.png">
-
+                <input #p class="btn btn-light" name="photo" id="upload-photo" type="file" accept=".jpg,.jpeg,.png" multiple (change)="setPhotos(p)">
+                <small *ngIf=" !validphotos && submitattempt " class="text-danger">Image files must be jpeg or png</small>
+                
               </div>
               <div class="col">
                     <label for="upload-video">  <i class="fab fa-youtube" style="color:rgb(149, 235, 141);"></i> Video</label>
@@ -29,7 +30,15 @@
                   <button  [disabled]="!newPost.content" type="submit"  class="btn post-btn" >Post</button>
               </div>
           </div>
+
         </form>
+        
       </div>  
+      <div *ngIf="photos.length" class="card-footer">
+        <div *ngFor="let p of photos;" style="color: black; float: left;">
+          <i style="padding-right:5px;" class="far fa-check-circle"></i> <b>{{p.name}}:</b> has been uploaded with success!
+          <br>
+        </div>
+    </div>
   </div>
 </div>

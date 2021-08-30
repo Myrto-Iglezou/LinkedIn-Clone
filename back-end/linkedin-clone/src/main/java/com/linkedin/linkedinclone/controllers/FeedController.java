@@ -6,10 +6,7 @@ import com.linkedin.linkedinclone.dto.FeedDTO;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
-import com.linkedin.linkedinclone.repositories.CommentRepository;
-import com.linkedin.linkedinclone.repositories.InterestReactionRepository;
-import com.linkedin.linkedinclone.repositories.PostRepository;
-import com.linkedin.linkedinclone.repositories.UserRepository;
+import com.linkedin.linkedinclone.repositories.*;
 import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+import static com.linkedin.linkedinclone.utils.PictureSave.compressBytes;
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
 
 @RestController
@@ -34,6 +32,7 @@ public class FeedController {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final PictureRepository pictureRepository;
     private final CommentRepository commentRepository;
     private final InterestReactionRepository interestReactionRepository;
 
@@ -138,6 +137,20 @@ public class FeedController {
                     }
                 }
             }
+
+            Set<Picture> newPicts = new HashSet<>();
+            for(Picture pict : p.getPictures()){
+                if(pict != null){
+                    if(pict.isCompressed()){
+                        Picture tempPicture = new Picture(pict.getId(),pict.getName(),pict.getType(),decompressBytes(pict.getBytes()));
+                        tempPicture.setCompressed(false);
+                        newPicts.add(tempPicture);
+                        System.out.println("> Picture compressed and saved saved ");
+                    }else
+                        newPicts.add(pict);
+                }
+            }
+            p.setPictures(newPicts);
 /*            System.out.println(owner);
             System.out.println(p);*/
         }
@@ -180,15 +193,20 @@ public class FeedController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(value="/in/{id}/feed/new-post", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity newPost(@PathVariable Long id,@RequestPart("object") Post post,@RequestPart(value = "imageFile", required=false) MultipartFile file) throws IOException {
-
-        // AUDIO IMAGES AND VIDEO TO BE DONEEE
+    public ResponseEntity newPost(@PathVariable Long id,@RequestPart("object") Post post,@RequestPart(value = "imageFile", required=false) MultipartFile[] files) throws IOException {
 
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-
         post.setOwner(currentUser);
+        if(files!=null){
+            for(MultipartFile file: files){
+                Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
+                pic.setCompressed(true);
+                pic.setPost(post);
+                pictureRepository.save(pic);
+                System.out.println("> Picture compressed and saved saved ");
+            }
+        }
         postRepository.save(post);
-
         System.out.println("\n\n\n> New post made with success");
         System.out.println(post);
         System.out.println(post.getOwner());
