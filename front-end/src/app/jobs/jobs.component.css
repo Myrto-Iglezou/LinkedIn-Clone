@@ -1,0 +1,15 @@
+#jobCards{
+    margin-top: 8%;
+    width: 100%;
+}
+
+.job-btn{
+    background-color: #158eff;
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+
+    width: 30%;
+    border:none;
+    font-size: 18px;
+}

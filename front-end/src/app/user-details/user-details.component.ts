@@ -8,7 +8,7 @@ import {AuthenticationService} from '../authentication.service';
 import {UserDetails} from '../model/user-details';
 import { Picture } from '../model/picture';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { SkillsExperienceService } from '../services/skills-experience.service';
+import {SkillsExperienceService } from '../services/skills-experience.service';
 
 @Component({
   selector: 'app-user-details',

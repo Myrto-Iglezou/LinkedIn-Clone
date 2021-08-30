@@ -33,10 +33,11 @@ public class JobsController {
     @CrossOrigin(origins = "*")
     @PostMapping("/in/{id}/new-job")
     public ResponseEntity newJob(@PathVariable Long id, @RequestBody Job job) {
+        System.out.println(job);
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         job.setUserMadeBy(currentUser);
         jobRepository.save(job);
-        return ResponseEntity.ok("\"Interested in post created with success!\"");
+        return ResponseEntity.ok("\"Job created with success!\"");
     }
 
     @CrossOrigin(origins = "*")
