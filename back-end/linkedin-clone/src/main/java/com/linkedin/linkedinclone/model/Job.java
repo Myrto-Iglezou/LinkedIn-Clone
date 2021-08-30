@@ -31,6 +31,8 @@ public class Job {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = {"jobsCreated","jobApplied"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User userMadeBy;
 
     @ManyToMany(fetch = FetchType.EAGER)

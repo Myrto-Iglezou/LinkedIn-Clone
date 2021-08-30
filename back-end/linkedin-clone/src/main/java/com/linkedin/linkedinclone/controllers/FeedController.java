@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+import static com.linkedin.linkedinclone.enumerations.NotificationType.INTEREST;
 import static com.linkedin.linkedinclone.utils.PictureSave.compressBytes;
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
 
@@ -34,6 +35,7 @@ public class FeedController {
     private final PostRepository postRepository;
     private final PictureRepository pictureRepository;
     private final CommentRepository commentRepository;
+    private final NotificationRepository notificationRepository;
     private final InterestReactionRepository interestReactionRepository;
 
 
@@ -83,8 +85,21 @@ public class FeedController {
         feedPosts.addAll(user.getPosts());
 
 
-        // Posts from users connections
         Set<Connection> connections = user.getUsersFollowing();
+        for(Connection con: connections) {
+            if(con.getIsAccepted()){
+                User userFollowing = con.getUserFollowed();
+                feedPosts.addAll(userFollowing.getPosts());
+
+                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+                for(InterestReaction ir: interestReactions){
+                    feedPosts.add(ir.getPost());
+                }
+            }
+        }
+
+        connections = user.getUserFollowedBy();
         for(Connection con: connections) {
             if(con.getIsAccepted()){
                 User userFollowing = con.getUserFollowing();
@@ -97,21 +112,6 @@ public class FeedController {
                 }
             }
         }
-
-/*        // Posts from users connections
-        Set<Connection> connections2 = user.getUserFollowedBy();
-        for(Connection con: connections2) {
-            if(con.getIsAccepted()){
-                User userFollowing = con.getUserFollowing();
-                feedPosts.addAll(userFollowing.getPosts());
-
-                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
-
-                for(InterestReaction ir: interestReactions){
-                    feedPosts.add(ir.getPost());
-                }
-            }
-        }*/
 
         for(Post p: feedPosts) {
             User owner = p.getOwner();
@@ -159,39 +159,6 @@ public class FeedController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/in/{id}/feed-network")
-    public Set<User> getFeedNetwork(@PathVariable Long id) {
-
-        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-
-        // Get authenticated user
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
-
-
-        Set<Post> feedPosts = new HashSet<>();
-        feedPosts.addAll(user.getPosts());
-
-        Set<User> network = new HashSet<>();
-
-        // Posts from users connections
-        Set<Connection> connections = currentUser.getUsersFollowing();
-        for(Connection con: connections) {
-            User userFollowing = con.getUserFollowing();
-            network.add(userFollowing);
-            feedPosts.addAll(userFollowing.getPosts());
-
-            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
-
-            for(InterestReaction ir: interestReactions){
-                feedPosts.add(ir.getPost());
-            }
-        }
-
-        return network;
-    }
-
-    @CrossOrigin(origins = "*")
     @PostMapping(value="/in/{id}/feed/new-post", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity newPost(@PathVariable Long id,@RequestPart("object") Post post,@RequestPart(value = "imageFile", required=false) MultipartFile[] files) throws IOException {
 
@@ -217,10 +184,11 @@ public class FeedController {
     @PutMapping("/in/{id}/feed/post-interested/{postdId}")
     public ResponseEntity newInterestedPost(@PathVariable Long id,@PathVariable Long postdId) {
 
-        System.out.println("/in/{id}/feed/post-interested/{postdId}");
+        System.out.println("> /in/{id}/feed/post-interested/{postdId}");
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         Post post = postRepository.findById(postdId).orElseThrow(()->new PostNotFoundException("Post with "+id+" not found"));
 
+        // IF reaction exists delete it
         for(InterestReaction ir: post.getInterestReactions()) {
             if(ir.getUserMadeBy()==currentUser) {
 
@@ -239,7 +207,13 @@ public class FeedController {
             }
         }
 
-        userService.newPostInterested(currentUser,post);
+        InterestReaction newReaction = new InterestReaction(currentUser,post);
+        User postOwner = post.getOwner();
+        if(postOwner!=currentUser){
+            Notification notification = new Notification(INTEREST,postOwner,newReaction);
+            notificationRepository.save(notification);
+        }
+        interestReactionRepository.save(newReaction);
         System.out.println("> New reaction made with success");
         System.out.println(post);
         return ResponseEntity.ok("\"Interested in post created with success!\"");
