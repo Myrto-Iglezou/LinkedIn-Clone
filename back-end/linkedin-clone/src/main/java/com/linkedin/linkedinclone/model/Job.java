@@ -30,11 +30,11 @@ public class Job {
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"jobsCreated","jobApplied"},allowSetters = true)
     private User userMadeBy;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> usersApplied = new HashSet<>();

@@ -139,9 +139,9 @@
           <hr>
           <div class="form-group" style="margin-top: 20px;">
             <h3>Privacy</h3>
-            <mat-radio-group [(ngModel)]="skillsexperience.isPublic" aria-label="Select an option" id="radioprivacy">
-              <mat-radio-button value="1" style="margin-right: 10px;">Public</mat-radio-button>
-              <mat-radio-button value="0">Private</mat-radio-button>
+            <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="skillsexperience.isPublic" required>
+              <mat-radio-button  [value]=true style="margin-right: 10px;" name="public">Public</mat-radio-button>
+              <mat-radio-button  [value]=false name="private">Private</mat-radio-button>
             </mat-radio-group>
           </div>
        

@@ -1,5 +1,43 @@
 <app-navbar></app-navbar>
 
-<p>jobs works!</p>
+<div class="container" id="jobCards">
+    <div class="card-group col-xs-12">
+        <div class="col-sm-4">
+            <div class="card"  id="addJobCard">
+                <div class="card-body" style= "text-align:center">
+                  <h5 class="card-title" style= "font-size: 20px;"><b>Create a Job</b></h5>
+                    <form name="jobForm" #jobForm="ngForm" (ngSubmit)="jobSubmit(jobForm)">
+                        <hr>
+                        <mat-form-field class="form-input"  appearance="fill" style= "width: 100%;">
+                            <mat-label>Job title</mat-label>
+                            <input matInput type="text" id="title" placeholder="Job title" [(ngModel)]="job.title" name="title" #title="ngModel" required >
+                        </mat-form-field><br>
+                        <mat-form-field class="form-input"  appearance="fill" style= "width: 100%;">
+                            <mat-label>Job description</mat-label>
+                            <input matInput type="text" id="description" placeholder="Job description" [(ngModel)]="job.description" name="description" #description="ngModel" required >
+                        </mat-form-field><br>
+                    
+                        <div >
+                            <button class="job-btn btn btn-primary" type="submit">Submit</button>   
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card"  id="jobCard">
+                <div style= "text-align:center;margin-bottom: 10px;">
+                    <h2 style= "padding-top: 10%;"></h2>
+                </div>
+                <div class="card-body" style= "text-align:center;padding-bottom: 10px;">
+                    <div  style="padding-bottom: 20px;">
+                        No connections yet!
+                    </div>
+                    
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
 
 <app-footer></app-footer>
