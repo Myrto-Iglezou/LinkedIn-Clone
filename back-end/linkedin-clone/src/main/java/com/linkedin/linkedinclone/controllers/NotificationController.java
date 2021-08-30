@@ -39,18 +39,16 @@ public class NotificationController {
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/notifications")
     public Set<Notification> getNotifications(@PathVariable Long id) {
-        System.out.println("GET notifications");
+        System.out.println("\n\n\n>GET notifications");
         User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Set<Notification> notificationsActive = new HashSet<>();
         for(Notification not: currentUser.getNotifications()){
             System.out.println(not);
             if(!not.getIsShown() && not.getType() == COMMENT ) {
-                Connection con = not.getConnection_request();
-                if(!con.getIsAccepted())
-                    notificationsActive.add(not);
+                notificationsActive.add(not);
             } else if (!not.getIsShown() && not.getType() == INTEREST) {
                 notificationsActive.add(not);
-            } else if (!not.getIsShown() && not.getType() == CONNECTION_REQUEST) {
+            } else if (!not.getIsShown() && !not.getConnection_request().getIsAccepted() && not.getType() == CONNECTION_REQUEST) {
                 notificationsActive.add(not);
             } else;
         }

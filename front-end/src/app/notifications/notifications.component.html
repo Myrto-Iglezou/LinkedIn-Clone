@@ -27,17 +27,23 @@
         <p style="font-size: 20px;">No news from your posts</p>
     </div>
     <div *ngIf="postNotifications.length != 0" class="container align-self-center">
-        <ul *ngFor="let n of postNotifications;" class="list-group">        
-            <li *ngIf="n.type === 'COMMENT'" class="list-group-item list-group-item-action list-group-item-primary">
-                User {{n.new_comment.userMadeBy.name}} {{n.new_comment.userMadeBy.surname}} commented:
-                <span style="font-size: bold;"> {{ n.new_comment.content }} </span>
-                on your post: <br>
-                <span style="font-style: italic;" > {{n.new_comment.post.content}} </span>
-            </li>
-            <li *ngIf="n.type === 'INTEREST'" class="list-group-item list-group-item-action list-group-item-info">
-                User {{n.new_comment.userMadeBy.name}} {{n.new_comment.userMadeBy.surname}} reacted to your post:
-                <span style="font-style: italic;" > {{n.new_comment.post.content}} </span>
-            </li>    
+        <ul class="list-group">    
+            <li *ngFor="let n of postNotifications" class="list-group-item list-group-item-action">
+                <div *ngIf="getType(n.type)==1">
+                    <span style="float:left;margin-right: 10px;"><i class="far fa-comments fa-2x"></i></span> 
+                    <span>
+                        User <b> {{n.new_comment.userMadeBy.name}} {{n.new_comment.userMadeBy.surname}} </b> commented: 
+                        <span style="font-style: italic;"> "{{ n.new_comment.content }}" </span> 
+                        on your post: <br>
+                        <span style="font-style: italic;" > " {{n.new_comment.post.content}} " </span>
+                    </span>                   
+                </div>
+                <div *ngIf="getType(n.type)==2" style="background-color:rgb(240, 240, 240);">
+                    <span style="float:left;margin-right: 10px;"><i class="far fa-thumbs-up fa-2x"></i></span>
+                    User <b> {{n.new_interest.userMadeBy.name}} {{n.new_interest.userMadeBy.surname}} </b> reacted to your post:<br>
+                    <span style="font-style: italic;" > " {{n.new_interest.post.content}} " </span>
+                </div>                
+            </li>   
         </ul>
     </div>
 </div>

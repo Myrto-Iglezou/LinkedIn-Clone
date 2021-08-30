@@ -50,8 +50,18 @@ export class NotificationsComponent implements OnInit {
       }
     );
 
-
   }
+
+  getType(type: string): Number {
+    // alert(type);
+    if(type === 'CONNECTION_REQUEST')
+      return 0;
+    else if(type === 'COMMENT')
+      return 1;
+    else
+      return 2;
+  }
+
 
   filterNotifications() {
     this.notifications.forEach(
@@ -73,7 +83,7 @@ export class NotificationsComponent implements OnInit {
         alert(error.message);
       }      
     );
-    // location.reload();
+    location.reload();
   }
 
   goToProfile(user: User) {  }
