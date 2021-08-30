@@ -176,4 +176,57 @@ public class UserController {
         System.out.println("> All changes made with success!");
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/in/{id}/settings/change-password")
+    public ResponseEntity changePassword(@PathVariable Long id , @RequestBody NewUserInfo pwdDetails) {
+        if (!pwdDetails.getNewPassword().equals(pwdDetails.getPasswordConfirm())) {
+            System.out.println("\"Passwords do not match!\"");
+            return ResponseEntity
+                    .badRequest()
+                    .body("{\"timestamp\": " + "\"" + new Date().toString()+ "\","
+                            + "\"status\": 400, "
+                            + "\"error\": \"Bad Request\", "
+                            + "\"message\": \"Passwords do not match!\", "
+                            + "\"path\": \"/users/"+ id.toString() +"/passwordchange\"}"
+                    );
+        }
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        if(!encoder.matches(pwdDetails.getCurrentPassword(),user.getPassword())){
+            System.out.println("\"Wrong password\"");
+            return ResponseEntity
+                    .badRequest()
+                    .body("{\"timestamp\": " + "\"" + new Date().toString()+ "\","
+                            + "\"status\": 400, "
+                            + "\"error\": \"Bad Request\", "
+                            + "\"message\": \"Wrong password!\", "
+                            + "\"path\": \"/users/"+ id.toString() +"/passwordchange\"}"
+                    );
+        }
+
+        user.setPassword(encoder.encode(pwdDetails.getNewPassword()));
+        userRepository.save(user);
+        System.out.println("\"Password Changed!\"");
+        return ResponseEntity.ok("\"Password Changed!\"");
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/in/{id}/settings/change-username")
+    public ResponseEntity changeUserName(@PathVariable Long id , @RequestBody NewUserInfo details) {
+        String token = null;
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+
+        token = JWT.create()
+                .withSubject(details.getNewUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
+        token = SecurityConstants.TOKEN_PREFIX + token;
+        existingUser.setUsername(details.getNewUsername());
+        userRepository.save(existingUser);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set(SecurityConstants.HEADER_STRING, token);
+        return ResponseEntity.ok().headers(responseHeaders).body("\"Successful edit!\"");
+    }
+
 }

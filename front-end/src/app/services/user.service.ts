@@ -25,8 +25,15 @@ export class UserService {
   }
 
   editUserSettings(usersettings: UserSettings): Observable<HttpResponse<any>>{
-
     return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings', usersettings, {observe : 'response'});
-
   }
+
+  changeUsername(usersettings: UserSettings): Observable<HttpResponse<any>>{
+    return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings/change-username', usersettings, {observe : 'response'});
+  }
+
+  changePassword(usersettings: UserSettings): Observable<HttpResponse<any>>{
+    return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings/change-password', usersettings, {observe : 'response'});
+  }
+
 }

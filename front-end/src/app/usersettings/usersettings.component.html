@@ -42,8 +42,16 @@
                                 <div class="form-group" >
                                     <label for="pwd_2" class="pswd-item"><span>Current Password </span></label>
                                     <input type="password" class="form-control" id="pwd_2" placeholder="Enter current password" [(ngModel)]="currPwd_2" name="currPwd_2" #pwd_2="ngModel"
-                                           [class.is-invalid]="submitattempt_2 && (currPwd_2 !== usersettings.currentPassword)" required>
-                                    <small *ngIf="submitattempt_2 && (currPwd_2 !== usersettings.currentPassword)" class="text-danger">This is not your current password</small>
+                                           [class.is-invalid]="submitattempt_2" required>
+                                    <small *ngIf="pwd_2.invalid && submitattempt_2" class="text-danger">Current password is required field</small>
+                                    <!-- <small *ngIf="(currPwd_2 !== usersettings.currentPassword)" class="text-danger">This is not your current password</small> -->
+                                    <div *ngIf="submiterror && dangerBox" class="alert alert-danger" role="alert">
+                                        <small class="text-danger" >{{submiterror.error.message}}</small>
+                                        <button style="color: #ff0b00; background-color: transparent" type="button" class="close" aria-label="Close" (click)="dangerBox = false">
+                                          <span>&times;</span>
+                                        </button>
+                                      </div>
+                                      
                                 </div>
                                 <div class="form-group" >
                                     <label for="newpwd" class="pswd-item"><span>New Password </span></label>
@@ -62,6 +70,12 @@
                                     <button  [disabled]="loading_2" type="submit" class="btn btn-settings">Submit</button>
                                     <div  *ngIf="loading_2" class="spinner-border spinner-border-sm" role="status"></div>
                                 </div>
+                                <div *ngIf="submitmsg && successBox" class="alert alert-success" role="alert">
+                                    <small class="text-success" >{{submitmsg}}</small>
+                                    <button style="color: green; background-color: transparent" type="button" class="close" aria-label="Close" (click)="successBox = false">
+                                      <span>&times;</span>
+                                    </button>
+                                  </div>
                             </form>
                         </div> 
                     </div>

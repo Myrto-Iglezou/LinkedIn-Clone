@@ -25,6 +25,7 @@ export class UsersettingsComponent implements OnInit {
   currPwd_1: string; 
   currPwd_2: string; 
   userDetails: UserDetails;
+  user: User;
 
   constructor(private userService: UserService, private route: ActivatedRoute , private authenticationService: AuthenticationService) { }
 
@@ -34,6 +35,7 @@ export class UsersettingsComponent implements OnInit {
     });
 
     this.userService.getUser(this.userDetails.id.toString()).subscribe((user) => {
+        this.user = user;
         this.usersettings.id = user.id;
         this.usersettings.currentPassword = user.password;
         this.usersettings.currentUsername = user.username;
@@ -52,7 +54,7 @@ export class UsersettingsComponent implements OnInit {
       this.usersettings.newPassword = null;
       this.usersettings.passwordConfirm = null;
 
-      this.userService.editUserSettings(this.usersettings)
+      this.userService.changeUsername(this.usersettings)
         .subscribe(
           response => {
             this.loading_1 = false;
@@ -84,23 +86,18 @@ export class UsersettingsComponent implements OnInit {
       this.dangerBox = false;
     }
   }
+
+
+
   pwdSubmit(userform){
     if (userform.form.valid  && (this.usersettings.newPassword === this.usersettings.passwordConfirm)) {
       this.loading_2 = true;
       this.usersettings.newUsername = null;
-      this.userService.editUserSettings(this.usersettings)
+      this.usersettings.currentUsername = this.user.username;
+      this.userService.changePassword(this.usersettings)
         .subscribe(
           response => {
             this.loading_2 = false;
-            const token = response.headers.get('Authorization');
-            if (token) {
-              let userDetails: UserDetails = null;
-              this.authenticationService.getLoggedInUser().subscribe((uDetails) => {
-                  userDetails = uDetails;
-              });
-              userDetails.token = token;
-              this.authenticationService.setLoggedInUser(userDetails);
-            }
             this.submitmsg = response.body;
             this.successBox = true;
             this.dangerBox = false;
