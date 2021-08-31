@@ -195,5 +195,18 @@ export class UserDetailsComponent implements OnInit {
     location.reload();
   }
 
+  changeJobStatus(editform){
+    if(editform.form.valid) {
+      this.userService.editUserJob(this.user)
+        .subscribe(
+          responce => {},
+            error => {
+              alert(error.message);
+            } 
+        );
+    }
+    location.reload();
+  }
+
   
 }

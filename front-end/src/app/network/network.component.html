@@ -43,8 +43,26 @@
                         </ul>
                         <div class="card-body" >
                             <div class="btn-group btn-group-sm p-1" >
-                                <button [disabled]="alreadyConnected(user)" (click)="addConnection(user)" type="button" class="btn btn-success m-1">Add connection</button>
-                                <button [routerLink]="['/users/',user.id]" type="button" class="btn btn-info m-1">Show profile</button>
+                                <div *ngIf="connected(user.id) && !hasRequestPending(user.id)">
+                                    <button type="button" class="btn btn-success m-1" style="font-size: 14px;" disabled>
+                                        <i class="fas fa-check"></i>
+                                        Connected
+                                    </button>
+                                </div>
+                                <div *ngIf="!connected(user.id) && !hasRequestPending(user.id)">
+                                    <button (click)="addConnection(user)" type="button" style="font-size: 14px;" class="btn btn-success m-1">
+                                        <i class="fas fa-plus"></i>
+                                        Add 
+                                    </button>                                
+                                </div> 
+                                <div *ngIf="hasRequestPending(user.id)">
+                                    <button type="button" class="btn  m-1" style="font-size: 14px; color: white; background-color: rgb(48, 48, 48);" disabled>
+                                        <i class="fas fa-clock"></i>
+                                        Pending
+                                        
+                                    </button>
+                                </div> 
+                                <button [routerLink]="['/users/',user.id]" type="button" style="font-size: 14px; color: white;" class="btn btn-info m-1">Show profile</button>
                             </div>
                         </div>
                     </div>

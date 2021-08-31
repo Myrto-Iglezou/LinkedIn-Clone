@@ -77,13 +77,13 @@ export class JobsComponent implements OnInit {
   alreadyApplied(job: Job): boolean{
     job.usersApplied.forEach(
       u => {
-        if(u.id == this.user.id){
+        if(u.id == this.userDetails.id){
           return true;
         }
       }
     );
     return false;
-  }
+  } 
 
   newApplication(jobId: number) {
     alert(jobId);

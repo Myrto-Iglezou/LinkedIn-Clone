@@ -11,7 +11,7 @@
                     <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
                     <div class="mt-3">
                       <h3>{{user.name}} {{user.surname}}</h3>
-                      <p class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
+                      <p *ngIf="user.currentJob" class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
                       <p class="text-muted font-size-sm">{{user.city}}</p>
                       <div>
                         <div *ngIf="user.id && userDetails && userDetails.id != user.id">
@@ -33,9 +33,11 @@
                                 Connected
                               </button>
                             </div>
+                          </div>
+                          <div *ngIf="user.id && userDetails && userDetails.id == user.id">
                             <div class="row">
                               <div class="col-sm-12">
-                                <a *ngIf="user.id && userDetails && userDetails.id == user.id" class="btn btn-info " [routerLink]="'/users/'+ user.id.toString() +'/edit'">Edit</a>
+                                <a *ngIf="user.id && userDetails && userDetails.id == user.id" class="btn btn-info " (click)="open(editJobStatus)">Edit my job status</a>
                               </div>
                             </div>
                           </div>
@@ -48,19 +50,19 @@
               <div class="card mt-3">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                     <i width="24" height="24" viewBox="0 0 24 24" class="far fa-envelope"></i>
+                    <i class="fas fa-envelope" style="color: #158eff;"></i>
                      <span class="text-secondary">{{user.username}}</span>
                   </li>
                   <li *ngIf="user.website" class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></h6>
+                    <i class="fas fa-globe" style="color: #158eff;"></i>
                     <span class="text-secondary">{{user.website}}</span>
                   </li>
                   <li *ngIf="user.github" class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></h6>
+                    <i class="fab fa-github" style="color: #158eff;"></i>
                     <span class="text-secondary">{{user.github}}</span>
                   </li>
                   <li *ngIf="user.twitter" class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></h6>
+                    <i class="fab fa-twitter" style="color: #158eff;"></i>
                     <span class="text-secondary">{{user.twitter}}</span>
                   </li>
                 </ul>
@@ -212,7 +214,7 @@
        
         </div>
         <div class="modal-footer">
-          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+          <button [disabled]="!skillsexperience.description && !skillsexperience.isPublic" type="submit" class="btn btn-save">Save</button>
         </div>
       </form>
     </ng-template>
@@ -229,7 +231,7 @@
           <div class="form-group">
               <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
                 <mat-label>Add education</mat-label>
-                <input matInput type="text" name="work" id="work" placeholder="Education" [(ngModel)]="skillsexperience.description" required>
+                <input matInput type="text" name="education" id="education" placeholder="Education" [(ngModel)]="skillsexperience.description" required>
               </mat-form-field> <br>
           </div>
           <hr>
@@ -242,7 +244,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+          <button [disabled]="!skillsexperience.description && !skillsexperience.isPublic" type="submit" class="btn btn-save">Save</button>
         </div>
       </form>
     </ng-template>
@@ -259,7 +261,7 @@
           <div class="form-group">
               <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
                 <mat-label>Add Skill</mat-label>
-                <input matInput type="text" name="work" id="work" placeholder="Skill" [(ngModel)]="skillsexperience.description" required>
+                <input matInput type="text" name="skill" id="skill" placeholder="Skill" [(ngModel)]="skillsexperience.description" required>
               </mat-form-field> <br>
           </div>
           <hr>
@@ -272,7 +274,64 @@
           </div>      
         </div>
         <div class="modal-footer">
-          <button [disabled]="!skillsexperience.description" type="submit" class="btn btn-save">Save</button>
+          <button [disabled]="!skillsexperience.description && !skillsexperience.isPublic " type="submit" class="btn btn-save">Save</button>
+        </div>
+      </form>
+    </ng-template>
+
+    <ng-template #editJobStatus let-modal>
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title"><i class="fas fa-edit"></i> Edit Job Status</h1>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form name="form" #jobStatusForm="ngForm" (ngSubmit)="changeJobStatus(jobStatusForm)">
+        <div class="modal-body">
+          <div class="form-group">
+              <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+                <mat-label>Job Description</mat-label>
+                <input matInput type="text" name="job" id="job" placeholder="Job Description" [(ngModel)]="user.currentJob" required>
+              </mat-form-field> <br>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+              <mat-label>Company</mat-label>
+              <input matInput type="text" name="company" id="company" placeholder="Company" [(ngModel)]="user.currentCompany" required>
+            </mat-form-field> <br>
+          </div>
+          <div class="form-group">
+            <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+              <mat-label>City</mat-label>
+              <input matInput type="text" name="city" id="city" placeholder="city" [(ngModel)]="user.city" required>
+            </mat-form-field> <br>
+          </div>
+          
+          <div class="form-group">
+            <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+              <mat-label>My website</mat-label>
+              <input matInput type="text" name="website" id="website" placeholder="My website" [(ngModel)]="user.website">
+            </mat-form-field> <br>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+              <mat-label>Github</mat-label>
+              <input matInput type="text" name="github" id="github" placeholder="Github" [(ngModel)]="user.github">
+            </mat-form-field> <br>
+          </div>
+
+          <div class="form-group">
+            <mat-form-field class="form-input" appearance="fill" style="width: 100%;">
+              <mat-label>Twitter</mat-label>
+              <input matInput type="text" name="twitter" id="twitter" placeholder="Twitter" [(ngModel)]="user.twitter">
+            </mat-form-field> <br>
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!user.currentJob && !user.currentCompany && !user.city" type="submit" class="btn btn-save">Save</button>
         </div>
       </form>
     </ng-template>

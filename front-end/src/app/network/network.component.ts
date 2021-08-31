@@ -6,6 +6,7 @@ import { AuthenticationService } from '../authentication.service';
 import { User } from '../model/user';
 import { UserDetails } from '../model/user-details';
 import { NetworkService } from '../services/network.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-network',
@@ -20,6 +21,7 @@ export class NetworkComponent implements OnInit {
   userDetails: UserDetails;
   network: User[] = new Array<User>();
   searchResults: User[] = new Array<User>();
+  user: User = new User();
 
   constructor(
     private route: ActivatedRoute,
@@ -27,13 +29,22 @@ export class NetworkComponent implements OnInit {
     private http: HttpClient,
     private authenticationService: AuthenticationService,
     private networkService: NetworkService,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
       this.userDetails = userDetails;
     });
+
+    this.userService.getUser(this.userDetails.id.toString()).subscribe((user1) => {
+      Object.assign(this.user , user1);
+    },
+      error => {
+        alert(error.message);
+      }
+    );
 
     this.networkService.getNetwork(this.userDetails.id).subscribe(
       (network) => {
@@ -46,7 +57,6 @@ export class NetworkComponent implements OnInit {
   }
 
   addConnection(user: User) {
-    alert(user.id);
     this.networkService.addNewConnection(this.userDetails.id,user.id).subscribe(
       responce => {},
       error => {
@@ -59,6 +69,8 @@ export class NetworkComponent implements OnInit {
         Object.assign(this.network , network);
       }
     );
+
+    location.reload();
       
   }
 
@@ -79,14 +91,35 @@ export class NetworkComponent implements OnInit {
     });   
   }
 
-  alreadyConnected(user: User): boolean {
-    this.network.forEach(
-      u => { 
-        if(u.name == user.name)
-          return true;
-    });
-    return false;
+  connected(id: number): boolean {
+    for (let u of this.network) {
+      if(u.id == id)
+        return true;
+    }
+    return false;    
   }
+
+  hasRequestPending(id: number): boolean {
+
+    let flag=false;
+
+    this.user.usersFollowing.forEach(
+      con => {
+        if(con.userFollowed.id == id && !con.isAccepted)
+          flag=true;
+      }
+    );
+
+    this.user.userFollowedBy.forEach(
+      con => {
+        if(con.userFollowing.id == id && !con.isAccepted)
+          flag=true;
+      }
+    );
+
+    return flag;
+  }
+
    
   showMoreItems(){
       this.paginationLimit = Number(this.paginationLimit) + 4;        
