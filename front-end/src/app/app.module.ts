@@ -34,6 +34,7 @@ import { UsersettingsComponent } from './usersettings/usersettings.component';
 import { NetworkComponent } from './network/network.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
 
 const appRoutes: Routes = [
   {
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
     NetworkComponent,
     NotificationsComponent,
     JobsComponent,
+    AdminNavComponent,
   ],
   imports: [
     NgxPaginationModule,

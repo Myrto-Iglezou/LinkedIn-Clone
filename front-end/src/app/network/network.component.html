@@ -44,7 +44,7 @@
                         <div class="card-body" >
                             <div class="btn-group btn-group-sm p-1" >
                                 <button [disabled]="alreadyConnected(user)" (click)="addConnection(user)" type="button" class="btn btn-success m-1">Add connection</button>
-                                <button (click)="goToProfile(user)" type="button" class="btn btn-info m-1">Show profile</button>
+                                <button [routerLink]="['/users/',user.id]" type="button" class="btn btn-info m-1">Show profile</button>
                             </div>
                         </div>
                     </div>
