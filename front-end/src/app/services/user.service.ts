@@ -40,4 +40,8 @@ export class UserService {
     return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings/change-password', usersettings, {observe : 'response'});
   }
 
+  editUserJob(user:User):  Observable<HttpResponse<any>>{
+    return this.http.put<UserSettings>('https://localhost:8443/in/' + user.id.toString() + '/editJob',user, {observe : 'response'});
+  }
+
 }

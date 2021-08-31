@@ -146,6 +146,22 @@ public class UserController {
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
 
+    @PutMapping("/in/{id}/editJob")
+    public ResponseEntity editUserJob(@PathVariable Long id, @RequestBody User user) {
+
+        System.out.println("\n\n> Edit User's Job");
+        User newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+
+        newUser.setCurrentJob(user.getCurrentJob());
+        newUser.setCurrentCompany(user.getCurrentCompany());
+        newUser.setCity(user.getCity());
+        newUser.setWebsite(user.getWebsite());
+        newUser.setGithub(user.getGithub());
+        newUser.setTwitter(user.getTwitter());
+        userRepository.save(newUser);
+        return ResponseEntity.ok("\"All changes made with success!\"");
+    }
+
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/profile/{otherUserId}")
