@@ -68,9 +68,21 @@ public class UserController {
                 userRepository.save(user);
                 System.out.println("> New user signed up");
             } else
-                throw new PasswordsNotSameException();
+                return ResponseEntity
+                        .badRequest()
+                        .body("{\"timestamp\": " + "\"" + new Date().toString() + "\","
+                                + "\"status\": 400, "
+                                + "\"error\": \"Bad Request\", "
+                                + "\"message\": \"Passwords do not match!\", "
+                        );
         } else
-            throw new EmailExistsAlreadyException(user.getUsername());
+            return ResponseEntity
+                    .badRequest()
+                    .body("{\"timestamp\": " + "\"" + new Date().toString() + "\","
+                            + "\"status\": 400, "
+                            + "\"error\": \"Bad Request\", "
+                            + "\"message\": \"Email exists already!\", "
+                    );
 
         String token = JWT.create()
                 .withSubject(user.getUsername())
