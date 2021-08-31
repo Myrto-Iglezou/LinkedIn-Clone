@@ -14,20 +14,20 @@
                       <p class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
                       <p class="text-muted font-size-sm">{{user.city}}</p>
                       <div>
-                        <div *ngIf="!hideElements">
-                            <div *ngIf="requestConnectButton" class="connect-buttons-container">
-                                <button class="btn btn-secondary request-connect-button" type="button" > <!--(click)="sendConnectRequest()"  -->
+                        <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                            <div *ngIf="!connected(user.id)" class="connect-buttons-container">
+                                <button class="btn btn-secondary request-connect-button" type="button" (click)="addConnection(user)"> 
                                 <i class="fas fa-plus"></i>
-                                Connect
+                                Add Connection
                               </button>
                             </div>
-                            <div *ngIf="connectPendingButton" class="connect-buttons-container">
+                            <!-- <div *ngIf="connectPendingButton" class="connect-buttons-container">
                               <button class="btn btn-outline-primary disabled-connect-button" type="button" disabled>
                                 <i class="fas fa-clock"></i>
                                 Connect Request Pending
                               </button>
-                            </div>
-                            <div *ngIf="connectedButton" class="connect-buttons-container">
+                            </div> -->
+                            <div *ngIf="connected(user.id)" class="connect-buttons-container">
                               <button class="btn btn-outline-primary disabled-connect-button" type="button" disabled>
                                 <i class="fas fa-check"></i>
                                 Connected
@@ -75,7 +75,7 @@
                         <div class="col-sm-10 col-12">
                           <h1>Work Experience</h1>
                         </div>
-                        <div class="col-sm-2 col-12">
+                        <div *ngIf="user.id && userDetails && userDetails.id == user.id" class="col-sm-2 col-12">
                             <button type="button" class="btn btn-outline-primary pull-right" (click)="open(content)"> <i class="fas fa-plus"></i> Add</button>
                         </div> 
                         <hr>
@@ -112,7 +112,7 @@
                         <div class="col-sm-10 col-12">
                           <h1>Education</h1>
                         </div>
-                        <div class="col-sm-2 col-12">
+                        <div *ngIf="user.id && userDetails && userDetails.id == user.id" class="col-sm-2 col-12">
                           <button type="button" class="btn btn-outline-primary pull-right" (click)="open(education)"> <i class="fas fa-plus"></i> Add</button>
                         </div> 
                         <hr>
@@ -150,7 +150,7 @@
                           <div class="col-sm-10 col-12">
                             <h1>Skills</h1>
                           </div>
-                          <div class="col-sm-2 col-12">
+                          <div *ngIf="user.id && userDetails && userDetails.id == user.id" class="col-sm-2 col-12">
                             <button type="button" class="btn btn-outline-primary pull-right" (click)="open(skills)"> <i class="fas fa-plus"></i> Add</button>
                           </div> 
                           <hr>
@@ -163,7 +163,7 @@
                               </ul>
   
                             </div>
-                            <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                            <div *ngIf="user.id && userDetails && userDetails.id != user.id" id="mySkills">
                               <ul id="skills_ul">
                                 <li *ngFor="let ed of user.skills;"  >
                                   <span *ngIf="ed.isPublic == 1" class="align-middle skill">{{ed.description}}</span>

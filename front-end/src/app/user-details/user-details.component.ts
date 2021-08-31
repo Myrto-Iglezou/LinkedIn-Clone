@@ -9,6 +9,7 @@ import {UserDetails} from '../model/user-details';
 import { Picture } from '../model/picture';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {SkillsExperienceService } from '../services/skills-experience.service';
+import { NetworkService } from '../services/network.service';
 
 @Component({
   selector: 'app-user-details',
@@ -22,13 +23,13 @@ export class UserDetailsComponent implements OnInit {
   validprofphoto = true;
   changeButton = false;
   userDetails: UserDetails;
+  userNetwork: User[] = new Array<User>();
 
   requestConnectButton = false;
   connectPendingButton = false;
   connectedButton = false;
   networkButton = false;
 
-  hideElements = false;
   closeResult = '';
 
 
@@ -39,7 +40,8 @@ export class UserDetailsComponent implements OnInit {
     private domSanitizer: DomSanitizer, 
     private authService: AuthenticationService,
     private modalService: NgbModal,
-    private skillsexperienceService:SkillsExperienceService
+    private skillsexperienceService:SkillsExperienceService,
+    private networkService: NetworkService,
     ) { }
 
   ngOnInit(): void {
@@ -54,6 +56,22 @@ export class UserDetailsComponent implements OnInit {
         alert(error.message);
       }
     );
+
+    this.networkService.getNetwork(this.userDetails.id).subscribe(
+      (network) => {
+        Object.assign(this.userNetwork , network);
+      }
+    );
+  }
+
+  connected(id: number): boolean {
+    let flag = 0;
+
+    for (let u of this.userNetwork) {
+      if(u.id == id)
+        return true;
+    }
+      return false;    
   }
 
   getRoles(){
@@ -126,6 +144,21 @@ export class UserDetailsComponent implements OnInit {
         );
     }
     location.reload();
+  }
+
+  addConnection(user: User) {
+    this.networkService.addNewConnection(this.userDetails.id,user.id).subscribe(
+      responce => {},
+      error => {
+        alert(error.message);
+      }      
+    );     
+    
+    this.networkService.getNetwork(this.userDetails.id).subscribe(
+      (network) => {
+        Object.assign(this.userNetwork , network);
+      }
+    );
   }
 
   
