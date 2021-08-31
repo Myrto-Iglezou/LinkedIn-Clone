@@ -57,6 +57,15 @@ public class User {
     @Column(name = "currentCompany")
     private String currentCompany;
 
+    @Column(name = "github")
+    private String github;
+
+    @Column(name = "website")
+    private String website;
+
+    @Column(name = "twitter")
+    private String twitter;
+
     // ------------ DATA MEMBERS WITH RELATIONS ------------------ //
 
     @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
