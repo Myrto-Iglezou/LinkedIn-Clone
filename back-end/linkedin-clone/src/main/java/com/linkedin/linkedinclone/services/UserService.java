@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.linkedin.linkedinclone.enumerations.NotificationType.*;
+import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
 
 @Service
 @AllArgsConstructor
@@ -72,22 +73,38 @@ public class UserService {
         commentRepository.save(comment);
     }
 
-    public Set<User> getUserNetwork(User user) {
+    public Set<User> getUserNetwork(User currentUser) {
         Set<User> network = new HashSet<>();
 
-        Set<Connection> connectionsFollowing = user.getUsersFollowing();
+        Set<Connection> connectionsFollowing = currentUser.getUsersFollowing();
+        System.out.println("connectionsFollowing");
         for(Connection con: connectionsFollowing) {
             if(con.getIsAccepted()){
-                network.add(con.getUserFollowing());
+                User userinNetwork = con.getUserFollowed();
+                System.out.println(userinNetwork.getName());
+                network.add(userinNetwork);
             }
         }
 
-        Set<Connection> connectionsFollowedBy = user.getUserFollowedBy();
+        Set<Connection> connectionsFollowedBy = currentUser.getUserFollowedBy();
+        System.out.println("connectionsFollowedBy");
         for(Connection con: connectionsFollowedBy) {
             if(con.getIsAccepted()){
-                network.add(con.getUserFollowing());
+                User userinNetwork = con.getUserFollowing();
+                System.out.println(userinNetwork.getName());
+                network.add(userinNetwork);
             }
         }
+
+        for(User u: network){
+            System.out.println(u.getName());
+            Picture uPic = u.getProfilePicture();
+            if(uPic!=null && uPic.isCompressed()) {
+                Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
+                u.setProfilePicture(temp);
+            }
+        }
+
         return network;
     }
 

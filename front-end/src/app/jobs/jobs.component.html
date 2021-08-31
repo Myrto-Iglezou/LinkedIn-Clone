@@ -19,7 +19,6 @@
                             <mat-label>Job description</mat-label>
                             <input matInput type="text" id="description" placeholder="Job description" [(ngModel)]="job.description" name="description" #description="ngModel" required >
                         </mat-form-field><br>
-                    
                         <div >
                             <button class="job-btn btn btn-primary" type="submit">Save</button>   
                         </div>
@@ -31,72 +30,81 @@
             <div class="text-center">
                 <h1 style="font-weight:bold; font-size: 30px;">Jobs</h1>
             </div>
-        
-            <div class="card border-primary mb-4"  id="jobCard">
-                <div class="card-title m-1 ">
-                    <h2 style="margin-left: 5%;padding-top:5% ;">Job title</h2>
-                    <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
-                </div>
-
-                <div class="card-body" style= "margin-left: 5%;padding-bottom: 10px;">
-                    <div  style="padding-bottom: 20px;">
-                        Job description
-                    </div>
-
-                    <div  style="padding-bottom: 20px;">
-                        Applicants so far: number
-                    </div>
-                    <hr style="border-style:dashed;border-color: blue;height: 2px; width: 85%;margin-left: 5%;margin-right: 5%;">
-
-                    <div class="row">
-                        
-                        <div class="btn m-b-0 m-0 border-danger" style="max-width: 20%; max-height: 5%;">
-                            <div class="card-body row">
-                                <div class="col-12 card-title mb-0"  style="margin-left: 0%;">
-                                    <strong> user.name user.surname </strong>
+            <div *ngIf="jobs.length==0" class="text-center p-4 text-muted">
+                No jobs have been posted
+            </div>
+            <div *ngFor="let job of jobs">
+                <div *ngIf="usersJob(job)">
+                    <div class="card border-primary mb-4"  id="jobCard">
+                        <div class="card-title m-1 ">
+                            <h2 style="margin-left: 5%;padding-top:5% ;">{{job.title}}</h2>
+                            <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
+                        </div>
+                        <div class="card-body" style= "margin-left: 5%;padding-bottom: 10px;">
+                            <div  style="padding-bottom: 20px;">
+                                {{job.description}}
+                            </div>
+                            <div  style="padding-bottom: 20px;">
+                                Number of applicants so far: {{job.usersApplied.length}}
+                            </div>
+                            <div  style="padding-bottom: 5px;">
+                                Applicants: 
+                            </div>
+                            <div class="row">
+                                <div *ngFor="let u of job.usersApplied">
+                                    <span class="badge badge-pill badge-primary" style="color: white;background-color: rgb(13, 175, 100) ;font-size: 1.1em;">
+                                         {{u.name}} {{u.surname}} 
+                                    </span>
                                 </div>
-                                
+                            </div>
+                            <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
+
+                            <div  style="padding-bottom: 20px;float:right;margin-right: 1%;">
+                                Published by You
+                            </div>
+                            <div  style="padding-bottom: 20px;float:left;margin-right: 1%;">
+                                {{job.timestamp | date:'d MMMM y, h:mm a'}}
                             </div>
                         </div>
-
                     </div>
-                    <hr style="border-style:dashed;border-color: blue;height: 2px; width: 85%;margin-left: 5%;margin-right: 5%;">
-
-                    <div  style="padding-bottom: 20px;float:right;margin-right: 1%;">
-                        Published by You
+                </div>
+                <div *ngIf="!usersJob(job)">
+                    <div class="card border mb-4"  id="jobCard">
+                        <div class="card-title m-1 ">
+                            <h2 style="float:left;margin-left: 5%;padding-top:5% ;">{{job.title}}</h2>
+                            <div *ngIf="alreadyApplied(job)" style="float:right;padding-top:5% ;" class="col-2  ">
+                                <button  type="button" (click)="newApplication(job.id)" class="btn btn-primary"> <i class="fas fa-plus"></i> Apply</button>
+                            </div> 
+                            <div *ngIf="!alreadyApplied(job)" style="float:right;padding-top:5% ;" class="col-3  ">
+                                <button disabled type="button" class="btn btn-outline-success"> <i class="fas fa-check"></i> Already applied</button>
+                            </div> 
+                            <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
+                            
+                        </div>
+        
+                        <div class="card-body" style= "margin-left: 5%;padding-bottom: 10px;">
+                            <div  style="padding-bottom: 20px;">
+                                {{job.description}}
+                            </div>
+        
+                            <div  style="padding-bottom: 20px;">
+                                Applicants so far: {{job.usersApplied.length}}
+                            </div>
+        
+                            <div  style="padding-bottom: 20px;float:right;margin-right: 1%;">
+                                Published by <strong>{{job.userMadeBy.name}} {{job.userMadeBy.surname}}</strong>
+                            </div>
+                            <div  style="padding-bottom: 20px;float:left;margin-right: 1%;">
+                                {{job.timestamp | date:'d MMMM y, h:mm a'}}
+                            </div>
+        
+        
+                        </div>
                     </div>
-                    <div  style="padding-bottom: 20px;float:left;margin-right: 1%;">
-                        Timestamp
-                    </div>
-
-
                 </div>
             </div>
 
-            <div class="card border mb-4"  id="jobCard">
-                <div class="card-title m-1 ">
-                    <h2 style="margin-left: 5%;padding-top:5% ;">Job title</h2>
-                    <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
-                </div>
 
-                <div class="card-body" style= "margin-left: 5%;padding-bottom: 10px;">
-                    <div  style="padding-bottom: 20px;">
-                        Job description
-                    </div>
-
-                    <div  style="padding-bottom: 20px;">
-                        Applicants so far: number
-                    </div>
-                    <div  style="padding-bottom: 20px;float:right;margin-right: 1%;">
-                        Published by Owner
-                    </div>
-                    <div  style="padding-bottom: 20px;float:left;margin-right: 1%;">
-                        Timestamp
-                    </div>
-
-
-                </div>
-            </div>
         </div>        
     </div>
 </div>

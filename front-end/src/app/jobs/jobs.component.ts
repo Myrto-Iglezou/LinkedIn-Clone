@@ -17,6 +17,8 @@ export class JobsComponent implements OnInit {
   user: User = new User();
   userDetails: UserDetails;
   job: Job = new Job();
+  jobs: Job[] = new Array<Job>();
+
 
   constructor(
     private route: ActivatedRoute,
@@ -36,30 +38,70 @@ export class JobsComponent implements OnInit {
         Object.assign(this.user , user);
       },
       error => {
-        if(this.userDetails)
-          this.router.navigate(['/in', this.userDetails.id.toString()]).then(() =>{
-            location.reload();
-          });
-        else
-          this.router.navigate(['/feed']).then(() => {
-            location.reload();
-          });
+        alert(error.message);
+      }
+    );
+
+    this.jobService.getJobs(this.userDetails.id).subscribe(
+      (jobs) => {
+        Object.assign(this.jobs , jobs);
+      },
+      error => {
+        alert(error.message);
       }
     );
   }
 
   jobSubmit(jobForm){
     if(jobForm.form.valid){
-      this.jobService.addJob(this.job,this.userDetails.id)
-          .subscribe(
-            responce => {},
-              error => {
-                alert(error.message);
-              } 
+      this.job.timestamp = new Date();
+      this.jobService.addJob(this.job,this.userDetails.id).subscribe(
+        responce => {
+          this.jobService.getJobs(this.userDetails.id).subscribe(
+            (jobs) => {
+              Object.assign(this.jobs , jobs);
+            },
+            error => {
+              alert(error.message);
+            }
           );
+          location.reload();
+        },
+        error => {
+          alert(error.message);
+        } 
+      );
     }
-    location.reload();
-
   }
+
+  alreadyApplied(job: Job): boolean{
+    job.usersApplied.forEach(
+      u => {
+        if(u.id == this.user.id){
+          return true;
+        }
+      }
+    );
+    return false;
+  }
+
+  newApplication(jobId: number) {
+    alert(jobId);
+    this.jobService.apply(jobId,this.userDetails.id).subscribe(
+      responce => {
+        location.reload();
+      },
+      error => {
+        alert(error.message);
+      } 
+    );
+  }
+
+  usersJob(job: Job) {
+    if(job.userMadeBy.id == this.user.id)
+      return true;
+    else 
+      return false;  
+    }
 
 }

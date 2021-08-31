@@ -71,6 +71,7 @@ public class NetworkController {
                 }
             }
         }
+
         for(Map.Entry m: map.entrySet()){
             System.out.println("-- "+m.getValue());
             searchResults.addAll((List<User>)  m.getValue());
@@ -88,7 +89,7 @@ public class NetworkController {
         return reverse(searchResults);
     }
 
-        @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/network")
     public Set<User> getNetwork(@PathVariable Long id) {

@@ -11,7 +11,15 @@ export class JobsService {
   constructor(private http: HttpClient) {}
 
   addJob(job: Job ,userId: number): Observable <HttpResponse<string>>{
-    alert(job.title);
     return this.http.post<string>('https://localhost:8443/in/' + userId.toString() + '/new-job', job, {observe : 'response'});
+  }
+
+  getJobs(userId: number): Observable <Job[]>{
+    return this.http.get<Job[]>('https://localhost:8443/in/' + userId.toString() + '/jobs');
+  }
+
+  apply(jobId: number ,userId: number): Observable <string>{
+    alert(userId);
+    return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/jobs/make-application/' + jobId.toString() , {observe : 'response'});
   }
 }
