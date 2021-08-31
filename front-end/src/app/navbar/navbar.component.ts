@@ -26,8 +26,7 @@ export class NavbarComponent implements OnInit {
       this.userDetails = userDetails;
       });
     
-    this.userService.getUser(this.userDetails.id.toString()).subscribe(
-      (user) => {
+    this.userService.getUser(this.userDetails.id.toString()).subscribe((user) => {
         Object.assign(this.user , user);
       },
       error => {
