@@ -1,10 +1,6 @@
 package com.linkedin.linkedinclone.controllers;
 
 
-import com.intellij.util.containers.MultiMap;
-import com.linkedin.linkedinclone.dto.NetworkUserDTO;
-import com.linkedin.linkedinclone.dto.NewUserInfo;
-import com.linkedin.linkedinclone.dto.UserNetworkDTO;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.ConnectionRepository;
@@ -12,13 +8,9 @@ import com.linkedin.linkedinclone.repositories.NotificationRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
 import com.linkedin.linkedinclone.services.UserService;
-import com.linkedin.linkedinclone.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -126,6 +118,15 @@ public class NetworkController {
         }
 
         return network;
+    }
+
+    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('PROFESSIONAL')")
+    @PutMapping("/in/{id}/request/{otherUserId}")
+    public boolean hasSendRequest(@PathVariable Long id, @PathVariable Long otherUserId) {
+
+        System.out.println("Check request");
+        return true;
     }
 
     @CrossOrigin(origins = "*")

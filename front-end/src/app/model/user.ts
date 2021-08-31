@@ -1,6 +1,7 @@
 import { Picture } from './picture';
 import { Role } from './role';
 import { SkillsAndExperience } from './skills-experience';
+import { Connection } from './connection';
 
 export class User {
   id: number;
@@ -15,8 +16,8 @@ export class User {
   city: string;
   currentJob: string;
   currentCompany: string;
-  usersFollowing:  Array<User> = new Array<User>();
-  userFollowedBy:  Array<User> = new Array<User>();
+  usersFollowing:  Array<Connection> = new Array<Connection>();
+  userFollowedBy:  Array<Connection> = new Array<Connection>();
   numOfConnections: number;
   education: Array <SkillsAndExperience> = new Array <SkillsAndExperience>();
   workExperience: Array <SkillsAndExperience> = new Array <SkillsAndExperience>();
