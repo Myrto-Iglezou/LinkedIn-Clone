@@ -10,6 +10,7 @@ import { Picture } from '../model/picture';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {SkillsExperienceService } from '../services/skills-experience.service';
 import { NetworkService } from '../services/network.service';
+import { Connection } from '../model/connection';
 
 @Component({
   selector: 'app-user-details',
@@ -23,12 +24,15 @@ export class UserDetailsComponent implements OnInit {
   validprofphoto = true;
   changeButton = false;
   userDetails: UserDetails;
+  thisUser: User = new User();
   userNetwork: User[] = new Array<User>();
-
   requestConnectButton = false;
   connectPendingButton = false;
   connectedButton = false;
   networkButton = false;
+
+  usersFollowing:  Connection[] = new Array<Connection>();
+  userFollowedBy:  Connection[] = new Array<Connection>();
 
   closeResult = '';
 
@@ -57,6 +61,16 @@ export class UserDetailsComponent implements OnInit {
       }
     );
 
+    this.userService.getUser(this.userDetails.id.toString()).subscribe((user1) => {
+      Object.assign(this.thisUser , user1);
+      Object.assign(this.usersFollowing, this.thisUser.usersFollowing);
+      Object.assign(this.userFollowedBy, this.thisUser.userFollowedBy);
+    },
+      error => {
+        alert(error.message);
+      }
+    );
+
     this.networkService.getNetwork(this.userDetails.id).subscribe(
       (network) => {
         Object.assign(this.userNetwork , network);
@@ -65,13 +79,20 @@ export class UserDetailsComponent implements OnInit {
   }
 
   connected(id: number): boolean {
-    let flag = 0;
 
     for (let u of this.userNetwork) {
       if(u.id == id)
         return true;
     }
       return false;    
+  }
+
+  hasRequestPending(id: number): boolean {
+
+    if(this.networkService.hasSendRequest(this.userDetails.id,id))
+      return true;
+    else
+      return false;
   }
 
   getRoles(){
@@ -159,6 +180,8 @@ export class UserDetailsComponent implements OnInit {
         Object.assign(this.userNetwork , network);
       }
     );
+
+    location.reload();
   }
 
   

@@ -15,19 +15,19 @@
                       <p class="text-muted font-size-sm">{{user.city}}</p>
                       <div>
                         <div *ngIf="user.id && userDetails && userDetails.id != user.id">
-                            <div *ngIf="!connected(user.id)" class="connect-buttons-container">
+                            <div *ngIf="!connected(user.id) && !hasRequestPending(user.id)" class="connect-buttons-container">
                                 <button class="btn btn-secondary request-connect-button" type="button" (click)="addConnection(user)"> 
                                 <i class="fas fa-plus"></i>
                                 Add Connection
                               </button>
                             </div>
-                            <!-- <div *ngIf="connectPendingButton" class="connect-buttons-container">
+                            <div *ngIf="hasRequestPending(user.id)" class="connect-buttons-container">
                               <button class="btn btn-outline-primary disabled-connect-button" type="button" disabled>
                                 <i class="fas fa-clock"></i>
                                 Connect Request Pending
                               </button>
-                            </div> -->
-                            <div *ngIf="connected(user.id)" class="connect-buttons-container">
+                            </div>
+                            <div *ngIf="connected(user.id) && !hasRequestPending(user.id)" class="connect-buttons-container">
                               <button class="btn btn-outline-primary disabled-connect-button" type="button" disabled>
                                 <i class="fas fa-check"></i>
                                 Connected

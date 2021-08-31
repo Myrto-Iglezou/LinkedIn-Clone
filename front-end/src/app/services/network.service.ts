@@ -19,7 +19,6 @@ export class NetworkService {
   constructor(private http: HttpClient) {}
 
   addNewConnection(userId: number,connId: number): Observable<string> {
-    alert("here");
     return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/new-connection/' + connId.toString(), {observe : 'response'});
   }
 
@@ -29,6 +28,10 @@ export class NetworkService {
 
   search(userId: number,searchQuery: string): Observable<User[]> {
     return this.http.get<User[]>('https://localhost:8443/in/' + userId.toString() + '/search/'+searchQuery);
+  }
+
+  hasSendRequest(mainUserId: number, otherUserId: number): Observable<boolean>{
+    return this.http.get<boolean>('https://localhost:8443/in/' + mainUserId.toString() + '/request/'+otherUserId.toString());
   }
 
 }
