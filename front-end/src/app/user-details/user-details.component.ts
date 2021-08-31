@@ -24,7 +24,7 @@ export class UserDetailsComponent implements OnInit {
   validprofphoto = true;
   changeButton = false;
   userDetails: UserDetails;
-  thisUser: User = new User();
+  connectedUser: User = new User();
   userNetwork: User[] = new Array<User>();
   requestConnectButton = false;
   connectPendingButton = false;
@@ -62,9 +62,7 @@ export class UserDetailsComponent implements OnInit {
     );
 
     this.userService.getUser(this.userDetails.id.toString()).subscribe((user1) => {
-      Object.assign(this.thisUser , user1);
-      Object.assign(this.usersFollowing, this.thisUser.usersFollowing);
-      Object.assign(this.userFollowedBy, this.thisUser.userFollowedBy);
+      Object.assign(this.connectedUser , user1);
     },
       error => {
         alert(error.message);
@@ -89,10 +87,23 @@ export class UserDetailsComponent implements OnInit {
 
   hasRequestPending(id: number): boolean {
 
-    if(this.networkService.hasSendRequest(this.userDetails.id,id))
-      return true;
-    else
-      return false;
+    let flag=false;
+
+    this.connectedUser.usersFollowing.forEach(
+      con => {
+        if(con.userFollowed.id == this.user.id && !con.isAccepted)
+          flag=true;
+      }
+    );
+
+    this.connectedUser.userFollowedBy.forEach(
+      con => {
+        if(con.userFollowing.id == this.user.id && !con.isAccepted)
+          flag=true;
+      }
+    );
+
+    return flag;
   }
 
   getRoles(){

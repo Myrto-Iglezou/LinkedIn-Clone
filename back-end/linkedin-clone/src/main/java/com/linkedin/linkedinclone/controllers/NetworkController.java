@@ -123,11 +123,34 @@ public class NetworkController {
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
-    @PutMapping("/in/{id}/request/{otherUserId}")
-    public boolean hasSendRequest(@PathVariable Long id, @PathVariable Long otherUserId) {
+    @GetMapping("/in/{id}/request/{otherUserId}")
+    public ResponseEntity<String> hasSendRequest(@PathVariable Long id, @PathVariable Long otherUserId) {
 
-        System.out.println("Check request");
-        return true;
+        System.out.println("\n\n>Check request");
+        User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        User otherUser = userRepository.findById(otherUserId).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+        System.out.println(otherUser.getName());
+
+        Set<Connection> connectionsFollowing = currentUser.getUsersFollowing();
+        System.out.println("connectionsFollowing");
+        for(Connection con: connectionsFollowing) {
+            if(!con.getIsAccepted()  && con.getUserFollowed()==otherUser){
+                User userinNetwork = con.getUserFollowed();
+                System.out.println(userinNetwork.getName());
+                return ResponseEntity.ok("true");
+            }
+        }
+
+        connectionsFollowing = currentUser.getUserFollowedBy();
+        System.out.println("----");
+        for(Connection con: connectionsFollowing) {
+            if(!con.getIsAccepted()  && con.getUserFollowing()==otherUser){
+                User userinNetwork = con.getUserFollowing();
+                System.out.println(userinNetwork.getName());
+                return ResponseEntity.ok("true");
+            }
+        }
+        return ResponseEntity.ok("false");
     }
 
     @CrossOrigin(origins = "*")
