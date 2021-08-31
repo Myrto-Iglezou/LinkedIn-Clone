@@ -112,9 +112,9 @@ public class UserController {
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
-    @GetMapping("/in/{id}/profile")
-    public User getPersonalProfile(@PathVariable Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
+    @GetMapping("/in/{id}/user-profile/{otherId}")
+    public User getPersonalProfile(@PathVariable Long id,@PathVariable Long otherId) {
+        User user = userRepository.findById(otherId).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Picture pic = user.getProfilePicture();
         if(pic != null && pic.isCompressed()){
             Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));

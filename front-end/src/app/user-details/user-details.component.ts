@@ -47,18 +47,11 @@ export class UserDetailsComponent implements OnInit {
       this.userDetails = userDetails;
     });
 
-    this.userService.getUser(this.route.snapshot.paramMap.get('id')).subscribe((user) => {
+    this.userService.getOtherUser(this.userDetails.id.toString(),this.route.snapshot.paramMap.get('id').toString()).subscribe((user) => {
         Object.assign(this.user , user);
       },
       error => {
-        if(this.userDetails)
-          this.router.navigate(['/users', this.userDetails.id.toString()]).then(() =>{
-            location.reload();
-          });
-        else
-          this.router.navigate(['/feed']).then(() => {
-            location.reload();
-          });
+        alert(error.message);
       }
     );
   }
@@ -84,8 +77,6 @@ export class UserDetailsComponent implements OnInit {
     }
     return null;
   }
-
-
     
   hasRole(rolename: string): boolean {
     let flag = false;

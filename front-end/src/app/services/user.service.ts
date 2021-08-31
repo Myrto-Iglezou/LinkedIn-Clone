@@ -24,6 +24,10 @@ export class UserService {
     return this.http.get<User>('https://localhost:8443/in/' + id);
   }
 
+  getOtherUser(id: string,otherId: string): Observable<User> {
+    return this.http.get<User>('https://localhost:8443/in/' + id + '/user-profile/'+ otherId);
+  }
+
   editUserSettings(usersettings: UserSettings): Observable<HttpResponse<any>>{
     return this.http.put<UserSettings>('https://localhost:8443/in/' + usersettings.id.toString() + '/settings', usersettings, {observe : 'response'});
   }
