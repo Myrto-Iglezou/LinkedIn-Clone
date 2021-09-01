@@ -100,5 +100,15 @@ export class FeedComponent implements OnInit {
     return null;
   }
 
+  displayUserPhoto(user: User): any{
+    if(user.profilePicture) {
+      if (user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
+      else if (user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
+    }
+    return null;
+  }
+
 
 }

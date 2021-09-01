@@ -8,13 +8,15 @@
                     <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
                 </div> 
                 <div class="card-body" style= "text-align:center">
-                  <h5 class="card-title" style= "font-size: 20px;"><b>{{user.name}} {{user.surname}}</b></h5>
-                  <p class="card-text">{{user.currentJob}} at {{user.currentCompany}}</p>
-                  <hr style="height:1px; color:#8f9299;">
-                    <p style= "text-align:left; padding-left:15px;">
-                        <b>Connections: </b> {{network.length}}</p>
-                  <hr style="height:1px; color:#8f9299;">
-                  <button *ngIf="userDetails" type="button" class="btn profile-btn" (click)="goToProfile()">View my profile</button>
+                    <h5 class="card-title" style= "font-size: 20px;"><b>{{user.name}} {{user.surname}}</b></h5>
+                    <div *ngIf=" user.currentJob && user.currentCompany">
+                        <p class="card-text">{{user.currentJob}} at {{user.currentCompany}}</p>
+                    </div>
+                    <hr style="height:1px; color:#8f9299;">
+                        <p style= "text-align:left; padding-left:15px;">
+                            <b>Connections: </b> {{network.length}}</p>
+                    <hr style="height:1px; color:#8f9299;">
+                    <button *ngIf="userDetails" type="button" class="btn profile-btn" (click)="goToProfile()">View my profile</button>
                 </div>
             </div>
 
@@ -29,12 +31,16 @@
                     <div *ngIf="network.length!=0">
                         <div *ngFor="let nuser of network">
                             <hr style="height:1px; color:#8f9299;">
-                            <a (onclick)="goToOtherProfile(nuser)">
-                                {{nuser.name}} {{nuser.surname}}
-                            </a>
-                            <hr style="height:1px; color:#8f9299;">
+                            <img [src]="displayUserPhoto(nuser)" class="rounded-circle" style="margin-left:-15px;width: 60px;" alt="" loading="lazy"/>
+                            <button [routerLink]="['/users/',nuser.id]" type="button" class="btn">
+                                {{nuser.name}} {{nuser.surname}} <br>
+                                <div *ngIf=" nuser.currentJob && nuser.currentCompany">
+                                    <small style="color: rgb(158, 157, 157);">{{nuser.currentJob}} at {{nuser.currentCompany}}</small>
+                                </div>
+                            </button>
                         </div>
                     </div>
+                    <hr style="height:1px; color:#8f9299;">
                   <a href="\network" class="btn profile-btn" >View my Network</a>
                 </div>
             </div>
