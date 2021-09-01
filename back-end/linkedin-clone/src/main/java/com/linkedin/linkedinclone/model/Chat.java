@@ -31,6 +31,8 @@ public class Chat {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="chat")
     @JsonIgnoreProperties(value = {"chat","jobApplied","jobsCreated","comments", "posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Message> messages = new HashSet<>();
 
 

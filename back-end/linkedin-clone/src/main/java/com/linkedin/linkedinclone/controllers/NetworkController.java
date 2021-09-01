@@ -178,16 +178,19 @@ public class NetworkController {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
         System.out.println(user.getName() + " will accept connection id"+ connectionId);
+
         Connection conn = connectionRepository.findById(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
         conn.setIsAccepted(true);
         connectionRepository.save(conn);
+
         Notification not = notificationRepository.findByConnectionId(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
         not.setIsShown(true);
         notificationRepository.save(not);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy:HH.mm.ss");
+
         Chat chat = new Chat();
-        chat.setTimestamp(Timestamp.valueOf(sdf1.format(new Timestamp(System.currentTimeMillis()))));
+        chat.setTimestamp(new Timestamp(System.currentTimeMillis()));
         Set<User> users = new HashSet<>();
         users.add(user);
         if(conn.getUserFollowed()!=user)
@@ -197,6 +200,11 @@ public class NetworkController {
 
         chat.setUsers(users);
         chatRepository.save(chat);
+        System.out.println("\n\n\n");
+        System.out.println(chat);
+        for(User u: users) {
+            System.out.println(u);
+            System.out.println(u.getChats());}
         return ResponseEntity.ok("\"Connection accepted with success!\"");
     }
 

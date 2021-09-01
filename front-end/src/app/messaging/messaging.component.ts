@@ -19,8 +19,8 @@ export class MessagingComponent implements OnInit {
 
   user: User = new User();
   userDetails: UserDetails;
-  currentChat: Chat;
-  chats: Chat[];
+  currentChat: Chat = null;
+  chats: Chat[] = new Array<Chat>();
   incomingMessages: Message[] = new Array<Message>();
   outcomingMessages: Message[] = new Array<Message>();
   newMessage: Message = new Message();
@@ -43,7 +43,15 @@ export class MessagingComponent implements OnInit {
     this.userService.getUser(this.userDetails.id.toString()).subscribe(
       (user) => {
         Object.assign(this.user , user);
-        Object.assign(this.chats , user.chats);
+    },
+      error => {
+        alert(error.message);
+      }
+    );
+
+    this.chatService.getChats(this.userDetails.id).subscribe(
+      (chats) => {
+        Object.assign(this.chats , chats);
     },
       error => {
         alert(error.message);
@@ -52,13 +60,14 @@ export class MessagingComponent implements OnInit {
 
     this.chats = this.sortChatsByDate();
   }
+
   getOtherUser(chat:Chat): User {
     
     for (let u of chat.users) {
       if(u.id != this.userDetails.id)
         return u;
     }
-    return this.user;
+    return null;
   }
 
   displayProfilePhoto(user: User): any{

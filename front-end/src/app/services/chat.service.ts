@@ -6,6 +6,7 @@ import { Comment } from '../model/comment';
 import { InterestReaction } from '../model/interestReaction';
 import { Chat } from '../model/chat';
 import { Message } from '../model/message';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'application/json' })
 };

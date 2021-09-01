@@ -33,7 +33,10 @@ public class ChatController {
     @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/chats")
     public Set<Chat> getAllChats(@PathVariable Long id) {
+        System.out.println("\n\n\n");
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+        for(Chat c: currentUser.getChats())
+            System.out.println(c);
         return currentUser.getChats();
     }
 

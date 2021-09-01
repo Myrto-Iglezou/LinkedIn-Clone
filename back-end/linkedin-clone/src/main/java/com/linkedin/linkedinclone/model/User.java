@@ -142,7 +142,7 @@ public class User {
     @JsonIgnoreProperties("userMadeBy")
     private Set<Message> messages = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "users")
     @JsonIgnoreProperties("users")
     private Set<Chat> chats = new HashSet<>();
 
