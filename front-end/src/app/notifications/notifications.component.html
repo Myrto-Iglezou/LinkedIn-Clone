@@ -5,7 +5,7 @@
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;padding-top: 6%;">Connection requests</h1>
     </div>
-    <div *ngIf="connRequests.length == 0" class="text-center">
+    <div *ngIf="connRequests.length == 0" class="text-center text-muted">
         <p style="font-size: 20px;">No new connection requests</p>
     </div>
     <div *ngIf="connRequests.length != 0" class="container align-self-center">
@@ -23,7 +23,7 @@
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;">Notifications from your posts</h1>
     </div>
-    <div *ngIf="postNotifications.length == 0" class="text-center">
+    <div *ngIf="postNotifications.length == 0" class="text-center text-muted">
         <p style="font-size: 20px;">No news from your posts</p>
     </div>
     <div *ngIf="postNotifications.length != 0" class="container align-self-center">
