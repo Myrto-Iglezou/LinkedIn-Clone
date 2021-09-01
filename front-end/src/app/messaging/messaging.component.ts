@@ -23,7 +23,7 @@ export class MessagingComponent implements OnInit {
   chats: Chat[];
   incomingMessages: Message[] = new Array<Message>();
   outcomingMessages: Message[] = new Array<Message>();
-
+  newMessage: Message = new Message();
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class MessagingComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private domSanitizer: DomSanitizer,
     private userService: UserService,
-    private ChatService: ChatService
+    private chatService: ChatService
   ) {  }
 
   ngOnInit() {
@@ -99,5 +99,20 @@ export class MessagingComponent implements OnInit {
         return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
     }
     return null;
+  }
+
+  addMessage(messageform) {
+    if(messageform.form.valid) {
+      this.newMessage.timestamp = new Date();
+      this.chatService.newMessage(this.newMessage,this.userDetails.id,this.currentChat.id)
+        .subscribe(
+          response => {
+             location.reload();
+            },
+            error => {
+              alert(error.message);
+            }
+        );
+    }
   }
 }

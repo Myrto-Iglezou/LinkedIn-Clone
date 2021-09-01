@@ -116,10 +116,12 @@
               </div>
               <div class="type_msg">
                 <div class="input_msg_write">
-                  <input type="text" class="write_msg" placeholder="Type a message" />
-                  <button class="msg_send_btn" type="button">
-                    <i class="far fa-paper-plane"></i>
-                  </button>
+                  <form name="form" #messageform="ngForm" (ngSubmit)="addMessage(messageform)">
+                    <input [(ngModel)]="newMessage.content" type="text" class="write_msg" placeholder="Type a message" />
+                    <button [disabled]="!newMessage.content"  class="msg_send_btn" type="submit">
+                      <i class="far fa-paper-plane"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
