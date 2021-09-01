@@ -40,10 +40,9 @@ export class LoginComponent implements OnInit {
 
   makeRedirectUrl(userDetails: UserDetails): string {
     let redirectUrl: string = null;
-    if (this.hasRole('PROFESSIONAL', userDetails)) redirectUrl = '/feed';
-    else if (this.hasRole('ADMIN', userDetails)) redirectUrl = '/admin';
+    if (this.hasRole('ADMIN', userDetails)) redirectUrl = '/admin';
+    else if (this.hasRole('PROFESSIONAL', userDetails)) redirectUrl = '/feed';    
     else redirectUrl = '/login';
-
     return redirectUrl;
   }
 
@@ -70,17 +69,19 @@ export class LoginComponent implements OnInit {
             userDetails.token = response.headers.get('Authorization');
             this.user.roles.forEach((role) => {
               if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';
-              else if (role.name === 'ADMIN') this.returnUrl = '/admin';
+              else if(role.name === 'ADMIN') this.returnUrl = '/admin';              
+              
               userDetails.roles.push(role.name);
             });
+            
             this.authenticationService.setLoggedInUser(userDetails);
-
+            
             this.route.queryParams.subscribe((params) => {
               if (params && params.returnUrl) {
                 this.router.navigate([params.returnUrl]).then(() => {
                   location.reload();
                 });
-              } else this.router.navigate([this.makeRedirectUrl(userDetails)]);
+              } else this.router.navigate([this.makeRedirectUrl(userDetails)]); 
             });
           },
           (error) => {
