@@ -52,6 +52,24 @@ export class MessagingComponent implements OnInit {
 
     this.chats = this.sortChatsByDate();
   }
+  getOtherUser(chat:Chat): User {
+    
+    for (let u of chat.users) {
+      if(u.id != this.userDetails.id)
+        return u;
+    }
+    return this.user;
+  }
+
+  displayProfilePhoto(user: User): any{
+    if(user.profilePicture) {
+      if (user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
+      else if (user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
+    }
+    return null;
+  }
 
   sortChatsByDate(): Chat[] {
     return this.chats.sort(
@@ -89,16 +107,6 @@ export class MessagingComponent implements OnInit {
 
   isIncoming(message: Message) {
     return message.userMadeBy.id != this.user.id;
-  }
-  
-  displayProfilePhoto(user: User): any{
-    if(user.profilePicture) {
-      if (user.profilePicture.type === 'image/png')
-        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
-      else if (user.profilePicture.type === 'image/jpeg')
-        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
-    }
-    return null;
   }
 
   addMessage(messageform) {
