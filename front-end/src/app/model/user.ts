@@ -26,6 +26,6 @@ export class User {
   website: string;
   twitter: string;
   github: string;
-  chat: Array <Chat> = new Array <Chat>();
+  chats: Array <Chat> = new Array <Chat>();
 
 }
