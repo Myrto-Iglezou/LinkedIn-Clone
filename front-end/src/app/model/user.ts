@@ -2,6 +2,7 @@ import { Picture } from './picture';
 import { Role } from './role';
 import { SkillsAndExperience } from './skills-experience';
 import { Connection } from './connection';
+import { Chat } from './chat';
 
 export class User {
   id: number;
@@ -25,13 +26,6 @@ export class User {
   website: string;
   twitter: string;
   github: string;
-  // posts: Array<Post> = new Array<Post>();
-  // comments: Array<Comment> = new Array<Comment>();
-  // notifications: Array<Notification> = new Array<Notification>();
-  // "interestReactions": [],
-  // "jobsCreated": [],
-  // "jobApplied": [],
-  // "messages": [],
-  // "chats": []
+  chat: Array <Chat> = new Array <Chat>();
 
 }
