@@ -21,7 +21,9 @@ export class MessagingComponent implements OnInit {
   userDetails: UserDetails;
   currentChat: Chat;
   chats: Chat[];
-  messages: Message[] = new Array<Message>();
+  incomingMessages: Message[] = new Array<Message>();
+  outcomingMessages: Message[] = new Array<Message>();
+
 
   constructor(
     private route: ActivatedRoute,
@@ -48,11 +50,19 @@ export class MessagingComponent implements OnInit {
       }
     );
 
-    this.sortedChats();
+    this.chats = this.sortChatsByDate();
   }
 
-  sortedChats() {
-    this.chats = this.chats.sort(
+  sortChatsByDate(): Chat[] {
+    return this.chats.sort(
+      (a, b) => {
+        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
+      }
+    );
+  }
+
+  sortMessagesByDate(messages: Message[]): Message[]  {
+    return messages.sort(
       (a, b) => {
         return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
       }
@@ -67,13 +77,27 @@ export class MessagingComponent implements OnInit {
 
     this.currentChat.messages.forEach(
       m => {
-
+        if(m.userMadeBy.id == this.user.id)
+          this.outcomingMessages.push(m);
+        else
+          this.incomingMessages.push(m);
       }
     );
-
-
+    this.outcomingMessages = this.sortMessagesByDate(this.outcomingMessages);
+    this.incomingMessages = this.sortMessagesByDate(this.incomingMessages);
   }
 
+  isIncoming(message: Message) {
+    return message.userMadeBy.id != this.user.id;
+  }
   
-
+  displayProfilePhoto(user: User): any{
+    if(user.profilePicture) {
+      if (user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
+      else if (user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
+    }
+    return null;
+  }
 }
