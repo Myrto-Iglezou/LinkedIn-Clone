@@ -3,10 +3,7 @@ package com.linkedin.linkedinclone.controllers;
 
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
-import com.linkedin.linkedinclone.repositories.ConnectionRepository;
-import com.linkedin.linkedinclone.repositories.NotificationRepository;
-import com.linkedin.linkedinclone.repositories.RoleRepository;
-import com.linkedin.linkedinclone.repositories.UserRepository;
+import com.linkedin.linkedinclone.repositories.*;
 import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.google.common.collect.Lists.reverse;
@@ -32,6 +31,7 @@ public class NetworkController {
     private final RoleRepository roleRepository;
     private final ConnectionRepository connectionRepository;
     private final NotificationRepository notificationRepository;
+    private final ChatRepository chatRepository;
 
     @CrossOrigin(origins = "*")
     //@PreAuthorize("hasRole('PROFESSIONAL')")
@@ -184,7 +184,19 @@ public class NetworkController {
         Notification not = notificationRepository.findByConnectionId(connectionId).orElseThrow(() -> new UserNotFoundException("Notification with id "+id+"doesn't exist"));
         not.setIsShown(true);
         notificationRepository.save(not);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd.MM.yyyy:HH.mm.ss");
+        Chat chat = new Chat();
+        chat.setTimestamp(Timestamp.valueOf(sdf1.format(new Timestamp(System.currentTimeMillis()))));
+        Set<User> users = new HashSet<>();
+        users.add(user);
+        if(conn.getUserFollowed()!=user)
+            users.add(conn.getUserFollowed());
+        else if(conn.getUserFollowing()!=user)
+            users.add(conn.getUserFollowing());
 
+        chat.setUsers(users);
+        chatRepository.save(chat);
         return ResponseEntity.ok("\"Connection accepted with success!\"");
     }
 
