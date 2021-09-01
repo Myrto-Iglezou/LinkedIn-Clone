@@ -44,11 +44,9 @@ public class User {
     private String surname;
 
     @Column(name = "phoneNumber")
-    //@NonNull
     private String phoneNumber;
 
     @Column(name = "city")
-    //@NonNull
     private String city;
 
     @Column(name = "currentJob")
@@ -104,19 +102,27 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="owner")
     @JsonIgnoreProperties("owner")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
     @JsonIgnoreProperties("userMadeBy")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="user")
     @JsonIgnoreProperties("user")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Notification> notifications = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnoreProperties("usersInterested")
     @Fetch(value = FetchMode.SELECT)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
     /* ----------- JOBS ----------- */

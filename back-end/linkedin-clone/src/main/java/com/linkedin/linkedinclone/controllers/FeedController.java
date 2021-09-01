@@ -162,8 +162,11 @@ public class FeedController {
     @PostMapping(value="/in/{id}/feed/new-post", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity newPost(@PathVariable Long id,@RequestPart("object") Post post,@RequestPart(value = "imageFile", required=false) MultipartFile[] files) throws IOException {
 
+        System.out.println("\n\n\n> newPost: "+id);
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+        System.out.println("\n> findById\n");
         post.setOwner(currentUser);
+        System.out.println("\n> setOwner\n");
         if(files!=null){
             for(MultipartFile file: files){
                 Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
@@ -173,6 +176,7 @@ public class FeedController {
                 System.out.println("> Picture compressed and saved saved ");
             }
         }
+        System.out.println("\n> to save\n");
         postRepository.save(post);
         System.out.println("\n\n\n> New post made with success");
         System.out.println(post);

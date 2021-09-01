@@ -37,15 +37,21 @@ public class Post {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="post", orphanRemoval=true)
     @JsonIgnoreProperties(value = {"post","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="post", orphanRemoval=true)
     @JsonIgnoreProperties(value = {"post"},allowSetters = true)
     @Fetch(value = FetchMode.SELECT)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<InterestReaction> interestReactions = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="post")
-    @JsonIgnoreProperties(value = {"post","user"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"post"})
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Picture> pictures = new HashSet<>();
 
 
