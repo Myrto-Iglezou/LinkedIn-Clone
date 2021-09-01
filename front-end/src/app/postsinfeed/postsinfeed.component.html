@@ -1,7 +1,7 @@
 <!-- <p>postsinfeed works!</p> -->
 
 <div class="posts" id="posts" >
-    <div class="text-center text-muted" *ngIf="posts.length==0">
+    <div class="text-center text-muted" *ngIf="posts.length==0" style="background-color: transparent;">
         No posts available
     </div>
     <div  *ngFor="let post of posts; let i = index">

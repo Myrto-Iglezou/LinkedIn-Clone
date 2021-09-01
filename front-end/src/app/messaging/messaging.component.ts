@@ -6,6 +6,7 @@ import { AuthenticationService } from '../authentication.service';
 import { User } from '../model/user';
 import { UserDetails } from '../model/user-details';
 import { UserService } from '../services/user.service';
+import { ChatService } from '../services/chat.service';
 import { Chat } from "../model/chat";
 
 @Component({
@@ -24,9 +25,9 @@ export class MessagingComponent implements OnInit {
     private http: HttpClient,
     private authenticationService: AuthenticationService,
     private domSanitizer: DomSanitizer,
-    private userService: UserService
-    ) {
-  }
+    private userService: UserService,
+    private ChatService: ChatService
+  ) {  }
 
   ngOnInit() {
     this.authenticationService.getLoggedInUser().subscribe((userDetails) => {
@@ -42,5 +43,10 @@ export class MessagingComponent implements OnInit {
     );
   }
 
+  sortedChats() {
+
+  }
+
+  
 
 }
