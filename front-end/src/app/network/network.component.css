@@ -20,9 +20,14 @@
     width: 100%;
 }
 
+.search-area:focus,.search-area:active  {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none;
+}
 .search-button {
     height: 50px;
-    background-color: #1285be;
+    background-color: #158eff;
     outline: none !important;
     box-shadow: none;
     border: none;
@@ -30,7 +35,7 @@
 
 .btn.search-button:hover,
 .btn.search-button:active {
-    background-color: #255f7c;
+    background-color: #158eff;
     border-color: inherit;
     -webkit-box-shadow: none;
     outline: none !important;
@@ -39,7 +44,7 @@
 }
 
 .btn.search-button:disabled {
-    background-color: #006394;
+    background-color: #158eff;
     border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;
