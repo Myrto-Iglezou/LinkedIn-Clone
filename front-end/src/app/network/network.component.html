@@ -15,7 +15,7 @@
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;">Search results</h1>
     </div>
-    <div *ngIf="searchResults.length == 0" class="text-center">
+    <div *ngIf="searchResults.length == 0" class="text-center text-muted">
         <p style="font-size: 20px;">No results</p>
     </div>
     <div *ngIf="searchResults.length" class="container" id="main-container">
@@ -81,7 +81,7 @@
     <div class="text-center p-5">
         <h1 style="font-weight:bold; font-size: 30px;">Your network</h1>
     </div>
-    <div *ngIf="network.length == 0" class="text-center">
+    <div *ngIf="network.length == 0" class="text-center text-muted">
         <p style="font-size: 20px;">No connections yet. Be more social!</p>
     </div>
 
