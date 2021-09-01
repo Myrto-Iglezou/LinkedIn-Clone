@@ -27,7 +27,7 @@ img{ max-width:100%;}
 .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
 
 .recent_heading h4 {
-  color: #05728f;
+  color: #158eff;
   font-size: 21px;
   margin: auto;
 }
@@ -97,7 +97,7 @@ img{ max-width:100%;}
 }
 
  .sent_msg p {
-  background: #05728f none repeat scroll 0 0;
+  background: #158eff none repeat scroll 0 0;
   border-radius: 3px;
   font-size: 14px;
   margin: 0; color:#fff;
@@ -111,7 +111,7 @@ img{ max-width:100%;}
 }
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
+  border: 0;
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
@@ -120,7 +120,7 @@ img{ max-width:100%;}
 
 .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
 .msg_send_btn {
-  background: #05728f none repeat scroll 0 0;
+  background: #158eff none repeat scroll 0 0;
   border: medium none;
   border-radius: 50%;
   color: #fff;
@@ -137,3 +137,9 @@ img{ max-width:100%;}
   height: 516px;
   overflow-y: auto;
 }
+
+.input_msg_write input:focus, .input_msg_write input:active{
+    border: 0;
+    outline: none;
+}
+
