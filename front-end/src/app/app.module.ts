@@ -35,6 +35,7 @@ import { NetworkComponent } from './network/network.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
+import { MessagingComponent } from './messaging/messaging.component';
 
 const appRoutes: Routes = [
   {
@@ -63,6 +64,10 @@ const appRoutes: Routes = [
   {
     path: 'feed',
     component: FeedComponent,
+  },
+  {
+    path: 'messaging',
+    component: MessagingComponent,
   },
   { path: 'admin', children: [
     {path: '', component: AdminComponent},
@@ -93,6 +98,7 @@ const appRoutes: Routes = [
     NotificationsComponent,
     JobsComponent,
     AdminNavComponent,
+    MessagingComponent,
   ],
   imports: [
     NgxPaginationModule,
