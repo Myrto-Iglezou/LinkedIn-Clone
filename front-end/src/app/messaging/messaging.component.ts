@@ -19,7 +19,7 @@ export class MessagingComponent implements OnInit {
 
   user: User = new User();
   userDetails: UserDetails;
-  openedChat: Chat;
+  currentChat: Chat;
   chats: Chat[];
   messages: Message[] = new Array<Message>();
 
@@ -59,9 +59,18 @@ export class MessagingComponent implements OnInit {
     );
   }
 
+  openChat(chat:Chat) {
+    this.currentChat = chat;
+  }
+
   incomingMessagesFilter(chat: Chat) {
 
-    // chat.chatMessages
+    this.currentChat.messages.forEach(
+      m => {
+
+      }
+    );
+
 
   }
 
