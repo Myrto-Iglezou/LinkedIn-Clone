@@ -123,8 +123,10 @@ export class MessagingComponent implements OnInit {
       this.newMessage.timestamp = new Date();
       this.chatService.newMessage(this.newMessage,this.userDetails.id,this.currentChat.id)
         .subscribe(
-          response => {
-             location.reload();
+            response => {
+
+              this.router.navigateByUrl('/SampleComponent', { skipLocationChange: true });
+              this.router.navigate(["MessagingComponent"]);
             },
             error => {
               alert(error.message);

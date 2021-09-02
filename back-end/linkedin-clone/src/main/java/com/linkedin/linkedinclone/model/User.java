@@ -66,8 +66,10 @@ public class User {
 
     // ------------ DATA MEMBERS WITH RELATIONS ------------------ //
 
-    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL )
     @JsonIgnoreProperties("user")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Picture profilePicture;
 
     @ManyToMany(fetch = FetchType.EAGER)

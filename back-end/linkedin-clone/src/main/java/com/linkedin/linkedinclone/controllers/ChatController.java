@@ -1,10 +1,7 @@
 package com.linkedin.linkedinclone.controllers;
 
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
-import com.linkedin.linkedinclone.model.Chat;
-import com.linkedin.linkedinclone.model.Job;
-import com.linkedin.linkedinclone.model.Message;
-import com.linkedin.linkedinclone.model.User;
+import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.ChatRepository;
 import com.linkedin.linkedinclone.repositories.MessageRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
 
 @RestController
 @AllArgsConstructor
@@ -37,6 +36,33 @@ public class ChatController {
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         for(Chat c: currentUser.getChats())
             System.out.println(c);
+
+        for(Chat c: currentUser.getChats()) {
+            System.out.println(c);
+            for(User u: c.getUsers()){
+                Picture pic = u.getProfilePicture();
+                if(pic != null){
+                    if(pic.isCompressed()){
+                        Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                        pic.setCompressed(false);
+                        u.setProfilePicture(tempPicture);
+                    }
+                }
+
+            }
+
+            for(Message m: c.getMessages()){
+                User u = m.getUserMadeBy();
+                Picture pic = u.getProfilePicture();
+                if(pic != null){
+                    if(pic.isCompressed()){
+                        Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                        pic.setCompressed(false);
+                        u.setProfilePicture(tempPicture);
+                    }
+                }
+            }
+        }
         return currentUser.getChats();
     }
 

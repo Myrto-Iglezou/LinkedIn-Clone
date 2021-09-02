@@ -30,7 +30,7 @@ public class Picture {
 
     // ---------- RELATIONS ---------- //
 
-    @OneToOne(mappedBy = "profilePicture")
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "profilePicture")
     @JsonIgnoreProperties("profilePicture")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

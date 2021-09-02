@@ -63,6 +63,7 @@ public class UserController {
                     Picture pic = new Picture(file.getOriginalFilename() ,file.getContentType() ,compressBytes(file.getBytes()));
                     pic.setCompressed(true);
                     user.setProfilePicture(pic);
+                    System.out.println(pic);
                     System.out.println("> Picture saved");
                 }
                 userRepository.save(user);
@@ -97,12 +98,12 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}")
     public User getProfile(@PathVariable Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Picture pic = user.getProfilePicture();
         if(pic != null && pic.isCompressed()){
+            System.out.println("COMPRESSED: "+pic.getId());
             Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
             pic.setCompressed(false);
             user.setProfilePicture(tempPicture);
@@ -111,7 +112,6 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/user-profile/{otherId}")
     public User getPersonalProfile(@PathVariable Long id,@PathVariable Long otherId) {
         User user = userRepository.findById(otherId).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
@@ -125,7 +125,6 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @PutMapping("/in/{id}/profile/new-info")
     public ResponseEntity informPersonalProfile(@PathVariable Long id, @RequestBody SkillsAndExperience skill) {
         System.out.println("\n\n> informPersonalProfile");
@@ -163,7 +162,6 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
     @GetMapping("/in/{id}/profile/{otherUserId}")
     public User showProfile(@PathVariable Long id, @PathVariable Long otherUserId) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));

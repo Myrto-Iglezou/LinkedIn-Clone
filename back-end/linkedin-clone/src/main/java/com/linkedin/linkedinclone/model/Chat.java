@@ -24,7 +24,7 @@ public class Chat {
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"chats"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"chats","messages"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users = new HashSet<>();

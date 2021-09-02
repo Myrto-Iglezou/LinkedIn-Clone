@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
             userDetails.token = response.headers.get('Authorization');
             this.user.roles.forEach((role) => {
               if(role.name === 'ADMIN') this.returnUrl = '/admin';
-              else  if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';             
+              else if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';             
               
               userDetails.roles.push(role.name);
             });
