@@ -16,8 +16,10 @@ export class UsersettingsComponent implements OnInit {
   usersettings: UserSettings = new UserSettings();
   loading_1 = false;
   loading_2 = false;
-  dangerBox = false;
-  successBox = false;
+  dangerBox_1 = false;
+  dangerBox_2 = false;
+  successBox_1 = false;
+  successBox_2 = false;
   submitattempt_1 = false;
   submitattempt_2 = false;
   submiterror: any ;
@@ -68,22 +70,21 @@ export class UsersettingsComponent implements OnInit {
               this.authenticationService.setLoggedInUser(userDetails);
             }
             this.submitmsg = response.body;
-            this.successBox = true;
-            this.dangerBox = false;
+            this.successBox_1 = true;
+            this.dangerBox_1 = false;
           },
           error => {
             this.loading_1 = false;
             this.submiterror = error;
-            this.dangerBox = true;
-            this.successBox = false;
+            this.dangerBox_1 = true;
+            this.successBox_1 = false;
             this.submitattempt_1 = true;
-            alert(error.message);
           }
         );
     }
     else{
       this.submitattempt_1 = true;
-      this.dangerBox = false;
+      this.dangerBox_1 = false;
     }
   }
 
@@ -99,21 +100,21 @@ export class UsersettingsComponent implements OnInit {
           response => {
             this.loading_2 = false;
             this.submitmsg = response.body;
-            this.successBox = true;
-            this.dangerBox = false;
+            this.successBox_2 = true;
+            this.dangerBox_2 = false;
           },
           error => {
             this.loading_2 = false;
             this.submiterror = error;
-            this.dangerBox = true;
-            this.successBox = false;
+            this.dangerBox_2 = true;
+            this.successBox_2 = false;
             this.submitattempt_2 = true;
           }
         );
     }
     else{
       this.submitattempt_2 = true;
-      this.dangerBox = false;
+      this.dangerBox_2 = false;
     }
 
   }

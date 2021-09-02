@@ -178,35 +178,6 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    //@PreAuthorize("hasRole('PROFESSIONAL')")
-    @PutMapping("in/{id}/settings")
-    public ResponseEntity changePasswordOrUsername(@PathVariable Long id,@RequestBody NewUserInfo info) {
-
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
-
-        System.out.println("> changePasswordOrUsername");
-        String responseMessage = new String();
-        System.out.println(info.getCurrentPassword());
-        System.out.println(user.getPassword());
-        //User user  = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with id "+id+"doesn't exist"));
-        if(info.getNewPassword()!=null){
-            if (info.getNewPassword().equals(info.getPasswordConfirm())) {
-                user.setPassword(encoder.encode(info.getNewPassword()));
-                responseMessage += "Password updated\n";
-                System.out.println("Password updated");
-            }
-        }
-        if(info.getNewUsername()!=null){
-            user.setUsername(info.getNewUsername());
-            responseMessage += "Username updated\n";
-        }
-        userRepository.save(user);
-
-        System.out.println("> All changes made with success!");
-        return ResponseEntity.ok("\"All changes made with success!\"");
-    }
-
-    @CrossOrigin(origins = "*")
     @PutMapping("/in/{id}/settings/change-password")
     public ResponseEntity changePassword(@PathVariable Long id , @RequestBody NewUserInfo pwdDetails) {
         if (!pwdDetails.getNewPassword().equals(pwdDetails.getPasswordConfirm())) {
@@ -246,6 +217,17 @@ public class UserController {
         String token = null;
         User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
+        if(!encoder.matches(details.getCurrentPassword(),existingUser.getPassword())){
+            System.out.println("\"Wrong password\"");
+            return ResponseEntity
+                    .badRequest()
+                    .body("{\"timestamp\": " + "\"" + new Date().toString()+ "\","
+                            + "\"status\": 400, "
+                            + "\"error\": \"Bad Request\", "
+                            + "\"message\": \"Wrong password!\", "
+                            + "\"path\": \"/users/"+ id.toString() +"/passwordchange\"}"
+                    );
+        }
         token = JWT.create()
                 .withSubject(details.getNewUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
