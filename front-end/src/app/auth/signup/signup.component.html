@@ -37,8 +37,7 @@
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Repeat Password</mat-label>
                     <input matInput type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Repeat Password" [(ngModel)]="user.passwordConfirm" #passwordConfirm="ngModel" required>
-                    <small *ngIf="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm" style="color: red;">Passwords do not match</small>
-                </mat-form-field> <br>
+                </mat-form-field><br>
 
                 <mat-form-field class="form-input" appearance="fill">
                     <mat-label>Phone Number</mat-label>
@@ -49,15 +48,18 @@
                   <label for="profilephoto" style="display: block">
                     <span>Profile photo </span> <span class="text-danger" >*</span>
                   </label>
-                  <input #profilephoto id="profilephoto" type="file" accept=".jpg,.jpeg,.png" style="display: block" (change)="setProfilePhoto(profilephoto)" >
+                  <input #profilephoto id="profilephoto" type="file" accept=".jpg,.jpeg,.png" style="display: block" (change)="setProfilePhoto(profilephoto)" required >
                   <small *ngIf="profilePhoto && (profilePhoto.type !='image/jpeg' && profilePhoto.type !='image/png') && submitattempt " >Image file must be jpeg or png</small>
                   <small *ngIf="!profilePhoto && submitattempt" style="color: red;">Please choose profile photo</small>
                 </div>
-                <div *ngIf="signuperror && dangerBox" class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom: 5px;">
+                <div *ngIf="signuperror && dangerBox && profilePhoto" class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom: 5px;">
                   <small class="text-danger" >{{signuperror.error.message}}</small>
                   <button style="color: #ff0b00; background-color: transparent" type="button" class="close" aria-label="Close" (click)="dangerBox = false">
-                    <span>&times;</span>
+                    <span>&times;</span> 
                   </button>
+                </div>
+                <div *ngIf="submitattempt && (user.passwordConfirm || user.password) && user.password !== user.passwordConfirm" class="alert alert-danger" role="alert" style="margin-top: 10px; margin-bottom: 5px;">
+                  <small class="text-danger" >Passwords do not match</small>
                 </div>
                 <button class="sign-in-btn btn btn-primary" [disabled]="!signupForm.valid" type="submit" >Sign up</button>
             </form>

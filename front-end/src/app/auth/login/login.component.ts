@@ -1,3 +1,4 @@
+import { Message } from './../../model/message';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -68,8 +69,8 @@ export class LoginComponent implements OnInit {
             userDetails.id = this.user.id;
             userDetails.token = response.headers.get('Authorization');
             this.user.roles.forEach((role) => {
-              if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';
-              else if(role.name === 'ADMIN') this.returnUrl = '/admin';              
+              if(role.name === 'ADMIN') this.returnUrl = '/admin';
+              else  if (role.name === 'PROFESSIONAL') this.returnUrl = '/feed';             
               
               userDetails.roles.push(role.name);
             });

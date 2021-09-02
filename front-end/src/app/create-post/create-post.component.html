@@ -34,7 +34,7 @@
         </form>
         
       </div>  
-      <div *ngIf="photos.length" class="card-footer">
+      <div *ngIf="photos.length" class="card-footer" style="margin-top: 10px; background-color: white;">
         <div *ngFor="let p of photos;" style="color: black; float: left;">
           <i style="padding-right:5px;" class="far fa-check-circle"></i> <b>{{p.name}}:</b> has been uploaded with success!
           <br>

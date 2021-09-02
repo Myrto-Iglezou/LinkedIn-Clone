@@ -70,8 +70,15 @@ export class NetworkComponent implements OnInit {
       }
     );
 
-    location.reload();
+    this.reloadCurrentRoute();
       
+  }
+
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
   }
 
   displayProfilePhoto(user: User): any{
@@ -126,8 +133,9 @@ export class NetworkComponent implements OnInit {
   }
 
   search() {
-    alert(this.userQuery);
+    
     // this.searchResults = null;
+    alert(this.userQuery);
     this.networkService.search(this.userDetails.id,this.userQuery).subscribe(
       (searchResults) => {
         Object.assign(this.searchResults , searchResults);

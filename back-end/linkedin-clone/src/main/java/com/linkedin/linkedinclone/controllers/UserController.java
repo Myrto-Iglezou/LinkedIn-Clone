@@ -73,7 +73,7 @@ public class UserController {
                         .body("{\"timestamp\": " + "\"" + new Date().toString() + "\","
                                 + "\"status\": 400, "
                                 + "\"error\": \"Bad Request\", "
-                                + "\"message\": \"Passwords do not match!\", "
+                                + "\"message\": \"Passwords do not match!\"}"
                         );
         } else
             return ResponseEntity
@@ -81,7 +81,7 @@ public class UserController {
                     .body("{\"timestamp\": " + "\"" + new Date().toString() + "\","
                             + "\"status\": 400, "
                             + "\"error\": \"Bad Request\", "
-                            + "\"message\": \"Email exists already!\", "
+                            + "\"message\": \"Email exists already!\"}"
                     );
 
         String token = JWT.create()

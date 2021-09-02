@@ -62,7 +62,6 @@ export class SignupComponent implements OnInit {
   signup(signupForm) {
     if (signupForm.form.valid  && (this.user.password === this.user.passwordConfirm)) {
 
-      alert("here");
       const formWrapper = new FormData();
       
       const userBlob = new Blob([JSON.stringify(this.user)], { type: 'application/json'});
@@ -91,7 +90,6 @@ export class SignupComponent implements OnInit {
             this.dangerBox = true;
             this.user.roles = [];
             this.submitattempt = true;
-            alert(error.message);
           }
         );
     }
