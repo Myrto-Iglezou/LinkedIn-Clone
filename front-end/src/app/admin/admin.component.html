@@ -1,8 +1,22 @@
 <app-admin-nav></app-admin-nav>
 
-<!-- <div id="users" style="padding-bottom: 10%; margin-top: 6%;">
-    <div class="text-center p-5">
-        <h1 style="font-weight:bold; font-size: 30px;">Users</h1>
+<div id="users" style="padding-bottom: 10%; margin-top: 6%;">
+    <div class=" p-5">
+        <div class="row text-center">
+            <div class="col-md-3 col-xl-12">
+                <h1 style="font-weight:bold; font-size: 30px;">Users</h1>
+            </div>
+        </div>
+        <hr>
+        <div class="text-left">
+            <div style="margin-left: 10px;">
+                <p style="font-size:large;">Extract Selected Users with:</p>
+                <button  type="button" class="btn btn-info btn-download"  > Download JSON</button>
+                <button  type="button" class="btn btn-success" style="margin-left: 10px;"  > Download XML</button>
+            </div>
+        </div>
+
+
     </div>
     <div *ngIf="users.length == 0" class="text-center">
         <p style="font-size: 20px;">No users yet.</p>
@@ -10,10 +24,10 @@
 
     <div *ngIf="users.length" class="container" id="main-container">       
         <div class="row">
-            <div *ngFor="let user of users" class="col-md-6 col-xl-3">
-                <div class="card m-b-30">
+            <div *ngFor="let user of users | slice : startPage:paginationLimit" class="col-md-6 col-xl-3">
+                <div class="card m-b-30" style="margin-bottom: 10px;">
                     <div class="card-body row">
-                        <div class="col-6">
+                        <div class="col-6" >
                             <a (click)="goToProfile(user)">
                                 <img  [src]="displayProfilePhoto(user)" class="rounded-circle" style="margin-left:25px;width: 60px;" alt="" loading="lazy"/>
                             </a>
@@ -31,17 +45,31 @@
                                 {{user.currentCompany}}
                             </li>
                         </ul>
-                        <div class="card-body" >
-                            <div class="btn-group btn-group-sm p-1" >
+                        <div *ngIf="!isAdmin(user)" class="card-body" style="align-items: center;">
+                            <div class="btn-group btn-group-sm p-1">
                                 <button (click)="goToProfile(user)" type="button" class="btn btn-primary m-1">Show profile</button>
                             </div>
-                        </div>
+                            <div class="btn-group btn-group-sm p-2 form-check" style="margin-left: 50px;">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
+                                <label class="form-check-label" for="flexCheckDefault" style="margin-left: 5px; margin-top: 2px; font-size: medium;"> Select</label>
+                              </div>
+                        </div> 
+                        <div *ngIf="isAdmin(user)" class="card-body" style="align-items: center;">
+                            <div class="btn-group btn-group-sm p-1">
+                                <button disabled type="button" class="btn btn-primary m-1">Show profile</button>
+                            </div>
+                        </div>   
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-center align-self-center ">
+                <button class="btn btn-outline-primary more-btn btn-sm m-2 col-md-2" style="align-self: center;" *ngIf ="paginationLimit < users.length" (click)="showMoreItems()">
+                    Show More
+                </button>
+            </div>
         </div>
     </div>
-</div> -->
+</div>
 
 
 <app-footer></app-footer>

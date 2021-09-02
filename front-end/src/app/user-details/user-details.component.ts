@@ -195,6 +195,14 @@ export class UserDetailsComponent implements OnInit {
     location.reload();
   }
 
+  isAdmin(user: User){
+    for (let role of user.roles){
+      if(role.name == 'ADMIN')
+        return true;
+    }
+    return false;
+  }
+
   changeJobStatus(editform){
     if(editform.form.valid) {
       this.userService.editUserJob(this.user)

@@ -14,6 +14,9 @@ import { UserDetails } from '../model/user-details';
 export class AdminComponent implements OnInit {
 
   users: User[];
+  paginationLimit:number; 
+  startPage : number;
+  usersToExtract: User[];
 
   constructor(
     private adminService: AdminService,
@@ -24,6 +27,8 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
+    this.startPage = 0;
+    this.paginationLimit = 8;
     
   }
 
@@ -47,9 +52,20 @@ export class AdminComponent implements OnInit {
   }
 
   goToProfile(user: User) {
-    alert(user.id);
     this.router.navigate(['/users/' + user.id.toString()]).then(() => {
       location.reload();
     });   
+  }
+
+  isAdmin(user: User){
+    for (let role of user.roles){
+      if(role.name == 'ADMIN')
+        return true;
+    }
+    return false;
+  }
+
+  showMoreItems(){
+    this.paginationLimit = Number(this.paginationLimit) + 4;        
   }
 }

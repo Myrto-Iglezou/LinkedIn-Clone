@@ -1,6 +1,13 @@
- 
-   <app-navbar></app-navbar>
+
+
+  <div *ngIf="isAdmin(connectedUser)">
+    <app-admin-nav></app-admin-nav>
+  </div>
    
+  <div *ngIf="!isAdmin(connectedUser)">
+    <app-navbar></app-navbar>
+  </div>
+
    <div class="container"  id="profilecards">
     <div class="main-body"> 
         <div class="row gutters-sm">
@@ -14,7 +21,7 @@
                       <p *ngIf="user.currentJob" class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
                       <p class="text-muted font-size-sm">{{user.city}}</p>
                       <div>
-                        <div *ngIf="user.id && userDetails && userDetails.id != user.id">
+                        <div *ngIf="user.id && userDetails && userDetails.id != user.id && !isAdmin(connectedUser)">
                             <div *ngIf="!connected(user.id) && !hasRequestPending(user.id)" class="connect-buttons-container">
                                 <button class="btn btn-secondary request-connect-button" type="button" (click)="addConnection(user)"> 
                                 <i class="fas fa-plus"></i>

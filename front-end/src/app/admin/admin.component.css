@@ -1,0 +1,19 @@
+.more-btn:focus,.more-btn:active  {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: none;
+}
+
+.container{
+    font-family: sans-serif;
+}
+
+.btn-download{
+    color: white;
+    border-color: #004b91;
+    background-color: #004b91;
+}
+
+.btn-download:hover{
+    background-color: #01417e;
+}

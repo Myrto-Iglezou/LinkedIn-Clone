@@ -60,3 +60,17 @@
     color:white;
     border: 0;
 }
+
+.logout-btn:hover{
+  background-color: #0078e9;
+}
+
+.users-btn{
+  background-color: #004b91;
+  color:white;
+  border: 0;
+}
+
+.users-btn:hover{
+  background-color: #01417e;
+}

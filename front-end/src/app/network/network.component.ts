@@ -92,7 +92,6 @@ export class NetworkComponent implements OnInit {
   }
 
   goToProfile(user: User) {
-    alert(user.id);
     this.router.navigate(['/users/' + user.id.toString()]).then(() => {
       location.reload();
     });   
@@ -135,7 +134,6 @@ export class NetworkComponent implements OnInit {
   search() {
     
     // this.searchResults = null;
-    alert(this.userQuery);
     this.networkService.search(this.userDetails.id,this.userQuery).subscribe(
       (searchResults) => {
         Object.assign(this.searchResults , searchResults);
