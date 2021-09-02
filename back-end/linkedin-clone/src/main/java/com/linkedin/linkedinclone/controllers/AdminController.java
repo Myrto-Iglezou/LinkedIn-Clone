@@ -27,7 +27,7 @@ public class AdminController {
     private final BCryptPasswordEncoder encoder;
 
     @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/users")
     public List<User> all() {
         return userRepository.findAll();
