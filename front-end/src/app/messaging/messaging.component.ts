@@ -193,4 +193,10 @@ export class MessagingComponent implements OnInit {
         );
     }
   }
+
+  goToProfile(user: User) {
+    this.router.navigate(['/users/' + user.id.toString()]).then(() => {
+      location.reload();
+    });   
+  }
 }

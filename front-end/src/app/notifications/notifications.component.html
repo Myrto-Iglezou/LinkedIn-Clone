@@ -11,7 +11,7 @@
     <div *ngIf="connRequests.length != 0" class="container align-self-center">
         <ul  class="list-group">            
             <li *ngFor="let con of connRequests;" class="list-group-item list-group-item-action list-group-item-light">
-                <span style="font-size: large;font-weight: bold;vertical-align: middle;" class="align-middle"> {{con.connection_request.userFollowing.name}} {{con.connection_request.userFollowing.surname}} wants to connect with you</span>
+                <span style="font-size: large;vertical-align: middle;" class="align-middle"> <a [routerLink]="['/users/',con.connection_request.userFollowing.id]" style="text-decoration: none;"><b>{{con.connection_request.userFollowing.name}} {{con.connection_request.userFollowing.surname}}</b></a> wants to connect with you</span>
                 <span type="button" class="btn btn-info rounded-pill align-middle" style="float:right; color: white;" (click)="goToProfile(con.connection_request.userFollowing)">View profile</span>
                 <span class="btn btn-success rounded-pill align-middle" style="float:right;color: white; margin-right: 4px;" (click)="acceptConnection(con.connection_request.id)">Accept</span>
             </li>

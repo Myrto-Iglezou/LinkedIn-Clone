@@ -85,7 +85,7 @@ export class JobsComponent implements OnInit {
   } 
 
   newApplication(jobId: number) {
-    alert(jobId);
+
     this.jobService.apply(jobId,this.userDetails.id).subscribe(
       responce => {
         location.reload();
