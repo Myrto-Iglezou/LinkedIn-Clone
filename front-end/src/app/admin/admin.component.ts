@@ -13,7 +13,7 @@ import { UserDetails } from '../model/user-details';
 })
 export class AdminComponent implements OnInit {
 
-  users: User[];
+  users: User[] = new Array<User>();
   paginationLimit:number; 
   startPage : number;
   usersToExtract: User[];
@@ -28,8 +28,15 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.startPage = 0;
-    this.paginationLimit = 8;
+    this.paginationLimit = 12;
+    this.adminService.getUsers().subscribe(
+      users => this.users = users
+    );
     
+  }
+
+  addToList(user: User){
+    this.usersToExtract.push(user);
   }
 
   getUsers(): void {

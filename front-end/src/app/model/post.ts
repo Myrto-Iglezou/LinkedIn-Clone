@@ -11,4 +11,5 @@ export class Post{
     comments: Array<Comment> = new Array<Comment>();
     interestReactions: Array<InterestReaction> = new Array<InterestReaction>();
     pictures: Array<Picture> = new Array<Picture>();
+    newComment: Comment;
 }
