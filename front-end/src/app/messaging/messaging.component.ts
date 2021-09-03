@@ -55,14 +55,26 @@ export class MessagingComponent implements OnInit {
         Object.assign(this.chats , chats);
         
         this.sortChatsByDate();
-       
-        // this.loadChatRoom();
+        this.currentChat = this.chats[0];
+        let id = this.route.snapshot.paramMap.get('id').toString();
+        if(id!=null){
+          this.chats.forEach(c => {
+            if(this.getOtherUser(c).id.toString() == id){
+              this.currentChat = c;
+            }
+          });
+          // alert("here");
+        }
+        
+          // this.loadChatRoom();
         // this.interval = setInterval(() => { this.loadChatRoom(); }, 30000);
     },
       error => {
         alert(error.message);
       }
     );
+
+    
 
     
     
@@ -88,7 +100,7 @@ export class MessagingComponent implements OnInit {
       }
     );
       
-    this.currentChat = this.chats[0];
+    
 
 
   }

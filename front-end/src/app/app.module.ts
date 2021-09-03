@@ -66,6 +66,10 @@ const appRoutes: Routes = [
     component: FeedComponent,
   },
   {
+    path: 'messaging/:id',
+    component: MessagingComponent,
+  },
+  {
     path: 'messaging',
     component: MessagingComponent,
   },

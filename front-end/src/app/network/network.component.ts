@@ -97,6 +97,13 @@ export class NetworkComponent implements OnInit {
     });   
   }
 
+  startConversation(user: User) {
+    // alert("here");
+    this.router.navigate(['/messaging/' + user.id.toString()]).then(() => {
+      location.reload();
+    });   
+  }
+
   connected(id: number): boolean {
     for (let u of this.network) {
       if(u.id == id)

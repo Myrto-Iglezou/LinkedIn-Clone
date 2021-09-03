@@ -15,14 +15,12 @@
                 <button  type="button" class="btn btn-success" style="margin-left: 10px;"  > Download XML</button>
             </div>
         </div>
-
-
     </div>
     <div *ngIf="users.length == 0" class="text-center">
         <p style="font-size: 20px;">No users yet.</p>
     </div>
 
-    <div *ngIf="users.length" class="container" id="main-container">       
+    <div *ngIf="users.length" class="container" id="main-container">
         <div class="row">
             <div *ngFor="let user of users | slice : startPage:paginationLimit" class="col-md-6 col-xl-3">
                 <div class="card m-b-30" style="margin-bottom: 10px;">
