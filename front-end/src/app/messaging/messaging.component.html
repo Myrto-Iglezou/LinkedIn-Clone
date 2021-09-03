@@ -15,18 +15,27 @@
                     </div>
                     <div *ngFor="let chat of chats">
                       <div [ngClass]="{ 'active_chat' : chat.id == currentChat.id }">
-                        <div class="chat_list btn" (click)="openChat(chat)" style="text-align: initial;">
+                        <div class="  chat_list " (click)="openChat(chat)" id="selectButton-{{chat.id}}" style="text-align: initial;">
                           <div class="chat_people">
                               <div class="chat_img">
                                   <!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> -->
                                   <img  [src]="displayProfilePhoto(getOtherUser(chat))" class="rounded-circle" style="width: 60px;" alt="" loading="lazy"/>
                               </div>
-                              <div class="chat_ib" >
-                                  <h5>{{getOtherUser(chat).name}} {{getOtherUser(chat).surname}}<span class="chat_date">Dec 25</span></h5>
-                                  <p>Test, which is a new approach to have all solutions 
-                                      astrology under one roof.</p>
+                              <div *ngIf="chat.messages.length!=0" class="chat_ib" >
+                                <h5> <strong>{{getOtherUser(chat).name}} {{getOtherUser(chat).surname}}</strong>
+                                  <span class="chat_date" style="font-size: small; float: right;">{{chat.latestMessage.timestamp | date:'d/M/y, h:mm a'}}</span>
+                                </h5>
+                                <p *ngIf="chat.latestMessage.userMadeBy.id == user.id" style="width: 100%;" class="text-muted w-100"><b>You:</b> {{chat.latestMessage.content}}</p>
+                                <p *ngIf="chat.latestMessage.userMadeBy.id != user.id" style="width: 100%;" class="text-muted w-100">{{chat.latestMessage.content}}</p>
+
                               </div>
+                            <div *ngIf="chat.messages.length==0" class="chat_ib" >
+                              <h5> <strong>{{getOtherUser(chat).name}} {{getOtherUser(chat).surname}}</strong>
+                                <span class="chat_date" style="font-size: small; float: right;"></span>
+                              </h5>
+                              <p style="width: 100%;" class="text-muted w-100">Start conversation!</p>
                           </div>
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -41,7 +50,7 @@
                   <div *ngFor="let message of currentChat.messages">
                   
                   
-                    <div *ngIf="isIncoming(message)" class="incoming_msg" style="text-align: left;">
+                    <div *ngIf="isIncoming(message)" class="incoming_msg" style="text-align: left;margin-top: 15px;">
                       <div class="incoming_msg_img"> 
                         <img [src]="displayProfilePhoto(message.userMadeBy)" class="rounded-circle" > 
                       </div>

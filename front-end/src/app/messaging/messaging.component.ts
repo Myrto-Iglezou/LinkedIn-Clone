@@ -24,6 +24,7 @@ export class MessagingComponent implements OnInit {
   incomingMessages: Message[] = new Array<Message>();
   outcomingMessages: Message[] = new Array<Message>();
   newMessage: Message = new Message();
+  interval;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,14 +53,77 @@ export class MessagingComponent implements OnInit {
     this.chatService.getChats(this.userDetails.id).subscribe(
       (chats) => {
         Object.assign(this.chats , chats);
+        
+        this.sortChatsByDate();
+       
+        // this.loadChatRoom();
+        // this.interval = setInterval(() => { this.loadChatRoom(); }, 30000);
     },
       error => {
         alert(error.message);
       }
     );
 
-    this.chats = this.sortChatsByDate();
+    
+    
   }
+
+  sortChatsByDate() {
+    // alert(this.chats.length-1);
+    this.chats.forEach(
+      c => {
+        if(c.messages.length!=0){
+          c.messages = this.sortMessagesByDate(c.messages);
+          c.timestamp = c.messages[c.messages.length-1].timestamp;
+          c.latestMessage = c.messages[c.messages.length-1];
+          // alert(c.timestamp);
+        }
+      }
+    );
+
+
+    this.chats.sort(
+      (a, b) => {
+        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
+      }
+    );
+      
+    this.currentChat = this.chats[0];
+
+
+  }
+
+  sortMessagesByDate(messages: Message[]): Message[]  {
+    return messages.sort(
+      (a, b) => {
+        return <any>new Date(a.timestamp) - <any>new Date(b.timestamp);
+      }
+    );
+  }
+
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
+
+  getActiveChats() {
+    this.chatService.getChats(this.userDetails.id).subscribe(
+      (chats) => {
+        Object.assign(this.chats , chats);
+        this.loadChatRoom();
+        this.interval = setInterval(() => { this.loadChatRoom(); }, 30000);
+    },
+      error => {
+        alert(error.message);
+      }
+    );
+  }
+
+  loadChatRoom() {
+    // this.getActiveChats();
+    this.openChat(this.currentChat);
+  }
+
 
   getOtherUser(chat:Chat): User {
     
@@ -88,21 +152,7 @@ export class MessagingComponent implements OnInit {
     return null;
   }
 
-  sortChatsByDate(): Chat[] {
-    return this.chats.sort(
-      (a, b) => {
-        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
-      }
-    );
-  }
-
-  sortMessagesByDate(messages: Message[]): Message[]  {
-    return messages.sort(
-      (a, b) => {
-        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
-      }
-    );
-  }
+  
 
   openChat(chat:Chat) {
     this.currentChat = chat;
@@ -132,8 +182,10 @@ export class MessagingComponent implements OnInit {
       this.chatService.newMessage(this.newMessage,this.userDetails.id,this.currentChat.id)
         .subscribe(
             response => {
-
-              this.reloadCurrentRoute();
+              // this.currentChat.messages.push(this.newMessage);
+              location.reload();
+              // document.getElementById("selectButton-{{currentChat.id}}").click();
+                            // this.reloadCurrentRoute();
             },
             error => {
               alert(error.message);

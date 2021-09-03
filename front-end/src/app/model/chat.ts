@@ -6,4 +6,5 @@ export class Chat{
     timestamp: Date;
     users: Array<User> = new Array<User>();
     messages: Array<Message> = new Array<Message>();
+    latestMessage: Message;
 }
