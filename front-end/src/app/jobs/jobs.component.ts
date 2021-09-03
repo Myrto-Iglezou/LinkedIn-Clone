@@ -18,7 +18,7 @@ export class JobsComponent implements OnInit {
   userDetails: UserDetails;
   job: Job = new Job();
   jobs: Job[] = new Array<Job>();
-
+  sortType: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,11 +45,39 @@ export class JobsComponent implements OnInit {
     this.jobService.getJobs(this.userDetails.id).subscribe(
       (jobs) => {
         Object.assign(this.jobs , jobs);
+        if(this.sortType==0){
+          this.sortJobsByDate();
+        }else if(this.sortType==1){
+          this.sortJobsByRelevance();
+        }
       },
       error => {
         alert(error.message);
       }
     );
+  }
+
+  changeSort(num:number){
+    if(num==0){
+      this.sortJobsByDate();
+    }else if(num==1){
+      this.sortJobsByRelevance();
+    }
+    this.sortType = num;
+    location.reload();
+    
+  }
+
+  sortJobsByDate() {
+    this.jobs.sort(
+      (a, b) => {
+        return <any>new Date(a.timestamp) - <any>new Date(b.timestamp);
+      }
+    );
+  }
+
+  sortJobsByRelevance() {
+
   }
 
   jobSubmit(jobForm){

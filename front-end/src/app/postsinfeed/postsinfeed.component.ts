@@ -31,6 +31,8 @@ export class PostsinfeedComponent implements OnInit {
   booleanButton=false;
   tempUser: User = new User();
   user: User = new User();
+  sortType: number = 0;
+
 
   constructor(
     private feedService: FeedService, 
@@ -48,6 +50,18 @@ export class PostsinfeedComponent implements OnInit {
     this.feedService.getFeedPosts(this.userDetails.id).subscribe(
       (posts) => {
         Object.assign(this.posts , posts);
+        if(this.sortType==0){
+          this.posts = this.sortJobsByDate();
+        }else if(this.sortType==1){
+          this.sortJobsByRelevance();
+        }
+        this.posts.forEach(
+          p => {
+            p.newComment = new Comment();
+            p.comments = this.sortCommentsByDate(p.comments);
+
+          }
+        );
       }
     );
 
@@ -59,10 +73,37 @@ export class PostsinfeedComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
 
-    for(var i=0 ; i < this.posts.length; i++ ){ 
-      this.newComments.push(new Comment()); 
-    } 
+  changeSort(num:number){
+    if(num==0){
+      this.sortJobsByDate();
+    }else if(num==1){
+
+    }
+    this.sortType = num;
+    location.reload();
+  }
+
+  sortJobsByDate(): Post[] {
+    return this.posts.sort(
+      (a, b) => {
+        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
+      }
+    );
+  }
+
+  sortJobsByRelevance() {
+    
+
+  }
+
+  sortCommentsByDate(comments: Comment[]): Comment[] {
+    return comments.sort(
+      (a, b) => {
+        return <any>new Date(a.timestamp) - <any>new Date(b.timestamp);
+      }
+    );
   }
 
   displayProfilePhoto(user: User): any{
@@ -100,7 +141,6 @@ export class PostsinfeedComponent implements OnInit {
 
 
   userIsInterested(post: Post): boolean {
-    // alert("heyyyy")
     for(let i=0; i<post.interestReactions.length; i++){
       if(post.interestReactions[i].userMadeBy.id == this.userDetails.id)
         return true;
@@ -109,12 +149,12 @@ export class PostsinfeedComponent implements OnInit {
   
   }
 
-  addNewComment(postid: number,commentform) {
+  addNewComment(post: Post,commentform) {
     // alert("here");
 
     if(commentform.form.valid) {
-      this.newComment.timestamp = new Date();
-      this.feedService.addNewComment(this.userDetails.id,postid,this.newComment)
+      post.newComment.timestamp = new Date();
+      this.feedService.addNewComment(this.userDetails.id,post.id,post.newComment)
         .subscribe(
           response => {
               location.reload();

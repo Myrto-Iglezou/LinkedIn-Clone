@@ -4,7 +4,18 @@
     <div class="text-center text-muted" *ngIf="posts.length==0" style="background-color: transparent;">
         No posts available
     </div>
+    <div *ngIf="posts.length!=0" >
+        <div class="form-group" style="margin-top: 0px;margin-left: 15px;margin-bottom: 30px;">
+            <h3>Sort by:</h3>
+            <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="sortType" required>
+              <mat-radio-button  (click)="changeSort(0)" [value]=0  style="margin-right: 10px;" name="private">Date posted</mat-radio-button>
+              <mat-radio-button (click)="changeSort(1)" [value]=1 name="public">Relevance</mat-radio-button>
+            </mat-radio-group> 
+        </div>   
+    </div>
+
     <div  *ngFor="let post of posts; let i = index">
+    
         <div class="card">
             <div class="card-body ">
                 <div class="container">
@@ -53,12 +64,12 @@
                             </div>
                         </div>
                         <div class="box-footer">
-                            <form name="form-{{i}}" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
+                            <form name="form-{{i}}" #commentform="ngForm" (ngSubmit)="addNewComment(post,commentform)"> 
                                 
                                 <img class="img-responsive img-circle img-sm" *ngIf="user.profilePicture" [src]="displayProfilePhoto(user)">
                                 <div class="img-push ">
-                                    <textarea id="{{i}}" name="content-{{i}}" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
-                                    <button [disabled]="!newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">
+                                    <textarea id="{{i}}" name="content-{{i}}" [(ngModel)]="post.newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
+                                    <button [disabled]="!post.newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">
                                         Submit
                                     </button>
                                 </div>
