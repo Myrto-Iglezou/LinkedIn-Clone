@@ -70,6 +70,14 @@ export class MessagingComponent implements OnInit {
     return null;
   }
 
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+  }
+
+
   displayProfilePhoto(user: User): any{
     if(user.profilePicture) {
       if (user.profilePicture.type === 'image/png')
@@ -125,8 +133,7 @@ export class MessagingComponent implements OnInit {
         .subscribe(
             response => {
 
-              this.router.navigateByUrl('/SampleComponent', { skipLocationChange: true });
-              this.router.navigate(["MessagingComponent"]);
+              this.reloadCurrentRoute();
             },
             error => {
               alert(error.message);

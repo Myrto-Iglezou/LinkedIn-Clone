@@ -107,7 +107,7 @@ public class LinkedinCloneApplication {
 			roles.add(prof_role);
 			user.setRoles(roles);
 			//MultipartFile file = new MockMultipartFile("user.jpg", new FileInputStream( new File("C:/Users/nikol/Desktop/user.jpg").getAbsolutePath()));
-
+			userRepository.save(user);
 
 
 			//pictureRepository.save(photo);
