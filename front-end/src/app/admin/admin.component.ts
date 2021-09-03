@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   users: User[] = new Array<User>();
   paginationLimit:number; 
   startPage : number;
-  usersToExtract: User[];
+  usersToExtract: User[] = new Array<User>();
 
   constructor(
     private adminService: AdminService,
