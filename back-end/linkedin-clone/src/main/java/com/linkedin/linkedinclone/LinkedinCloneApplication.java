@@ -122,7 +122,7 @@ public class LinkedinCloneApplication {
 				roles = new HashSet<Role>();
 				roles.add(prof_role);
 				user.setRoles(roles);
-				File fileItem = new File("/Users/nikol/Desktop/user.jpg");
+/*				File fileItem = new File("/Users/nikol/Desktop/user.jpg");
 				System.out.println(fileItem.getAbsolutePath());
 				FileInputStream input = new FileInputStream(fileItem);
 				MultipartFile file = new MockMultipartFile(
@@ -138,7 +138,7 @@ public class LinkedinCloneApplication {
 				);
 				pic.setCompressed(true);
 				System.out.println(pic);
-				user.setProfilePicture(pic);
+				user.setProfilePicture(pic);*/
 				userRepository.save(user);
 
 				System.out.println("User saved");
