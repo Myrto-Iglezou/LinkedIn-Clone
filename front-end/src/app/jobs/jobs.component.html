@@ -17,7 +17,8 @@
                         </mat-form-field><br>
                         <mat-form-field class="form-input"  appearance="fill" style= "width: 100%;">
                             <mat-label>Job description</mat-label>
-                            <input matInput type="text" id="description" placeholder="Job description" [(ngModel)]="job.description" name="description" #description="ngModel" required >
+                            <textarea matInput type="text" id="description" placeholder="Job description" [(ngModel)]="job.description" name="description" #description="ngModel" required></textarea>
+                            
                         </mat-form-field><br>
                         <div >
                             <button class="job-btn btn btn-primary" type="submit">Save</button>   
@@ -57,13 +58,13 @@
                             <div  style="padding-bottom: 5px;">
                                 Applicants: 
                             </div>
-                            <div class="row">
-                                <div *ngFor="let u of job.usersApplied">
-                                    <button class="badge badge-pill badge-primary" type="button" class="btn" [routerLink]="['/users/',u.id]" style="color: white;background-color: rgb(13, 175, 100) ;font-size: 1.1em;">
-                                         {{u.name}} {{u.surname}} 
-                                    </button>
-                                </div>
-                            </div>
+                            <u id="applicants" style="text-decoration:none">
+                                <li *ngFor="let u of job.usersApplied" style="text-decoration:none" >
+                                    <span class="align-middle applicant" [routerLink]="['/users/', u.id]"  style="text-decoration:none">{{u.name}} {{u.surname}} </span>
+                                </li>
+                            </u>
+
+
                         </div>
                         <hr style="width: 90%;margin-left: 5%;margin-right: 5%;">
                         <div class="card-body" style= "margin-left: 2%;padding-bottom: 10px;">
@@ -102,7 +103,8 @@
                             </div>
         
                             <div  style="padding-bottom: 20px;float:right;margin-right: 1%;">
-                                Published by <strong>{{job.userMadeBy.name}} {{job.userMadeBy.surname}}</strong>
+                                Published by  <a [routerLink]="['/users/',job.userMadeBy.id]" style="text-decoration: none;"><b>{{job.userMadeBy.name}} {{job.userMadeBy.surname}}</b></a>
+                                 
                             </div>
                             <div  style="padding-bottom: 20px;float:left;margin-right: 1%;">
                                 {{job.timestamp | date:'d MMMM y, h:mm a'}}

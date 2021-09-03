@@ -13,3 +13,31 @@
     border:none;
     font-size: 18px;
 }
+
+.applicant{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 15px;
+    font-size: large;
+    padding: 5px;
+    color: white; 
+    background-color: rgb(13, 175, 100) ;
+    font-size: 1.1em; 
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+#applicants li{
+    display: inline-flex;
+    margin-right: 10px;
+    margin-top: 10px;
+
+}
+#applicants li span{
+    text-decoration: none;
+}

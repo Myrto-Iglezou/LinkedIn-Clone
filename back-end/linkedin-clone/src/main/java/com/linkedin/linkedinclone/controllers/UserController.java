@@ -152,12 +152,19 @@ public class UserController {
         System.out.println("\n\n> Edit User's Job");
         User newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
 
-        newUser.setCurrentJob(user.getCurrentJob());
-        newUser.setCurrentCompany(user.getCurrentCompany());
-        newUser.setCity(user.getCity());
-        newUser.setWebsite(user.getWebsite());
-        newUser.setGithub(user.getGithub());
-        newUser.setTwitter(user.getTwitter());
+        if(user.getCurrentJob()!= null )
+            newUser.setCurrentJob(user.getCurrentJob());
+        if(user.getCurrentCompany()!= null)
+            newUser.setCurrentCompany(user.getCurrentCompany());
+        if(user.getCity()!= null)
+            newUser.setCity(user.getCity());
+        if(user.getWebsite()!= null )
+            newUser.setWebsite(user.getWebsite());
+        if(user.getGithub()!= null )
+            newUser.setGithub(user.getGithub());
+        if(user.getTwitter()!= null )
+            newUser.setTwitter(user.getTwitter());
+
         userRepository.save(newUser);
         return ResponseEntity.ok("\"All changes made with success!\"");
     }

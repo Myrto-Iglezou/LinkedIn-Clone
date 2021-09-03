@@ -86,6 +86,20 @@ export class NotificationsComponent implements OnInit {
     location.reload();
   }
 
-  goToProfile(user: User) {  }
+  goToProfile(user: User) {
+    this.router.navigate(['/users/' + user.id.toString()]).then(() => {
+      location.reload();
+    });   
+  }
+
+  displayProfilePhoto(user: User): any{
+    if(user.profilePicture) {
+      if (user.profilePicture.type === 'image/png')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + user.profilePicture.bytes);
+      else if (user.profilePicture.type === 'image/jpeg')
+        return this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + user.profilePicture.bytes);
+    }
+    return null;
+  }
 
 }

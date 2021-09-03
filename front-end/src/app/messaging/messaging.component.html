@@ -19,7 +19,9 @@
                           <div class="chat_people">
                               <div class="chat_img">
                                   <!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> -->
-                                  <img  [src]="displayProfilePhoto(getOtherUser(chat))" class="rounded-circle" style="width: 60px;" alt="" loading="lazy"/>
+                                  <a (click)="goToProfile(getOtherUser(chat))">
+                                    <img  [src]="displayProfilePhoto(getOtherUser(chat))" class="rounded-circle" style="width: 60px;" alt="" loading="lazy"/>
+                                  </a>
                               </div>
                               <div *ngIf="chat.messages.length!=0" class="chat_ib" >
                                 <h5> <strong>{{getOtherUser(chat).name}} {{getOtherUser(chat).surname}}</strong>
@@ -52,7 +54,9 @@
                   
                     <div *ngIf="isIncoming(message)" class="incoming_msg" style="text-align: left;margin-top: 15px;">
                       <div class="incoming_msg_img"> 
-                        <img [src]="displayProfilePhoto(message.userMadeBy)" class="rounded-circle" > 
+                        <a (click)="goToProfile(message.userMadeBy)">
+                          <img [src]="displayProfilePhoto(message.userMadeBy)" class="rounded-circle" style="cursor: pointer;"> 
+                        </a>
                       </div>
                       <div class="received_msg">
                         <div class="received_withd_msg" >

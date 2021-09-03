@@ -19,7 +19,6 @@ export class JobsService {
   }
 
   apply(jobId: number ,userId: number): Observable <string>{
-    alert(userId);
     return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/jobs/make-application/' + jobId.toString() , {observe : 'response'});
   }
 }
