@@ -55,7 +55,7 @@
                         <div class="box-footer">
                             <form name="form-{{i}}" #commentform="ngForm" (ngSubmit)="addNewComment(post.id,commentform)"> 
                                 
-                                <img class="img-responsive img-circle img-sm" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
+                                <img class="img-responsive img-circle img-sm" *ngIf="user.profilePicture" [src]="displayProfilePhoto(user)">
                                 <div class="img-push ">
                                     <textarea id="{{i}}" name="content-{{i}}" [(ngModel)]="newComment.content" rows="1" type="text" class="form-control text-post" placeholder="Press enter to post comment"></textarea>
                                     <button [disabled]="!newComment.content" class="btn post-btn btn-primary btn-sm align-right" type="submit"  style="margin-top:5px;background-color:#158eff; color:white;float: right;">

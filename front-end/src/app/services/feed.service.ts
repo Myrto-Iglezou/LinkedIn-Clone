@@ -31,7 +31,7 @@ export class FeedService {
   }
 
   addNewComment(userId: number,postId: number, comment: Comment): Observable<HttpResponse<any>>{
-    alert(userId);
+    // alert(userId);
     return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/new-comment/'+ postId.toString(), comment, {observe : 'response'});
   }
 

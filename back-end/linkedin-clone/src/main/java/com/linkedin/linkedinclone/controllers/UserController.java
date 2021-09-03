@@ -145,6 +145,7 @@ public class UserController {
         return ResponseEntity.ok("\"All changes made with success!\"");
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/in/{id}/editJob")
     public ResponseEntity editUserJob(@PathVariable Long id, @RequestBody User user) {
 

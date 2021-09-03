@@ -30,6 +30,7 @@ export class PostsinfeedComponent implements OnInit {
   newCom = new Comment();
   booleanButton=false;
   tempUser: User = new User();
+  user: User = new User();
 
   constructor(
     private feedService: FeedService, 
@@ -47,6 +48,15 @@ export class PostsinfeedComponent implements OnInit {
     this.feedService.getFeedPosts(this.userDetails.id).subscribe(
       (posts) => {
         Object.assign(this.posts , posts);
+      }
+    );
+
+    this.userService.getUser(this.userDetails.id.toString()).subscribe(
+      (user) => {
+        Object.assign(this.user , user);
+    },
+      error => {
+        alert(error.message);
       }
     );
 
@@ -100,7 +110,7 @@ export class PostsinfeedComponent implements OnInit {
   }
 
   addNewComment(postid: number,commentform) {
-    alert("here");
+    // alert("here");
 
     if(commentform.form.valid) {
       this.newComment.timestamp = new Date();

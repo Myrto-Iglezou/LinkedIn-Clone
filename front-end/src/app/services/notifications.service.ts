@@ -19,7 +19,6 @@ export class NotificationsService {
   constructor(private http: HttpClient) {}
 
   acceptConnection(userId: number,connId: number): Observable<string>{
-    alert('https://localhost:8443/in/' + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection');
     return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/notifications/' + connId.toString() + '/accept-connection', {observe : 'response'});
   }
 
