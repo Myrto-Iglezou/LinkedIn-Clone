@@ -5,6 +5,7 @@ import {AuthenticationService} from '../authentication.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserDetails } from '../model/user-details';
+import * as JsonToXML from 'js2xmlparser';
 
 @Component({
   selector: 'app-admin',
@@ -17,6 +18,7 @@ export class AdminComponent implements OnInit {
   paginationLimit:number; 
   startPage : number;
   usersToExtract: User[] = new Array<User>();
+  downloadAttempt: boolean;
 
   constructor(
     private adminService: AdminService,
@@ -29,6 +31,7 @@ export class AdminComponent implements OnInit {
     this.getUsers();
     this.startPage = 0;
     this.paginationLimit = 12;
+    this.downloadAttempt = false;
     this.adminService.getUsers().subscribe(
       users => this.users = users
     );
@@ -36,7 +39,15 @@ export class AdminComponent implements OnInit {
   }
 
   addToList(user: User){
-    this.usersToExtract.push(user);
+    let flag = false;
+    this.usersToExtract.forEach( (item, index) => {
+      if(item === user) {
+        this.usersToExtract.splice(index,1);
+        flag = true
+      }
+    });
+    if(flag == false)
+      this.usersToExtract.push(user);
   }
 
   getUsers(): void {
@@ -75,4 +86,28 @@ export class AdminComponent implements OnInit {
   showMoreItems(){
     this.paginationLimit = Number(this.paginationLimit) + 4;        
   }
+
+  downloadUSers(type: string, element){   
+
+    this.downloadAttempt = true;
+    if(this.usersToExtract.length != 0){
+
+      if(type == 'xml'){
+        var JSONfile = JSON.stringify(this.usersToExtract);
+        JSONfile = JSON.parse(JSONfile)
+        var js2xmlparser = require("js2xmlparser");
+        let XMLfile = js2xmlparser.parse("user",JSONfile);
+            
+        element.setAttribute('href', 'data:text/' + type + ';charset=UTF-8,' + XMLfile);  
+      
+        element.setAttribute('download', 'users.' + type);
+        element.click();
+      }else{
+        element.setAttribute('href', 'data:text/' + type + ';charset=UTF-8,' + encodeURIComponent(JSON.stringify(this.usersToExtract)));
+        element.setAttribute('download', 'users.' + type);
+        element.click();
+      }
+    }
+  }
+
 }

@@ -14,4 +14,5 @@ export class AdminService {
 
     return this.http.get<User[]>('https://localhost:8443/admin/users');
   }
+
 }

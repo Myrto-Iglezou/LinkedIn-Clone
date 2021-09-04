@@ -5,14 +5,22 @@
         <div class="row text-center">
             <div class="col-md-3 col-xl-12">
                 <h1 style="font-weight:bold; font-size: 30px;">Users</h1>
+                
             </div>
         </div>
         <hr>
-        <div class="text-center">
+        <div class="text-center" style="justify-content: center;">
             <div style="margin-left: 10px;">
                 <p style="font-size:large;">Extract Selected Users with:</p>
-                <button  type="button" class="btn btn-info btn-download"  > Download JSON</button>
-                <button  type="button" class="btn btn-success" style="margin-left: 10px;"  > Download XML</button>
+                <a #usersForExport style="display: none" ></a>
+                <button  type="button" class="btn btn-info btn-download" (click)="downloadUSers('json',usersForExport)" > Download JSON</button>
+                <button  type="button" class="btn btn-success" style="margin-left: 10px;"  (click)="downloadUSers('xml',usersForExport)"> Download XML</button>
+                <div *ngIf="downloadAttempt && usersToExtract.length == 0" class="alert alert-danger text-center" role="alert" style="margin-bottom: 5px; width: 20%; margin: auto; margin-top: 10px;">
+                    <small class="text-danger" >You have to select at least one user</small>
+                    <button style="color: #ff0b00; background-color: transparent; " type="button" class="close" aria-label="Close" (click)="downloadAttempt = false">
+                      <span>&times;</span> 
+                    </button>
+                </div>
             </div>
         </div>
     </div>
