@@ -157,12 +157,14 @@ export class PostsinfeedComponent implements OnInit {
       this.feedService.addNewComment(this.userDetails.id,post.id,post.newComment)
         .subscribe(
           response => {
-              location.reload();
+              // location.reload();
+              this.ngOnInit();
             },
             error => {
               alert(error.message);
             }
         );
+      // this.ngOnInit();
     }
     else{
       alert("Not valid data");

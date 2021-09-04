@@ -108,6 +108,11 @@ public class User {
     @ToString.Exclude
     private Set<Post> posts = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
+    @Fetch(value= FetchMode.SELECT)
+    private Set<Post> recommendedPosts = new HashSet<>();
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
     @JsonIgnoreProperties("userMadeBy")
     @EqualsAndHashCode.Exclude
@@ -137,6 +142,10 @@ public class User {
     @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
     private Set<Job> jobApplied = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
+    @Fetch(value= FetchMode.SELECT)
+    private Set<Job> recommendedJobs = new HashSet<>();
 
     /* ----------- CHAT ----------- */
 

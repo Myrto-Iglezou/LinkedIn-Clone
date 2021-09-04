@@ -4,6 +4,7 @@ import com.linkedin.linkedinclone.exceptions.ObjectExistsException;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
+import com.linkedin.linkedinclone.recommendation.RecommendationAlgos;
 import com.linkedin.linkedinclone.repositories.CommentRepository;
 import com.linkedin.linkedinclone.repositories.JobsRepository;
 import com.linkedin.linkedinclone.repositories.PostRepository;
@@ -19,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
+import static jdk.nashorn.internal.objects.Global.println;
 
 @RestController
 @AllArgsConstructor
@@ -119,7 +121,17 @@ public class JobsController {
         return job.getUsersApplied();
     }
 
-
+    @CrossOrigin(origins = "*")
+    @GetMapping("/in/{id}/recommended-jobs")
+    public Set<Job> getRecommendedJobs(@PathVariable Long id){
+        System.out.println("Hereeee");
+        RecommendationAlgos recAlgos = new RecommendationAlgos();
+        recAlgos.recommendedJobs(userRepository, jobRepository, userService);
+        System.out.println("=Hereeee-");
+        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+        System.out.println(currentUser.getRecommendedJobs());
+        return currentUser.getRecommendedJobs();
+    }
 
 
 }

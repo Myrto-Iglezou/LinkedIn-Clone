@@ -111,5 +111,14 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+    public Integer hasApplied(User u,Job j){
+        for(Job jj: u.getJobApplied()){
+            if(jj==j)
+                return 1;
+        }
+        return -1;
+    }
+
 }
 

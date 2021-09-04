@@ -18,7 +18,7 @@ export class JobsComponent implements OnInit {
   userDetails: UserDetails;
   job: Job = new Job();
   jobs: Job[] = new Array<Job>();
-  sortType: number = 0;
+  sortType: number=0;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +45,8 @@ export class JobsComponent implements OnInit {
     this.jobService.getJobs(this.userDetails.id).subscribe(
       (jobs) => {
         Object.assign(this.jobs , jobs);
-        if(this.sortType==0){
+        // this.sortType = 
+        if(this.sortType==0 || this.sortType==null){
           this.sortJobsByDate();
         }else if(this.sortType==1){
           this.sortJobsByRelevance();
@@ -58,26 +59,35 @@ export class JobsComponent implements OnInit {
   }
 
   changeSort(num:number){
-    if(num==0){
-      this.sortJobsByDate();
-    }else if(num==1){
-      this.sortJobsByRelevance();
-    }
+    
+    // if(num==0){
+    //   this.sortJobsByDate();
+    // }else if(num==1){
+    //   this.sortJobsByRelevance();
+    // }
     this.sortType = num;
-    location.reload();
+    this.ngOnInit();
     
   }
 
   sortJobsByDate() {
+
     this.jobs.sort(
       (a, b) => {
-        return <any>new Date(a.timestamp) - <any>new Date(b.timestamp);
+        return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
       }
     );
   }
 
   sortJobsByRelevance() {
-
+    this.jobService.getRecommendedJobs(this.userDetails.id).subscribe(
+      (jobs) => {
+        Object.assign(this.jobs , jobs);
+      },
+      error => {
+        alert(error.message);
+      }
+    );    
   }
 
   jobSubmit(jobForm){
@@ -85,15 +95,7 @@ export class JobsComponent implements OnInit {
       this.job.timestamp = new Date();
       this.jobService.addJob(this.job,this.userDetails.id).subscribe(
         responce => {
-          this.jobService.getJobs(this.userDetails.id).subscribe(
-            (jobs) => {
-              Object.assign(this.jobs , jobs);
-            },
-            error => {
-              alert(error.message);
-            }
-          );
-          location.reload();
+          this.ngOnInit();
         },
         error => {
           alert(error.message);

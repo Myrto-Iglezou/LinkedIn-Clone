@@ -18,6 +18,10 @@ export class JobsService {
     return this.http.get<Job[]>('https://localhost:8443/in/' + userId.toString() + '/jobs');
   }
 
+  getRecommendedJobs(userId: number): Observable <Job[]>{
+    return this.http.get<Job[]>('https://localhost:8443/in/' + userId.toString() + '/recommended-jobs');
+  }
+
   apply(jobId: number ,userId: number): Observable <string>{
     return this.http.put<string>('https://localhost:8443/in/' + userId.toString() + '/jobs/make-application/' + jobId.toString() , {observe : 'response'});
   }

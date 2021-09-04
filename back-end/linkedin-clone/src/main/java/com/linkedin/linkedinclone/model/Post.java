@@ -55,6 +55,13 @@ public class Post {
     private Set<Picture> pictures = new HashSet<>();
 
 
+    @ManyToMany(mappedBy="recommendedPosts",fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = {"recommendedPosts","posts","interestReactions"},allowSetters = true)
+    @Fetch(value= FetchMode.SELECT)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<User> recommendedTo = new HashSet<User>();
+
     public Post(String content) {
         this.content = content;
     }

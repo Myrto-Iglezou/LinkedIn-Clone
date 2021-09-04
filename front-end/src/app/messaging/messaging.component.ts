@@ -56,13 +56,15 @@ export class MessagingComponent implements OnInit {
         
         this.sortChatsByDate();
         this.currentChat = this.chats[0];
-        let id = this.route.snapshot.paramMap.get('id').toString();
+        let id = this.route.snapshot.paramMap.get('id');
         if(id!=null){
-          this.chats.forEach(c => {
-            if(this.getOtherUser(c).id.toString() == id){
-              this.currentChat = c;
+          this.chats.forEach(
+            c => {
+              if(this.getOtherUser(c).id.toString() == id.toString()){
+                this.currentChat = c;
+              }
             }
-          });
+          );
           // alert("here");
         }
         
@@ -99,10 +101,6 @@ export class MessagingComponent implements OnInit {
         return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
       }
     );
-      
-    
-
-
   }
 
   sortMessagesByDate(messages: Message[]): Message[]  {
@@ -194,15 +192,18 @@ export class MessagingComponent implements OnInit {
       this.chatService.newMessage(this.newMessage,this.userDetails.id,this.currentChat.id)
         .subscribe(
             response => {
-              // this.currentChat.messages.push(this.newMessage);
-              location.reload();
-              // document.getElementById("selectButton-{{currentChat.id}}").click();
-                            // this.reloadCurrentRoute();
+              this.newMessage = new Message();
+              this.ngOnInit();
             },
             error => {
               alert(error.message);
             }
         );
+      this.ngOnInit();
+      
+      
+      
+      
     }
   }
 

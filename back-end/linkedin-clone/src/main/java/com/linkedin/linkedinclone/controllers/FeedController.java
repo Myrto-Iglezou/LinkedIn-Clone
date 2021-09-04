@@ -6,12 +6,14 @@ import com.linkedin.linkedinclone.dto.FeedDTO;
 import com.linkedin.linkedinclone.exceptions.PostNotFoundException;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
+import com.linkedin.linkedinclone.recommendation.RecommendationAlgos;
 import com.linkedin.linkedinclone.repositories.*;
 import com.linkedin.linkedinclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -255,4 +257,14 @@ public class FeedController {
         System.out.println(post);
         return ResponseEntity.ok("\"Comment in post created with success!\"");
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/in/{id}/recommended-posts")
+    public Set<Post> getRecommendedPosts(@PathVariable Long id){
+ /*       RecommendationAlgos recAlgos = new RecommendationAlgos();
+        recAlgos.recommendedPosts(userRepository, postRepository, userService);
+ */       User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
+        return currentUser.getRecommendedPosts();
+    }
+
 }
