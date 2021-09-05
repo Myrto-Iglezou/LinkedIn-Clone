@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
 import static jdk.nashorn.internal.objects.Global.println;
@@ -123,14 +121,21 @@ public class JobsController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/recommended-jobs")
-    public Set<Job> getRecommendedJobs(@PathVariable Long id){
-        System.out.println("Hereeee");
+    public List<Job> getRecommendedJobs(@PathVariable Long id){
         RecommendationAlgos recAlgos = new RecommendationAlgos();
         recAlgos.recommendedJobs(userRepository, jobRepository, userService);
-        System.out.println("=Hereeee-");
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        System.out.println(currentUser.getRecommendedJobs());
-        return currentUser.getRecommendedJobs();
+        List<Job> recommendedJobs = new ArrayList<>();
+        if (currentUser.getRecommendedJobs() != null){
+            System.out.println("list is null");
+            recommendedJobs = currentUser.getRecommendedJobs();
+        }
+
+        for (Job j:recommendedJobs  ) {
+            System.out.println(j);
+        }
+        System.out.println(recommendedJobs);
+        return recommendedJobs;
     }
 
 

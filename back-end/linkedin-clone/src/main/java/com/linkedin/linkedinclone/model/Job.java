@@ -8,7 +8,9 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,5 +51,6 @@ public class Job {
     @Fetch(value= FetchMode.SELECT)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<User> recommendedTo = new HashSet<User>();
+    private List<User> recommendedTo = new ArrayList<>();
+
 }

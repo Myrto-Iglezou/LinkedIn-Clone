@@ -26,6 +26,10 @@ export class FeedService {
     return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
   }
 
+  getRecommendedPosts(userId: number): Observable <Post[]>{
+    return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/recommended-posts');
+  }
+
   addPostReaction(postId: number,userId: number): Observable<HttpResponse<any>>{
     return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/post-interested/'+ postId.toString(), {observe : 'response'});
   }

@@ -101,7 +101,7 @@ export class NetworkComponent implements OnInit {
     // alert("here");
     this.router.navigate(['/messaging/' + user.id.toString()]).then(() => {
       location.reload();
-    });   
+    });
   }
 
   connected(id: number): boolean {

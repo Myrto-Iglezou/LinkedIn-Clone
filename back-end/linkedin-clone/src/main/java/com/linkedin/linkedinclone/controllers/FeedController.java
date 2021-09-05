@@ -260,11 +260,21 @@ public class FeedController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/recommended-posts")
-    public Set<Post> getRecommendedPosts(@PathVariable Long id){
- /*       RecommendationAlgos recAlgos = new RecommendationAlgos();
+    public List<Post> getRecommendedPosts(@PathVariable Long id) {
+        RecommendationAlgos recAlgos = new RecommendationAlgos();
         recAlgos.recommendedPosts(userRepository, postRepository, userService);
- */       User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-        return currentUser.getRecommendedPosts();
+        List<Post> recommendedPosts = new ArrayList<>();
+        User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
+
+        if (currentUser.getRecommendedPosts() != null) {
+            for (Post p : currentUser.getRecommendedPosts()) {
+                if (userService.getFeedPosts(currentUser).contains(p))
+                    recommendedPosts.add(p);
+            }
+        }
+
+
+        return recommendedPosts;
     }
 
 }
