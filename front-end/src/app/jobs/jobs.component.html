@@ -30,7 +30,7 @@
                 <h3>Sort by:</h3>
                 <mat-radio-group  aria-label="Select an option" name="radioprivacy" id="radioprivacy" [(ngModel)]="sortType" required>
                   <mat-radio-button (click)="changeSort(0)" [value]=0 style="margin-right: 10px;" name="private">Date created</mat-radio-button>
-                  <mat-radio-button (click)="changeSort(1)" [value]=1 name="public">Relevance</mat-radio-button>
+                  <mat-radio-button (click)="changeSort(1)" [value]=1 name="public">Relevant to you</mat-radio-button>
                 </mat-radio-group> 
             </div>   
         </div>
@@ -42,7 +42,7 @@
                 No jobs have been posted
             </div>
             <div *ngFor="let job of jobs">
-                <div *ngIf="usersJob(job)">
+                <div *ngIf="usersJob(job) && sortType==0">
                     <div class="card border-primary mb-4"  id="jobCard">
                         <div class="card-title m-1 ">
                             <h2 style="margin-left: 5%;padding-top:5% ;">{{job.title}}</h2>

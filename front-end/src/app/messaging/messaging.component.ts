@@ -65,6 +65,7 @@ export class MessagingComponent implements OnInit {
               }
             }
           );
+
           // alert("here");
         }
         
@@ -162,9 +163,18 @@ export class MessagingComponent implements OnInit {
     return null;
   }
 
-  
+  startConversation(user: User) {
+    // alert("here");
+    this.router.navigate(['/messaging/' + user.id.toString()]).then(() => {
+      location.reload();
+    });
+  }
 
   openChat(chat:Chat) {
+    // this.startConversation();
+    this.router.navigate(['/messaging/' + this.getOtherUser(chat).id.toString()]).then(() => {
+      this.ngOnInit();
+    });
     this.currentChat = chat;
   }
 

@@ -18,6 +18,7 @@ export class JobsComponent implements OnInit {
   userDetails: UserDetails;
   job: Job = new Job();
   jobs: Job[] = new Array<Job>();
+  recommendedJobs: Job[] = new Array<Job>();
   sortType: number=0;
 
   constructor(
@@ -45,7 +46,6 @@ export class JobsComponent implements OnInit {
     this.jobService.getJobs(this.userDetails.id).subscribe(
       (jobs) => {
         Object.assign(this.jobs , jobs);
-        // this.sortType = 
         if(this.sortType==0 || this.sortType==null){
           this.sortJobsByDate();
         }else if(this.sortType==1){
@@ -56,15 +56,20 @@ export class JobsComponent implements OnInit {
         alert(error.message);
       }
     );
+
+    this.jobService.getRecommendedJobs(this.userDetails.id).subscribe(
+      (jobs) => {
+        if(jobs.length != 0)
+          Object.assign(this.recommendedJobs , jobs);
+      },
+      error => {
+        alert(error.message);
+      }
+    );  
   }
 
   changeSort(num:number){
     
-    // if(num==0){
-    //   this.sortJobsByDate();
-    // }else if(num==1){
-    //   this.sortJobsByRelevance();
-    // }
     this.sortType = num;
     this.ngOnInit();
     
@@ -80,14 +85,7 @@ export class JobsComponent implements OnInit {
   }
 
   sortJobsByRelevance() {
-    this.jobService.getRecommendedJobs(this.userDetails.id).subscribe(
-      (jobs) => {
-        Object.assign(this.jobs , jobs);
-      },
-      error => {
-        alert(error.message);
-      }
-    );    
+    Object.assign(this.jobs,this.recommendedJobs);
   }
 
   jobSubmit(jobForm){
@@ -118,7 +116,7 @@ export class JobsComponent implements OnInit {
 
     this.jobService.apply(jobId,this.userDetails.id).subscribe(
       responce => {
-        location.reload();
+        this.ngOnInit();
       },
       error => {
         alert(error.message);

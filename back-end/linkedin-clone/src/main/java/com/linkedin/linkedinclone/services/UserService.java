@@ -8,6 +8,7 @@ import com.linkedin.linkedinclone.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -46,10 +47,80 @@ public class UserService {
 
     /* --------- FEED --------- */
 
-    public void newPost(User user, Post newPost) {
+    public Set<Post> getFeedPosts(User user) {
+        Set<Post> feedPosts = new HashSet<>();
+        feedPosts.addAll(user.getPosts());
 
-        newPost.setOwner(user);
-        postRepository.save(newPost);
+
+        Set<Connection> connections = user.getUsersFollowing();
+        for(Connection con: connections) {
+            if(con.getIsAccepted()){
+                User userFollowing = con.getUserFollowed();
+                feedPosts.addAll(userFollowing.getPosts());
+
+                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+                for(InterestReaction ir: interestReactions){
+                    feedPosts.add(ir.getPost());
+                }
+            }
+        }
+
+        connections = user.getUserFollowedBy();
+        for(Connection con: connections) {
+            if(con.getIsAccepted()){
+                User userFollowing = con.getUserFollowing();
+                feedPosts.addAll(userFollowing.getPosts());
+
+                Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
+
+                for(InterestReaction ir: interestReactions){
+                    feedPosts.add(ir.getPost());
+                }
+            }
+        }
+
+        for(Post p: feedPosts) {
+            User owner = p.getOwner();
+
+            Picture pic = owner.getProfilePicture();
+            if(pic != null){
+                if(pic.isCompressed()){
+                    Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                    pic.setCompressed(false);
+                    owner.setProfilePicture(tempPicture);
+                }
+            }
+
+            Set<Comment> comments = p.getComments();
+            for(Comment c: comments){
+                User commentOwner = c.getUserMadeBy();
+                Picture cpic = commentOwner.getProfilePicture();
+                if(cpic != null){
+                    if(cpic.isCompressed()){
+                        Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
+                        cpic.setCompressed(false);
+                        commentOwner.setProfilePicture(tempPicture);
+                    }
+                }
+            }
+
+            Set<Picture> newPicts = new HashSet<>();
+            for(Picture pict : p.getPictures()){
+                if(pict != null){
+                    if(pict.isCompressed()){
+                        Picture tempPicture = new Picture(pict.getId(),pict.getName(),pict.getType(),decompressBytes(pict.getBytes()));
+                        tempPicture.setCompressed(false);
+                        newPicts.add(tempPicture);
+                        System.out.println("> Picture compressed and saved saved ");
+                    }else
+                        newPicts.add(pict);
+                }
+            }
+            p.setPictures(newPicts);
+        }
+
+        return feedPosts;
     }
 
     public void newPostInterested(User user, Post post) {
@@ -114,11 +185,41 @@ public class UserService {
 
     public Integer hasApplied(User u,Job j){
         for(Job jj: u.getJobApplied()){
-            if(jj==j)
+            if(jj.getId()==j.getId())
                 return 1;
         }
+
+        for(Job jj: u.getJobsCreated()){
+            if(jj.getId()==j.getId())
+                return 0;
+        }
+
         return -1;
     }
 
+    public boolean hasLiked(User u,Post p){
+        for(InterestReaction i: u.getInterestReactions()){
+            if(i.getPost()==p)
+                return true;
+        }
+        return false;
+    }
+
+    public Integer numOfComments(User u,Post p){
+        Integer numOfComments = 0;
+        for(Comment c: u.getComments()){
+            if(c.getUserMadeBy()==u)
+                numOfComments++;
+        }
+        return numOfComments;
+    }
+
+    public boolean isNetworkPost(User u,Post p){
+        for(Post pp: getFeedPosts(u)){
+            if(pp==p)
+                return true;
+        }
+        return false;
+    }
 }
 

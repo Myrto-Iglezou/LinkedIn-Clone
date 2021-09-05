@@ -26,17 +26,19 @@ export class FeedService {
     return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/feed-posts');
   }
 
+  getRecommendedPosts(userId: number): Observable <Post[]>{
+    return this.http.get<Post[]>('https://localhost:8443/in/' + userId.toString() + '/recommended-posts');
+  }
+
   addPostReaction(postId: number,userId: number): Observable<HttpResponse<any>>{
     return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/post-interested/'+ postId.toString(), {observe : 'response'});
   }
 
   addNewComment(userId: number,postId: number, comment: Comment): Observable<HttpResponse<any>>{
-    // alert(userId);
     return this.http.put<any>('https://localhost:8443/in/' + userId.toString() + '/feed/new-comment/'+ postId.toString(), comment, {observe : 'response'});
   }
 
   userIsInterested(userId: number,postId: number): Observable<HttpResponse<InterestReaction>> {
-    // alert("-----");
     return this.http.get<InterestReaction>('https://localhost:8443/in/' + userId.toString() + '/feed/is-interested/'+ postId.toString(), {observe : 'response'});
   }
 }

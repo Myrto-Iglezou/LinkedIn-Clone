@@ -11,7 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -111,7 +113,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
     @Fetch(value= FetchMode.SELECT)
-    private Set<Post> recommendedPosts = new HashSet<>();
+    private List<Post> recommendedPosts = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
     @JsonIgnoreProperties("userMadeBy")
@@ -145,7 +147,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
     @Fetch(value= FetchMode.SELECT)
-    private Set<Job> recommendedJobs = new HashSet<>();
+    private List<Job> recommendedJobs = new ArrayList<>();
 
     /* ----------- CHAT ----------- */
 
