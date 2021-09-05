@@ -25,18 +25,6 @@ public class RecommendationAlgos {
         List<User> userList = userRepository.findByRole(RoleType.PROFESSIONAL);
         List<Job> jobList = jobsRepository.findAll();
 
-        for(int u = 0; u < userList.size() ; u++) {
-            userList.get(u).setRecommendedJobs(null);
-            userRepository.save(userList.get(u));
-        }
-        for(int d = 0; d < jobList.size() ; d++){
-            jobList.get(d).setRecommendedTo(null);
-            jobsRepository.save(jobList.get(d));
-        }
-
-        userList = userRepository.findByRole(RoleType.PROFESSIONAL);
-        jobList = jobsRepository.findAll();
-
         System.out.println("userList.size = "+userList.size());
         System.out.println("jobList.size = "+jobList.size());
 
@@ -74,6 +62,7 @@ public class RecommendationAlgos {
 
 
             Recommendation recommendation = new Recommendation();
+            recommendation.print(matrix);
             double[][] results = recommendation.matrix_factorization(matrix, 2, 0.0002, 0.0);
             System.out.println("MATRIX:");
             recommendation.print(matrix);
