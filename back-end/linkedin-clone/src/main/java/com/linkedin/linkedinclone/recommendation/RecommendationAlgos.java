@@ -25,18 +25,6 @@ public class RecommendationAlgos {
         List<User> userList = userRepository.findByRole(RoleType.PROFESSIONAL);
         List<Job> jobList = jobsRepository.findAll();
 
-        for(int u = 0; u < userList.size() ; u++) {
-            userList.get(u).setRecommendedJobs(null);
-            userRepository.save(userList.get(u));
-        }
-        for(int d = 0; d < jobList.size() ; d++){
-            jobList.get(d).setRecommendedTo(null);
-            jobsRepository.save(jobList.get(d));
-        }
-
-        userList = userRepository.findByRole(RoleType.PROFESSIONAL);
-        jobList = jobsRepository.findAll();
-
         System.out.println("userList.size = "+userList.size());
         System.out.println("jobList.size = "+jobList.size());
 
@@ -48,13 +36,13 @@ public class RecommendationAlgos {
                 double val = 0;
                 for (int d = 0; d < jobList.size(); d++) {
                     /*
-                        Scoring: [-1,0,1] (sparse)
+                        Scoring:
                         --------------------------------
-                        - [1] if applied to this job
-                        - [0] if it has been posted by him
-                        - [-1] if it nothing from the above
+                        Average edit distance between:
+                         - user skills and
+                         - job title.
                     */
-                    matrix[u][d] = userService.hasApplied(userList.get(u),jobList.get(d));
+                    matrix[u][d] = userService.matchingSkills(userList.get(u),jobList.get(d));
                     if (matrix[u][d] != -1) {
                         val += matrix[u][d];
                         count++;
@@ -74,10 +62,11 @@ public class RecommendationAlgos {
 
 
             Recommendation recommendation = new Recommendation();
-            double[][] results = recommendation.matrix_factorization(matrix, 2, 0.0002, 0.0);
-            System.out.println("MATRIX:");
             recommendation.print(matrix);
-            System.out.println("RESULTS:");
+            double[][] results = recommendation.matrix_factorization(matrix, 2, 0.0002, 0.0);
+            System.out.println("> MATRIX:");
+            recommendation.print(matrix);
+            System.out.println("> RESULTS:");
             recommendation.print(results);
 
             for (int u = 0; u < userList.size(); u++) {
@@ -142,8 +131,8 @@ public class RecommendationAlgos {
                         - +3 if interested
                         - +2 if commented
                         * if nothing from above:
-                            +1 if this post is in network
-                          else -1
+                            edit distance between skills and post content
+                          else average
                     */
                     matrix[u][d] = 0;
                     if(userService.hasLiked(userList.get(u),postList.get(d)))
@@ -157,8 +146,15 @@ public class RecommendationAlgos {
                     if (matrix[u][d] != 0) {
                         val += matrix[u][d];
                         count++;
-                    }else
-                        matrix[u][d] = -2;
+                    }else{
+                        Integer score = userService.matchingSkills(userList.get(u),postList.get(d));
+                        if(score!=0) {
+                            matrix[u][d] = score;
+                            val += matrix[u][d];
+                            count++;
+                        }else
+                            matrix[u][d] = -2;
+                    }
                 }
 
                 for(int d = 0 ; d < postList.size(); d++){
@@ -168,7 +164,7 @@ public class RecommendationAlgos {
                         if(userService.isNetworkPost(userList.get(u), postList.get(d)))
                             matrix[u][d] = 1;
                         else
-                        matrix[u][d] = -1;
+                            matrix[u][d] = -1;
                     }
                 }
 
