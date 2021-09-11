@@ -235,7 +235,7 @@ public class UserService {
         }
     }
 
-    public Integer matchingSkills(User u,Post p){
+    public Integer matchingSkills(User u,Post p) {
 
         Set<SkillsAndExperience> skills =  u.getSkills();
         Integer avgDistance = 0;

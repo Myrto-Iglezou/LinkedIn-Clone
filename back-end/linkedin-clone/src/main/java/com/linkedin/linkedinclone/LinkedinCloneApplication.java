@@ -7,6 +7,7 @@ import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.PictureRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
+import com.linkedin.linkedinclone.services.UserService;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.commons.io.IOUtils;
@@ -32,10 +33,7 @@ import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.compressBytes;
 
@@ -88,8 +86,25 @@ public class LinkedinCloneApplication {
 	}
 
 	@Bean
-	CommandLineRunner initDatabase(UserRepository userRepository, RoleRepository roleRepository, PictureRepository pictureRepository, BCryptPasswordEncoder encoder) {
-		return args -> {};
+	CommandLineRunner initDatabase(UserRepository userRepository, UserService userService, RoleRepository roleRepository, PictureRepository pictureRepository, BCryptPasswordEncoder encoder) {
+		return args -> {
+
+		    if(userRepository.findByRole(RoleType.ADMIN).size()==0){
+                Role admin_role = new Role(RoleType.ADMIN);
+                roleRepository.save(admin_role);
+                User user = new User(
+                        "admin",
+                        encoder.encode("012345"),
+                        "admin",
+                        "admin"
+                );
+                Set<Role> roles = new HashSet<Role>();
+                roles.add(admin_role);
+                user.setRoles(roles);
+                userRepository.save(user);
+
+            }
+        };
 
 	}
 
