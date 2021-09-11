@@ -108,7 +108,6 @@ public class LinkedinCloneApplication {
 			user.setRoles(roles);
 			userRepository.save(user);
 
-
 		};
 	}
 
