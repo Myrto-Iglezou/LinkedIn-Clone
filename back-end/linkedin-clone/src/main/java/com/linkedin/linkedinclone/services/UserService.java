@@ -5,7 +5,6 @@ import com.linkedin.linkedinclone.dto.PostDTO;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.*;
-import com.linkedin.linkedinclone.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -213,46 +212,6 @@ public class UserService {
                 numOfComments++;
         }
         return numOfComments;
-    }
-
-    public Integer matchingSkills(User u,Job j){
-
-        Set<SkillsAndExperience> skills =  u.getSkills();
-        Integer avgDistance = 0;
-        for(SkillsAndExperience s:skills){
-            Integer editDist = Utils.minDistance(s.getDescription(),j.getTitle());
-            System.out.println("Job: "+j.getTitle());
-            System.out.println("Skills: "+s.getDescription());
-            System.out.println("Score: "+editDist);
-            avgDistance += editDist;
-        }
-
-        if (avgDistance != 0) {
-            System.out.println("Avg Score: " + (int) (((double) avgDistance) / ((double) skills.size())));
-            return (int) (((double) avgDistance) / ((double) skills.size()));
-        } else {
-            return -1;
-        }
-    }
-
-    public Integer matchingSkills(User u,Post p) {
-
-        Set<SkillsAndExperience> skills =  u.getSkills();
-        Integer avgDistance = 0;
-        for(SkillsAndExperience s:skills){
-            Integer editDist = Utils.minDistance(s.getDescription(),p.getContent());
-            System.out.println("Post: "+p.getContent());
-            System.out.println("Skills: "+s.getDescription());
-            System.out.println("Score: "+editDist);
-            avgDistance += editDist;
-        }
-
-        if (avgDistance != 0) {
-            System.out.println("Avg Score: " + (int) (((double) avgDistance) / ((double) skills.size())));
-            return (int) (((double) avgDistance) / ((double) skills.size()));
-        } else {
-            return 0;
-        }
     }
 
     public boolean isNetworkPost(User u,Post p){

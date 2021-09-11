@@ -24,6 +24,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FeedComponent } from './feed/feed.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -93,6 +94,7 @@ const appRoutes: Routes = [
     UserDetailsComponent,
     FeedComponent,
     NavbarComponent,
+    ProfileCardComponent,
     CreatePostComponent,
     PostsinfeedComponent,
     UsersettingsComponent,

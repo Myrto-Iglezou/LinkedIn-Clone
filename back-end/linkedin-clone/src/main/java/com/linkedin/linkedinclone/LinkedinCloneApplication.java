@@ -7,7 +7,6 @@ import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.PictureRepository;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
-import com.linkedin.linkedinclone.services.UserService;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.commons.io.IOUtils;
@@ -33,7 +32,10 @@ import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.compressBytes;
 
@@ -86,26 +88,58 @@ public class LinkedinCloneApplication {
 	}
 
 	@Bean
-	CommandLineRunner initDatabase(UserRepository userRepository, UserService userService, RoleRepository roleRepository, PictureRepository pictureRepository, BCryptPasswordEncoder encoder) {
+	CommandLineRunner initDatabase(UserRepository userRepository, RoleRepository roleRepository, PictureRepository pictureRepository, BCryptPasswordEncoder encoder) {
 		return args -> {
 
-		    if(userRepository.findByRole(RoleType.ADMIN).size()==0){
-                Role admin_role = new Role(RoleType.ADMIN);
-                roleRepository.save(admin_role);
-                User user = new User(
-                        "admin",
-                        encoder.encode("012345"),
-                        "admin",
-                        "admin"
-                );
-                Set<Role> roles = new HashSet<Role>();
-                roles.add(admin_role);
-                user.setRoles(roles);
-                userRepository.save(user);
+			Role admin_role = new Role(RoleType.ADMIN);
+			roleRepository.save(admin_role);
+			Role prof_role = new Role(RoleType.PROFESSIONAL);
+			roleRepository.save(prof_role);
 
-            }
-        };
+			User user = new User(
+					"admin@mail.com",
+					encoder.encode("012345"),
+					"admin",
+					"admin"
+			);
+			Set<Role> roles = new HashSet<Role>();
+			roles.add(admin_role);
+			roles.add(prof_role);
+			user.setRoles(roles);
+			userRepository.save(user);
 
+			for (int i = 0; i < 20; i++) {
+				user = new User(
+						"user" + i + "@mail.com",
+						encoder.encode("012345"),
+						"name" + i,
+						"surname" + i
+				);
+				roles = new HashSet<Role>();
+				roles.add(prof_role);
+				user.setRoles(roles);
+/*				File fileItem = new File("/Users/nikol/Desktop/user.jpg");
+				System.out.println(fileItem.getAbsolutePath());
+				FileInputStream input = new FileInputStream(fileItem);
+				MultipartFile file = new MockMultipartFile(
+						"fileItem",
+						fileItem.getName(),
+						"image/jpg",
+						IOUtils.toByteArray(input)
+				);
+				Picture pic = new Picture(
+						file.getOriginalFilename(),
+						file.getContentType(),
+						compressBytes(file.getBytes())
+				);
+				pic.setCompressed(true);
+				System.out.println(pic);
+				user.setProfilePicture(pic);*/
+				userRepository.save(user);
+
+				System.out.println("User saved");
+			}
+		};
 	}
 
 }
