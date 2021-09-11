@@ -108,37 +108,7 @@ public class LinkedinCloneApplication {
 			user.setRoles(roles);
 			userRepository.save(user);
 
-			for (int i = 0; i < 20; i++) {
-				user = new User(
-						"user" + i + "@mail.com",
-						encoder.encode("012345"),
-						"name" + i,
-						"surname" + i
-				);
-				roles = new HashSet<Role>();
-				roles.add(prof_role);
-				user.setRoles(roles);
-/*				File fileItem = new File("/Users/nikol/Desktop/user.jpg");
-				System.out.println(fileItem.getAbsolutePath());
-				FileInputStream input = new FileInputStream(fileItem);
-				MultipartFile file = new MockMultipartFile(
-						"fileItem",
-						fileItem.getName(),
-						"image/jpg",
-						IOUtils.toByteArray(input)
-				);
-				Picture pic = new Picture(
-						file.getOriginalFilename(),
-						file.getContentType(),
-						compressBytes(file.getBytes())
-				);
-				pic.setCompressed(true);
-				System.out.println(pic);
-				user.setProfilePicture(pic);*/
-				userRepository.save(user);
 
-				System.out.println("User saved");
-			}
 		};
 	}
 
