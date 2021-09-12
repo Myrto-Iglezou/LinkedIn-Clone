@@ -91,23 +91,24 @@ public class LinkedinCloneApplication {
 	CommandLineRunner initDatabase(UserRepository userRepository, RoleRepository roleRepository, PictureRepository pictureRepository, BCryptPasswordEncoder encoder) {
 		return args -> {
 
-			Role admin_role = new Role(RoleType.ADMIN);
-			roleRepository.save(admin_role);
-			Role prof_role = new Role(RoleType.PROFESSIONAL);
-			roleRepository.save(prof_role);
+			if(userRepository.findByRole(RoleType.ADMIN).size() == 0){
+				Role admin_role = new Role(RoleType.ADMIN);
+				roleRepository.save(admin_role);
+				Role prof_role = new Role(RoleType.PROFESSIONAL);
+				roleRepository.save(prof_role);
 
-			User user = new User(
-					"admin@mail.com",
-					encoder.encode("012345"),
-					"admin",
-					"admin"
-			);
-			Set<Role> roles = new HashSet<Role>();
-			roles.add(admin_role);
-			roles.add(prof_role);
-			user.setRoles(roles);
-			userRepository.save(user);
-
+				User user = new User(
+						"admin@mail.com",
+						encoder.encode("012345"),
+						"admin",
+						"admin"
+				);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(admin_role);
+				roles.add(prof_role);
+				user.setRoles(roles);
+				userRepository.save(user);
+			}
 		};
 	}
 
