@@ -92,7 +92,7 @@ public class RecommendationAlgos {
             userRepository.saveAll(userList);
 
         }
-        
+
     }
 
     public void recommendedPosts(UserRepository userRepository, PostRepository postRepository, UserService userService) {
