@@ -231,14 +231,67 @@ public class FeedController {
         List<Post> recommendedPosts = new ArrayList<>();
         User currentUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with " + id + " not found"));
 
-        if (currentUser.getRecommendedPosts() != null) {
+        System.out.println("\n\n\n 1 ===================================\n\n\n");
+        if (currentUser.getRecommendedPosts().size() != 0) {
+
             for (Post p : currentUser.getRecommendedPosts()) {
-                if (userService.getFeedPosts(currentUser).contains(p))
-                    recommendedPosts.add(p);
+                for(Post fp: getFeedPosts(id)){
+                    Long id1 = fp.getId();
+                    Long id2 = p.getId();
+                    if (id1 == id2)
+                        recommendedPosts.add(p);
+
+                }
             }
+        }else {
+            return new ArrayList<>(getFeedPosts(id));
         }
+        System.out.println("\n\n\n 2 ===================================\n\n\n");
+        Collections.reverse(recommendedPosts);
 
+        System.out.println("\n\n\n 3 ===================================\n\n\n");
+        for(Post p: recommendedPosts) {
+            User owner = p.getOwner();
 
+            Picture pic = owner.getProfilePicture();
+            if(pic != null){
+                if(pic.isCompressed()){
+                    Picture dbPic = pictureRepository.findById(pic.getId()).orElseThrow(()->new UserNotFoundException("Pic with "+pic.getId()+" not found"));;
+                    Picture tempPicture = new Picture(dbPic.getId(),dbPic.getName(),dbPic.getType(),decompressBytes(dbPic.getBytes()));
+                    tempPicture.setCompressed(false);
+                    owner.setProfilePicture(tempPicture);
+                }
+            }
+
+            Set<Comment> comments = p.getComments();
+            for(Comment c: comments){
+                User commentOwner = c.getUserMadeBy();
+                Picture cpic = commentOwner.getProfilePicture();
+                if(cpic != null){
+                    if(cpic.isCompressed()){
+                        Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
+                        tempPicture.setCompressed(false);
+                        commentOwner.setProfilePicture(tempPicture);
+                    }
+                }
+            }
+
+            Set<Picture> newPicts = new HashSet<>();
+            for(Picture pict : p.getPictures()){
+                if(pict != null){
+                    if(pict.isCompressed()){
+                        Picture tempPicture = new Picture(pict.getId(),pict.getName(),pict.getType(),decompressBytes(pict.getBytes()));
+                        tempPicture.setCompressed(false);
+                        newPicts.add(tempPicture);
+                        System.out.println("> Picture compressed and saved saved ");
+                    }else
+                        newPicts.add(pict);
+                }
+            }
+            p.setPictures(newPicts);
+/*            System.out.println(owner);
+            System.out.println(p);*/
+        }
         return recommendedPosts;
     }
 

@@ -56,7 +56,7 @@ public class Post {
 
 
     @ManyToMany(mappedBy="recommendedPosts",fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"recommendedPosts","posts","interestReactions"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"recommendedPosts","posts","interestReactions","posts","usersFollowing","userFollowedBy","posts","comments","notifications","interestReactions","jobsCreated","interactions","jobApplied","messages","chats"},allowSetters = true)
     @Fetch(value= FetchMode.SELECT)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

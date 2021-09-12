@@ -22,7 +22,7 @@ public class RecommendationAlgos {
 
     public void recommendedJobs(UserRepository userRepository, JobsRepository jobsRepository, UserService userService) {
 
-        List<User> userList = userRepository.findByRole(RoleType.PROFESSIONAL);
+        List<User> userList = userService.getUsers();
         List<Job> jobList = jobsRepository.findAll();
 
         System.out.println("userList.size = "+userList.size());
@@ -73,20 +73,19 @@ public class RecommendationAlgos {
                 List<Job> jobs = new ArrayList<>();
                 List<Pair> pairs = new ArrayList<>();
                 for (int d = 0; d < jobList.size(); d++) {
-                    if (matrix[u][d] == -1)
+                    if (matrix[u][d] != -1)
                         pairs.add(new Pair(d, results[u][d]));
                 }
                 pairs.sort((Pair p1, Pair p2) -> Double.compare(p2.value, p1.value));
                 if (pairs.size() > 0) {
-                    //int topk = Math.min(pairs.size(), 5);
-                    System.out.println("pairs.size = "+pairs.size());
+                    System.out.println("\n\nFor user: "+userList.get(u).getName());
                     for (int i = 0; i < pairs.size(); i++) {
+                        System.out.println(jobList.get(pairs.get(i).index).getTitle() +" with "+pairs.get(i).value);
+
                         jobs.add(jobList.get(pairs.get(i).index));
                     }
                     userList.get(u).setRecommendedJobs(jobs);
                 }
-                if( pairs.size() == jobList.size())
-                    userList.get(u).setRecommendedJobs(null);
             }
 
             userRepository.saveAll(userList);
@@ -97,21 +96,8 @@ public class RecommendationAlgos {
 
     public void recommendedPosts(UserRepository userRepository, PostRepository postRepository, UserService userService) {
 
-        List<User> userList = userRepository.findByRole(RoleType.PROFESSIONAL);
+        List<User> userList = userService.getUsers();
         List<Post> postList = postRepository.findAll();
-
-        for(int u = 0; u < userList.size() ; u++) {
-            userList.get(u).setRecommendedPosts(null);
-            userRepository.save(userList.get(u));
-        }
-
-        for(int d = 0; d < postList.size() ; d++){
-            postList.get(d).setRecommendedTo(null);
-            postRepository.save(postList.get(d));
-        }
-
-        userList = userRepository.findByRole(RoleType.PROFESSIONAL);
-        postList = postRepository.findAll();
 
         System.out.println(userList.size());
         System.out.println(postList.size());
@@ -128,31 +114,30 @@ public class RecommendationAlgos {
                     /*
                         Scoring between -1 and 5 overall
                         --------------------------------
-                        - +3 if interested
-                        - +2 if commented
+                        - base edit distance from current job and skills
+                        - *3 if interested
+                        - *2 if commented
                         * if nothing from above:
-                            edit distance between skills and post content
-                          else average
+                            -1
                     */
-                    matrix[u][d] = 0;
+                    matrix[u][d] = userService.matchingSkills(userList.get(u),postList.get(d));
                     if(userService.hasLiked(userList.get(u),postList.get(d)))
-                        matrix[u][d] += 3;
+                        matrix[u][d] *= 3;
 
                     Integer numOfComments = userService.numOfComments(userList.get(u), postList.get(d));
                     if (numOfComments>0)
-                        matrix[u][d] += 2;
+                        matrix[u][d] *= numOfComments;
 
 
                     if (matrix[u][d] != 0) {
                         val += matrix[u][d];
                         count++;
                     }else{
-                        Integer score = userService.matchingSkills(userList.get(u),postList.get(d));
-                        if(score!=0) {
-                            matrix[u][d] = score;
-                            val += matrix[u][d];
-                            count++;
-                        }else
+                        if(userService.hasLiked(userList.get(u),postList.get(d)) && count!=0){
+                            matrix[u][d] = (val / count)*2;
+                        }else if( userService.numOfComments(userList.get(u),postList.get(d))>0  && count!=0){
+                            matrix[u][d] = (val / count)*userService.numOfComments(userList.get(u), postList.get(d));
+                        } else
                             matrix[u][d] = -2;
                     }
                 }
@@ -161,10 +146,7 @@ public class RecommendationAlgos {
                     if (matrix[u][d] == -2 && count != 0)
                         matrix[u][d] = val / count;
                     else if(count == 0) {
-                        if(userService.isNetworkPost(userList.get(u), postList.get(d)))
-                            matrix[u][d] = 1;
-                        else
-                            matrix[u][d] = -1;
+                        matrix[u][d] = -1;
                     }
                 }
 
@@ -179,20 +161,21 @@ public class RecommendationAlgos {
                 List<Post> posts = new ArrayList<>();
                 List<Pair> pairs = new ArrayList<>();
                 for (int d = 0; d < postList.size(); d++) {
-                    if (matrix[u][d] == -1)
+                    if (matrix[u][d] != -1)
                         pairs.add(new Pair(d, results[u][d]));
                 }
                 pairs.sort((Pair p1, Pair p2) -> Double.compare(p2.value, p1.value));
+
                 if (pairs.size() > 0) {
-                    //int topk = Math.min(pairs.size(), 5);
-                    for (int i = 0; i < pairs.size(); i++)
+                    System.out.println("\n\nFor user: "+userList.get(u).getName());
+                    for (int i = 0; i < pairs.size(); i++) {
+                        System.out.println(postList.get(pairs.get(i).index).getContent() +" with "+pairs.get(i).value);
+
                         posts.add(postList.get(pairs.get(i).index));
+                    }
                     userList.get(u).setRecommendedPosts(posts);
                 }
-                if( pairs.size() == postList.size())
-                    userList.get(u).setRecommendedPosts(null);
             }
-
             userRepository.saveAll(userList);
 
         }

@@ -126,15 +126,46 @@ public class JobsController {
         recAlgos.recommendedJobs(userRepository, jobRepository, userService);
         User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
         List<Job> recommendedJobs = new ArrayList<>();
-        if (currentUser.getRecommendedJobs() != null){
+        if (currentUser.getRecommendedJobs().size() != 0){
             System.out.println("list is null");
             recommendedJobs = currentUser.getRecommendedJobs();
+        } else {
+            return new ArrayList<>(getJobs(id));
         }
 
         for (Job j:recommendedJobs  ) {
             System.out.println(j);
         }
         System.out.println(recommendedJobs);
+        Collections.reverse(recommendedJobs);
+
+        for(Job j: recommendedJobs) {
+            System.out.println(j);
+
+            User owner = j.getUserMadeBy();
+
+            Picture pic = owner.getProfilePicture();
+            if(pic != null){
+                if(pic.isCompressed()){
+                    Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
+                    pic.setCompressed(false);
+                    owner.setProfilePicture(tempPicture);
+                }
+            }
+
+            Set<User> usersApplied = j.getUsersApplied();
+            for(User u: usersApplied) {
+                Picture cpic = u.getProfilePicture();
+                if(cpic != null){
+                    if(cpic.isCompressed()){
+                        Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
+                        cpic.setCompressed(false);
+                        u.setProfilePicture(tempPicture);
+                    }
+                }
+            }
+        }
+
         return recommendedJobs;
     }
 

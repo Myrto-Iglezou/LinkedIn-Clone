@@ -2,6 +2,7 @@ package com.linkedin.linkedinclone.services;
 
 import com.linkedin.linkedinclone.dto.NetworkUserDTO;
 import com.linkedin.linkedinclone.dto.PostDTO;
+import com.linkedin.linkedinclone.enumerations.RoleType;
 import com.linkedin.linkedinclone.exceptions.UserNotFoundException;
 import com.linkedin.linkedinclone.model.*;
 import com.linkedin.linkedinclone.repositories.*;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.linkedin.linkedinclone.enumerations.NotificationType.*;
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
@@ -145,6 +143,7 @@ public class UserService {
         commentRepository.save(comment);
     }
 
+
     public Set<User> getUserNetwork(User currentUser) {
         Set<User> network = new HashSet<>();
 
@@ -184,6 +183,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> getUsers(){
+        Set<User> usersWithoutAdmin = new HashSet<>();
+        List<User> users = userRepository.findAll();
+        System.out.println("++++++++++++++++++++");
+        for (User u: users){
+
+            if(!u.getName().equals("admin")){
+                System.out.println(u.getName());
+                usersWithoutAdmin.add(u);
+            }
+        }
+        System.out.println("++++++++++++++++++++");
+        return new ArrayList<>(usersWithoutAdmin);
+    }
+
     public Integer hasApplied(User u,Job j){
         for(Job jj: u.getJobApplied()){
             if(jj.getId()==j.getId())
@@ -221,12 +235,14 @@ public class UserService {
         Integer avgDistance = 0;
         for(SkillsAndExperience s:skills){
             Integer editDist = Utils.minDistance(s.getDescription().toLowerCase(),j.getTitle().toLowerCase());
+
+            System.out.println("User: "+u.getName());
             System.out.println("Job: "+j.getTitle());
             System.out.println("Skills: "+s.getDescription());
-            System.out.println("Score: "+editDist);
+            System.out.println("Score: "+editDist+"\n\n");
             avgDistance += editDist;
         }
-
+        avgDistance += Utils.minDistance(u.getCurrentJob().toLowerCase(),j.getTitle().toLowerCase());
         if (avgDistance != 0) {
             System.out.println("Avg Score: " + (int) (((double) avgDistance) / ((double) skills.size())));
             return (int) (((double) avgDistance) / ((double) skills.size()));
@@ -241,17 +257,19 @@ public class UserService {
         Integer avgDistance = 0;
         for(SkillsAndExperience s:skills){
             Integer editDist = Utils.minDistance(s.getDescription().toLowerCase(),p.getContent().toLowerCase());
-            System.out.println("Post: "+p.getContent());
+
+            System.out.println("User: "+u.getName());
+            System.out.println("Job: "+p.getContent());
             System.out.println("Skills: "+s.getDescription());
-            System.out.println("Score: "+editDist);
+            System.out.println("Score: "+editDist+"\n\n");
             avgDistance += editDist;
         }
-
+        avgDistance += Utils.minDistance(u.getCurrentJob().toLowerCase(),p.getContent().toLowerCase());
         if (avgDistance != 0) {
             System.out.println("Avg Score: " + (int) (((double) avgDistance) / ((double) skills.size())));
             return (int) (((double) avgDistance) / ((double) skills.size()));
         } else {
-            return 0;
+            return -1;
         }
     }
 

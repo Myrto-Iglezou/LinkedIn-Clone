@@ -35,20 +35,19 @@ public class Job {
     private Timestamp timestamp;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"jobsCreated","jobApplied"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"jobsCreated","jobApplied","recommendedJobs","interestReactions"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User userMadeBy;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated"},allowSetters = true)
+    @JsonIgnoreProperties(value = {"jobApplied","jobsCreated","recommendedJobs","interestReactions"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> usersApplied = new HashSet<>();
 
     @ManyToMany(mappedBy="recommendedJobs",fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"recommendedJobs","jobsCreated","jobApplied","interestReactions"},allowSetters = true)
-    @Fetch(value= FetchMode.SELECT)
+    @JsonIgnoreProperties(value = {"recommendedJobs","jobsCreated","jobApplied","interestReactions","usersFollowing","userFollowedBy","posts"},allowSetters = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<User> recommendedTo = new ArrayList<>();

@@ -24,6 +24,8 @@ export class PostsinfeedComponent implements OnInit {
   page = 1;
   userDetails: UserDetails;
   posts: Post[] = new Array<Post>();
+  recommendedPosts: Post[] = new Array<Post>();
+
   // commentText :string;
   newComments: Comment[] = new Array<Comment>();
   newComment = new Comment();
@@ -50,10 +52,10 @@ export class PostsinfeedComponent implements OnInit {
     this.feedService.getFeedPosts(this.userDetails.id).subscribe(
       (posts) => {
         Object.assign(this.posts , posts);
-        if(this.sortType==0){
-          this.posts = this.sortJobsByDate();
+        if(this.sortType==0 || this.sortType==null){
+          this.sortPostsByDate();
         }else if(this.sortType==1){
-          this.sortJobsByRelevance();
+          this.sortPostsByRelevance();
         }
         this.posts.forEach(
           p => {
@@ -73,19 +75,28 @@ export class PostsinfeedComponent implements OnInit {
         alert(error.message);
       }
     );
+
+    this.feedService.getRecommendedPosts(this.userDetails.id).subscribe(
+      (posts) => {
+        if(posts.length != 0)
+          Object.assign(this.recommendedPosts , posts);
+      },
+      error => {
+        alert(error.message);
+      }
+    );  
   }
 
   changeSort(num:number){
-    if(num==0){
-      this.sortJobsByDate();
-    }else if(num==1){
-
-    }
+    
     this.sortType = num;
-    location.reload();
+    this.ngOnInit();
+    
   }
 
-  sortJobsByDate(): Post[] {
+  removePostsFromOtherUsers(){}
+
+  sortPostsByDate(): Post[] {
     return this.posts.sort(
       (a, b) => {
         return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
@@ -93,9 +104,8 @@ export class PostsinfeedComponent implements OnInit {
     );
   }
 
-  sortJobsByRelevance() {
-    
-
+  sortPostsByRelevance() {
+    Object.assign(this.posts,this.recommendedPosts);
   }
 
   sortCommentsByDate(comments: Comment[]): Comment[] {

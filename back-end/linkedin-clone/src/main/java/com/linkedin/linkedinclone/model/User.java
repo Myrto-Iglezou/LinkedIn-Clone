@@ -111,7 +111,7 @@ public class User {
     private Set<Post> posts = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
+    @JsonIgnoreProperties(value = {"recommendedTo","interestReactions","comments","owner"} , allowSetters = true)
     @Fetch(value= FetchMode.SELECT)
     private List<Post> recommendedPosts = new ArrayList<>();
 
@@ -137,16 +137,15 @@ public class User {
     /* ----------- JOBS ----------- */
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="userMadeBy")
-    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
+    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy","recommendedTo"})
     private Set<Job> jobsCreated = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy"})
+    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy","recommendedTo"})
     private Set<Job> jobApplied = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = {"recommendedTo","interactions"} , allowSetters = true)
-    @Fetch(value= FetchMode.SELECT)
+    @JsonIgnoreProperties(value = {"usersApplied","userMadeBy","recommendedTo"} , allowSetters = true)
     private List<Job> recommendedJobs = new ArrayList<>();
 
     /* ----------- CHAT ----------- */
