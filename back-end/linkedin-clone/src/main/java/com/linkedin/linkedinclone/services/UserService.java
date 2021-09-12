@@ -220,7 +220,7 @@ public class UserService {
         Set<SkillsAndExperience> skills =  u.getSkills();
         Integer avgDistance = 0;
         for(SkillsAndExperience s:skills){
-            Integer editDist = Utils.minDistance(s.getDescription(),j.getTitle());
+            Integer editDist = Utils.minDistance(s.getDescription().toLowerCase(),j.getTitle().toLowerCase());
             System.out.println("Job: "+j.getTitle());
             System.out.println("Skills: "+s.getDescription());
             System.out.println("Score: "+editDist);
@@ -240,7 +240,7 @@ public class UserService {
         Set<SkillsAndExperience> skills =  u.getSkills();
         Integer avgDistance = 0;
         for(SkillsAndExperience s:skills){
-            Integer editDist = Utils.minDistance(s.getDescription(),p.getContent());
+            Integer editDist = Utils.minDistance(s.getDescription().toLowerCase(),p.getContent().toLowerCase());
             System.out.println("Post: "+p.getContent());
             System.out.println("Skills: "+s.getDescription());
             System.out.println("Score: "+editDist);
