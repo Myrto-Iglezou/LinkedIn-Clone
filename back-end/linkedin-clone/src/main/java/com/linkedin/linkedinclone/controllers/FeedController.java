@@ -42,42 +42,6 @@ public class FeedController {
 
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/in/{id}/feed")
-    public FeedDTO getFeed(@PathVariable Long id) {
-
-        User currentUser = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found"));
-
-        // Get authenticated user
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findUserByUsername(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername());
-
-
-        Set<Post> feedPosts = new HashSet<>();
-        feedPosts.addAll(user.getPosts());
-
-        Set<User> network = new HashSet<>();
-
-        // Posts from users connections
-        Set<Connection> connections = currentUser.getUsersFollowing();
-        for(Connection con: connections) {
-            User userFollowing = con.getUserFollowing();
-            network.add(userFollowing);
-            feedPosts.addAll(userFollowing.getPosts());
-
-            Set<InterestReaction> interestReactions = userFollowing.getInterestReactions();
-
-            for(InterestReaction ir: interestReactions){
-                feedPosts.add(ir.getPost());
-            }
-        }
-
-
-        FeedDTO feed = new FeedDTO(user,feedPosts,network);
-
-        return feed;
-    }
-
-    @CrossOrigin(origins = "*")
     @GetMapping("/in/{id}/feed-posts")
     public Set<Post> getFeedPosts(@PathVariable Long id) {
         System.out.println("\n\n\n ------------------- Get feed posts");
@@ -121,8 +85,9 @@ public class FeedController {
             Picture pic = owner.getProfilePicture();
             if(pic != null){
                 if(pic.isCompressed()){
-                    Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
-                    pic.setCompressed(false);
+                    Picture dbPic = pictureRepository.findById(pic.getId()).orElseThrow(()->new UserNotFoundException("Pic with "+pic.getId()+" not found"));;
+                    Picture tempPicture = new Picture(dbPic.getId(),dbPic.getName(),dbPic.getType(),decompressBytes(dbPic.getBytes()));
+                    tempPicture.setCompressed(false);
                     owner.setProfilePicture(tempPicture);
                 }
             }
@@ -134,7 +99,7 @@ public class FeedController {
                 if(cpic != null){
                     if(cpic.isCompressed()){
                         Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
-                        cpic.setCompressed(false);
+                        tempPicture.setCompressed(false);
                         commentOwner.setProfilePicture(tempPicture);
                     }
                 }

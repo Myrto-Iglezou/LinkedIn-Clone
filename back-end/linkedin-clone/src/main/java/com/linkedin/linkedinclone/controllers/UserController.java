@@ -103,9 +103,9 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id "+id+"doesn't exist"));
         Picture pic = user.getProfilePicture();
         if(pic != null && pic.isCompressed()){
-            System.out.println("COMPRESSED: "+pic.getId());
-            Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
-            pic.setCompressed(false);
+            Picture dbPic = pictureRepository.findById(pic.getId()).orElseThrow(()->new UserNotFoundException("Pic with "+pic.getId()+" not found"));;
+            Picture tempPicture = new Picture(dbPic.getId(),dbPic.getName(),dbPic.getType(),decompressBytes(dbPic.getBytes()));
+            tempPicture.setCompressed(false);
             user.setProfilePicture(tempPicture);
         }
         return user;
