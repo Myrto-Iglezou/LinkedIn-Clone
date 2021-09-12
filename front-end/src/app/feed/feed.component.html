@@ -5,7 +5,12 @@
         <div class="col-sm-4">
             <div class="card"  id="profileCard">
                 <div style= "text-align:center">
-                    <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
+                    <div *ngIf="user.profilePicture">
+                        <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
+                      </div>
+                      <div *ngIf="!user.profilePicture">
+                        <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" id="profile-image" class="card-img-top" alt="...">
+                      </div>
                 </div> 
                 <div class="card-body" style= "text-align:center">
                     <h5 class="card-title" style= "font-size: 20px;"><b>{{user.name}} {{user.surname}}</b></h5>
@@ -31,7 +36,12 @@
                     <div *ngIf="network.length!=0">
                         <div *ngFor="let nuser of network">
                             <hr style="height:1px; color:#8f9299;">
-                            <img [src]="displayUserPhoto(nuser)" class="rounded-circle" style="margin-left:-15px;width: 60px;" alt="" loading="lazy"/>
+                            <div *ngIf="nuser.profilePicture">
+                                <img [src]="displayUserPhoto(nuser)" class="rounded-circle" style="margin-left:-15px;width: 60px;" alt="" loading="lazy">
+                            </div>
+                            <div *ngIf="!nuser.profilePicture">
+                                <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" class="rounded-circle" style="margin-left:-15px;width: 60px;" alt="" loading="lazy">
+                            </div>
                             <button [routerLink]="['/users/',nuser.id]" type="button" class="btn">
                                 {{nuser.name}} {{nuser.surname}} <br>
                                 <div *ngIf=" nuser.currentJob && nuser.currentCompany">

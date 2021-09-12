@@ -8,15 +8,20 @@
     <app-navbar></app-navbar>
   </div>
 
-   <div class="container"  id="profilecards">
+  <div class="container"  id="profilecards">
     <div class="main-body"> 
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
-                    <div class="mt-3">
+                    <div *ngIf="user.profilePicture">
+                      <img [src]="displayProfilePhoto()" id="profile-image" class="card-img-top" alt="...">
+                    </div>
+                    <div *ngIf="!user.profilePicture">
+                      <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" id="profile-image" class="card-img-top" alt="...">
+                    </div>
+                      <div class="mt-3">
                       <h3>{{user.name}} {{user.surname}}</h3>
                       <p *ngIf="user.currentJob" class="text-secondary mb-1">{{user.currentJob}} at {{user.currentCompany}}</p>
                       <p class="text-muted font-size-sm">{{user.city}}</p>

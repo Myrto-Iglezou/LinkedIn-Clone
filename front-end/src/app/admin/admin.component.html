@@ -35,7 +35,12 @@
                     <div class="card-body row">
                         <div class="col-6" >
                             <a (click)="goToProfile(user)">
-                                <img  [src]="displayProfilePhoto(user)" class="rounded-circle" style="margin-left:25px;width: 60px;" alt="" loading="lazy"/>
+                                <div *ngIf="user.profilePicture">
+                                    <img [src]="displayProfilePhoto(user)" class="rounded-circle" style="margin-left:25px;width: 60px;" alt="" loading="lazy">
+                                </div>
+                                <div *ngIf="!user.profilePicture">
+                                    <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" class="rounded-circle" style="margin-left:25px;width: 60px;" alt="" loading="lazy">
+                                </div>
                             </a>
                         </div>
                         <div class="col-6 card-title align-self-center mb-0" style="margin-left: 0%;">

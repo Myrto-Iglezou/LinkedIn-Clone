@@ -38,20 +38,30 @@
           <li class="nav-item">
             <a class="nav-link d-flex flex-column text-center" aria-current="page" href="/notifications"><i class="fas fa-bell fa-lg"></i><span class="small">Notifications</span></a>
           </li>
-          <li class="nav-item dropdown"  ngbDropdown>
+          <!-- <li class="nav-item dropdown"  ngbDropdown> -->
             
-          <li class="nav-item text-center">
-            <div ngbDropdown class="d-inline-block">
-              <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
-               <img  [src]="displayProfilePhoto()" class="rounded-circle" height="40" alt="" loading="lazy"/>
-              </button>
-              <div ngbDropdownMenu id="mydropdown">
-                <button ngbDropdownItem *ngIf="userDetails" type="button" class="btn" (click)="goToProfile()" > Profile </button>
-                <button ngbDropdownItem ><a aria-current="page"[routerLink]="['/settings']" id="set-btn">Settings</a></button>
-                <button ngbDropdownItem (click)="logout()">Logout</button>
+            <li class="nav-item text-center">
+              <div ngbDropdown class="d-inline-block">
+                
+                <div *ngIf="user.profilePicture">
+                  <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                    <img [src]="displayProfilePhoto()" class="rounded-circle" height="40" alt="" loading="lazy">
+                  </button>
+                </div>
+                <div *ngIf="!user.profilePicture">
+                  <button class="btn" id="dropdownBasic1" ngbDropdownToggle>
+                    <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" class="rounded-circle" height="40" alt="" loading="lazy">
+                  </button>
+                </div>
+                
+                <div ngbDropdownMenu id="mydropdown">
+                  <button ngbDropdownItem *ngIf="userDetails" type="button" class="btn" (click)="goToProfile()" > Profile </button>
+                  <button ngbDropdownItem ><a aria-current="page"[routerLink]="['/settings']" id="set-btn">Settings</a></button>
+                  <button ngbDropdownItem (click)="logout()">Logout</button>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          <!-- </li>  -->
               
         </ul>
         <!-- Left links -->

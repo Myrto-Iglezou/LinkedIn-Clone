@@ -20,7 +20,12 @@
                               <div class="chat_img">
                                   <!-- <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> -->
                                   <a (click)="goToProfile(getOtherUser(chat))">
-                                    <img  [src]="displayProfilePhoto(getOtherUser(chat))" class="rounded-circle" style="width: 60px;" alt="" loading="lazy"/>
+                                    <div *ngIf="user.profilePicture">
+                                      <img [src]="displayProfilePhoto(getOtherUser(chat))" class="rounded-circle" style="width: 60px;" alt="" loading="lazy">
+                                    </div>
+                                    <div *ngIf="!user.profilePicture">
+                                      <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" class="rounded-circle" style="width: 60px;" alt="" loading="lazy">
+                                    </div>
                                   </a>
                               </div>
                               <div *ngIf="chat.messages.length!=0" class="chat_ib" >
@@ -55,7 +60,13 @@
                     <div *ngIf="isIncoming(message)" class="incoming_msg" style="text-align: left;margin-top: 15px;">
                       <div class="incoming_msg_img"> 
                         <a (click)="goToProfile(message.userMadeBy)">
-                          <img [src]="displayProfilePhoto(message.userMadeBy)" class="rounded-circle" style="cursor: pointer;"> 
+                        
+                          <div *ngIf="user.profilePicture">
+                            <img [src]="displayProfilePhoto(message.userMadeBy)" class="rounded-circle" style="cursor: pointer;">
+                          </div>
+                          <div *ngIf="!user.profilePicture">
+                            <img src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" class="rounded-circle" style="cursor: pointer;">
+                          </div>
                         </a>
                       </div>
                       <div class="received_msg">
