@@ -116,35 +116,35 @@ public class RecommendationAlgos {
                         --------------------------------
                         - base edit distance from current job and skills
                         - *3 if interested
-                        - *2 if commented
+                        - *numOfComments if commented
                         * if nothing from above:
                             -1
                     */
                     matrix[u][d] = userService.matchingSkills(userList.get(u),postList.get(d));
                     if(userService.hasLiked(userList.get(u),postList.get(d)))
-                        matrix[u][d] *= 3;
+                        matrix[u][d] /= (double)3;
 
                     Integer numOfComments = userService.numOfComments(userList.get(u), postList.get(d));
                     if (numOfComments>0)
-                        matrix[u][d] *= numOfComments;
-
+                        matrix[u][d] /= (double)(numOfComments+1);
 
                     if (matrix[u][d] != 0) {
                         val += matrix[u][d];
                         count++;
                     }else{
-                        if(userService.hasLiked(userList.get(u),postList.get(d)) && count!=0){
-                            matrix[u][d] = (val / count)*2;
-                        }else if( userService.numOfComments(userList.get(u),postList.get(d))>0  && count!=0){
-                            matrix[u][d] = (val / count)*userService.numOfComments(userList.get(u), postList.get(d));
-                        } else
-                            matrix[u][d] = -2;
+                        matrix[u][d] = -2;
                     }
                 }
 
                 for(int d = 0 ; d < postList.size(); d++){
-                    if (matrix[u][d] == -2 && count != 0)
-                        matrix[u][d] = val / count;
+                    if (matrix[u][d] == -2 && count != 0){
+                        if(userService.hasLiked(userList.get(u),postList.get(d)) && count!=0){
+                            matrix[u][d] = (val / count)/2;
+                        }else if( userService.numOfComments(userList.get(u),postList.get(d))>0  && count!=0){
+                            matrix[u][d] = (val / count)/userService.numOfComments(userList.get(u), postList.get(d));
+                        } else
+                            matrix[u][d] = -1;
+                    }
                     else if(count == 0) {
                         matrix[u][d] = -1;
                     }

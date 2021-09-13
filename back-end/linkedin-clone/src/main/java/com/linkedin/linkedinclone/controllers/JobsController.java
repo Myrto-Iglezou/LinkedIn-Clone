@@ -148,7 +148,7 @@ public class JobsController {
             if(pic != null){
                 if(pic.isCompressed()){
                     Picture tempPicture = new Picture(pic.getId(),pic.getName(),pic.getType(),decompressBytes(pic.getBytes()));
-                    pic.setCompressed(false);
+                    tempPicture.setCompressed(false);
                     owner.setProfilePicture(tempPicture);
                 }
             }
@@ -159,7 +159,7 @@ public class JobsController {
                 if(cpic != null){
                     if(cpic.isCompressed()){
                         Picture tempPicture = new Picture(cpic.getId(),cpic.getName(),cpic.getType(),decompressBytes(cpic.getBytes()));
-                        cpic.setCompressed(false);
+                        tempPicture.setCompressed(false);
                         u.setProfilePicture(tempPicture);
                     }
                 }

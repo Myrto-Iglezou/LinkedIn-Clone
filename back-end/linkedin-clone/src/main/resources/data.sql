@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `linkedin_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `linkedin_db`;
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: linkedin_db
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,7 +23,7 @@ USE `linkedin_db`;
 
 LOCK TABLES `chat` WRITE;
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
-INSERT INTO `chat` VALUES (1,'2021-09-12 16:24:25'),(2,'2021-09-12 16:28:35'),(3,'2021-09-12 16:32:17'),(4,'2021-09-12 16:35:27'),(5,'2021-09-12 16:35:28');
+INSERT INTO `chat` VALUES (1,'2021-09-12 16:24:25'),(2,'2021-09-12 16:28:35'),(3,'2021-09-12 16:32:17'),(4,'2021-09-12 16:35:27'),(5,'2021-09-12 16:35:28'),(6,'2021-09-13 10:57:41'),(7,'2021-09-13 10:57:42');
 /*!40000 ALTER TABLE `chat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -33,7 +33,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `chat_users` WRITE;
 /*!40000 ALTER TABLE `chat_users` DISABLE KEYS */;
-INSERT INTO `chat_users` VALUES (1,2),(1,3),(2,2),(2,5),(3,2),(3,4),(4,3),(4,6),(5,2),(5,6);
+INSERT INTO `chat_users` VALUES (1,2),(1,3),(2,2),(2,5),(3,2),(3,4),(4,3),(4,6),(5,2),(5,6),(6,3),(6,5),(7,3),(7,4);
 /*!40000 ALTER TABLE `chat_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -43,6 +43,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,'I totally agree','2021-09-13 11:01:44',NULL,2,6),(2,'Nerdd','2021-09-13 11:03:15',NULL,3,6),(3,'Totaly nerd','2021-09-13 11:09:55',NULL,3,5),(4,'DevOps is the future!','2021-09-13 11:59:57',NULL,2,5),(5,'Nikos see my posted jobs if you\'re interested','2021-09-13 12:03:31',NULL,2,5),(6,'Microsoft is the best','2021-09-13 12:10:13',NULL,5,2);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +53,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `connection` WRITE;
 /*!40000 ALTER TABLE `connection` DISABLE KEYS */;
-INSERT INTO `connection` VALUES (1,_binary '',NULL,6,2),(2,_binary '',NULL,4,2),(3,_binary '',NULL,3,2),(4,_binary '',NULL,5,2),(5,_binary '',NULL,6,3),(6,_binary '\0',NULL,3,5),(7,_binary '\0',NULL,3,4);
+INSERT INTO `connection` VALUES (1,_binary '',NULL,6,2),(2,_binary '',NULL,4,2),(3,_binary '',NULL,3,2),(4,_binary '',NULL,5,2),(5,_binary '',NULL,6,3),(6,_binary '',NULL,3,5),(7,_binary '',NULL,3,4);
 /*!40000 ALTER TABLE `connection` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +63,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (19),(19);
+INSERT INTO `hibernate_sequence` VALUES (1),(19),(19);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +73,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `interest_reaction` WRITE;
 /*!40000 ALTER TABLE `interest_reaction` DISABLE KEYS */;
-INSERT INTO `interest_reaction` VALUES (1,NULL,NULL,1,2);
+INSERT INTO `interest_reaction` VALUES (1,NULL,NULL,1,2),(2,NULL,NULL,3,6),(3,NULL,NULL,2,6),(4,NULL,NULL,2,5),(5,NULL,NULL,5,2);
 /*!40000 ALTER TABLE `interest_reaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (1,'Looking for senior ML engineer.','2021-09-12 16:37:09','Machine Learning Engineer',5),(2,'Looking for Junior ML engineer. Please sen me a message.','2021-09-12 16:38:08','Machine Learning Job',5),(3,'Our company is looking for a devOps engineer. Please contact me for more info.','2021-09-12 16:42:03','DevOps Engineer',4),(4,'Looking for a Software Engineer .','2021-09-12 16:43:38','HTML, Javascript Engineer',4);
+INSERT INTO `job` VALUES (1,'Looking for senior ML engineer.','2021-09-12 16:37:09','Machine Learning Engineer',5),(2,'Looking for Junior ML engineer. Please sen me a message.','2021-09-12 16:38:08','Machine Learning Job',5),(3,'Our company is looking for a devOps engineer. Please contact me for more info.','2021-09-12 16:42:03','DevOps Engineer',4),(4,'Looking for a Software Engineer .','2021-09-12 16:43:38','HTML, Javascript Engineer',4),(5,'I am looking a cyber security engineer. Please send me a message if you are interested.','2021-09-13 11:11:47','Cyber Security Job',5);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +102,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,'Hi friend!','2021-09-12 16:32:46',3,4),(2,'Hi Nick!','2021-09-12 16:35:50',4,6),(3,'Hello','2021-09-12 16:45:19',3,2),(4,'How are you?','2021-09-12 16:45:33',3,2),(5,'Hi friend!','2021-09-12 16:45:46',1,2);
+INSERT INTO `message` VALUES (1,'Hi friend!','2021-09-12 16:32:46',3,4),(2,'Hi Nick!','2021-09-12 16:35:50',4,6),(3,'Hello','2021-09-12 16:45:19',3,2),(4,'How are you?','2021-09-12 16:45:33',3,2),(5,'Hi friend!','2021-09-12 16:45:46',1,2),(6,'Hello!','2021-09-13 12:13:52',1,3),(7,'Did you see the posted jobs??','2021-09-13 12:14:06',1,3),(8,'Hi Manolis!','2021-09-13 12:14:18',4,3),(9,'I am fine. Thanks','2021-09-13 12:17:55',3,4),(10,'You?','2021-09-13 12:17:59',3,4);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +112,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,_binary '',2,1,NULL,NULL,6),(2,_binary '',2,2,NULL,NULL,4),(3,_binary '',2,3,NULL,NULL,3),(4,_binary '',2,4,NULL,NULL,5),(5,_binary '',2,5,NULL,NULL,6),(6,_binary '\0',2,6,NULL,NULL,3),(7,_binary '\0',2,7,NULL,NULL,3),(8,_binary '\0',1,NULL,NULL,1,6);
+INSERT INTO `notification` VALUES (1,_binary '',2,1,NULL,NULL,6),(2,_binary '',2,2,NULL,NULL,4),(3,_binary '',2,3,NULL,NULL,3),(4,_binary '',2,4,NULL,NULL,5),(5,_binary '',2,5,NULL,NULL,6),(6,_binary '',2,6,NULL,NULL,3),(7,_binary '',2,7,NULL,NULL,3),(8,_binary '\0',1,NULL,NULL,1,6),(9,_binary '\0',0,NULL,1,NULL,3),(10,_binary '\0',0,NULL,2,NULL,3),(11,_binary '\0',1,NULL,NULL,2,3),(12,_binary '\0',1,NULL,NULL,3,3),(13,_binary '\0',0,NULL,3,NULL,3),(14,_binary '\0',1,NULL,NULL,4,3),(15,_binary '\0',0,NULL,4,NULL,3),(16,_binary '\0',0,NULL,5,NULL,3),(17,_binary '\0',1,NULL,NULL,5,5),(18,_binary '\0',0,NULL,6,NULL,5);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,17 +131,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'Lessons starting tomorrow. ','2021-09-12 16:35:18',6);
+INSERT INTO `post` VALUES (1,'Lessons starting tomorrow. ','2021-09-12 16:35:18',6),(2,'DevOps is interesting now.','2021-09-13 10:58:21',3),(3,'Machine Learning <3','2021-09-13 10:58:56',3),(4,'Being a teacher is the best!','2021-09-13 11:04:18',6),(5,'Google is paying well.','2021-09-13 11:06:55',5),(6,'DevOps+MachineLearning=<3','2021-09-13 11:08:20',5);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `post_interest_reactions`
---
-
-LOCK TABLES `post_interest_reactions` WRITE;
-/*!40000 ALTER TABLE `post_interest_reactions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_interest_reactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -174,15 +166,6 @@ INSERT INTO `user` VALUES (1,NULL,NULL,NULL,NULL,'admin','$2a$10$GONFMdmEDjH04aa
 UNLOCK TABLES;
 
 --
--- Dumping data for table `user_chats`
---
-
-LOCK TABLES `user_chats` WRITE;
-/*!40000 ALTER TABLE `user_chats` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_chats` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `user_interest_reactions`
 --
 
@@ -206,6 +189,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user_recommended_jobs` WRITE;
 /*!40000 ALTER TABLE `user_recommended_jobs` DISABLE KEYS */;
+INSERT INTO `user_recommended_jobs` VALUES (6,3),(6,5),(6,2),(6,1),(5,3),(5,5),(5,4),(6,4),(4,3),(4,5),(5,2),(5,1),(3,1),(4,2),(4,1),(4,4),(3,2),(3,5),(3,4),(3,3),(2,3),(2,5),(2,2),(2,4),(2,1);
 /*!40000 ALTER TABLE `user_recommended_jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,6 +199,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user_recommended_posts` WRITE;
 /*!40000 ALTER TABLE `user_recommended_posts` DISABLE KEYS */;
+INSERT INTO `user_recommended_posts` VALUES (2,3),(2,5),(4,3),(4,5),(3,3),(2,6),(2,2),(3,5),(3,6),(3,4),(2,4),(6,3),(5,6),(5,3),(5,2),(2,1),(5,5),(4,6),(3,2),(3,1),(5,1),(4,2),(4,4),(4,1),(5,4),(6,5),(6,6),(6,4),(6,2),(6,1);
 /*!40000 ALTER TABLE `user_recommended_posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-12 16:47:28
+-- Dump completed on 2021-09-13 12:21:18

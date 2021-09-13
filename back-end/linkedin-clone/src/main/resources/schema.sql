@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `linkedin_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `linkedin_db`;
--- MySQL dump 10.13  Distrib 8.0.25, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: linkedin_db
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `chat` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `comment` (
   KEY `FKlk4o90b8dpywn0h666n5er8hs` (`notification_id`),
   KEY `FKs1slvnkuemjsq2kj4h3vhx7i1` (`post_id`),
   KEY `FKtjfa2hhg8rdv00l60awdctu3s` (`user_made_by_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `interest_reaction` (
   KEY `FKn5ho85typb1ldl61nwu57xwbr` (`notification_id`),
   KEY `FK6nh25kdjdheletms9sk3yy9kj` (`post_id`),
   KEY `FKl5ceqokl69twcaoirjdwry4kh` (`user_made_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `job` (
   `user_made_by_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKtivyhmwtis44ql36sx20mx7aq` (`user_made_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `message` (
   PRIMARY KEY (`id`),
   KEY `FKmejd0ykokrbuekwwgd5a5xt8a` (`chat_id`),
   KEY `FKph40sp8gk60xcbtbldqcmx2m0` (`user_made_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `notification` (
   KEY `FKrm62op4qf3svdgema50y6iums` (`new_comment_id`),
   KEY `FK8o0xnpjn4hkbmoe0aexfr6h2` (`new_interest_id`),
   KEY `FKb0yvoep4h4k92ipon31wmdf7e` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,22 +227,7 @@ CREATE TABLE `post` (
   `owner_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKed26xsbw5klvkdyqql60f7xbp` (`owner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `post_interest_reactions`
---
-
-DROP TABLE IF EXISTS `post_interest_reactions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `post_interest_reactions` (
-  `post_id` bigint NOT NULL,
-  `interest_reactions_id` bigint NOT NULL,
-  PRIMARY KEY (`post_id`,`interest_reactions_id`),
-  KEY `FKqte77dwf1rroh140isrobxb2m` (`interest_reactions_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,21 +290,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `FKhl6ina2my866nv0rh1aipxi8u` (`profile_picture_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `user_chats`
---
-
-DROP TABLE IF EXISTS `user_chats`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_chats` (
-  `user_id` bigint NOT NULL,
-  `chats_id` bigint NOT NULL,
-  PRIMARY KEY (`user_id`,`chats_id`),
-  KEY `FKp3jbfmgl56s8gh1ossiyqse8h` (`chats_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,4 +376,4 @@ CREATE TABLE `user_roles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-12 16:47:07
+-- Dump completed on 2021-09-13 12:20:51

@@ -42,21 +42,7 @@ export class JobsComponent implements OnInit {
         alert(error.message);
       }
     );
-
-    this.jobService.getJobs(this.userDetails.id).subscribe(
-      (jobs) => {
-        Object.assign(this.jobs , jobs);
-        if(this.sortType==0 || this.sortType==null){
-          this.sortJobsByDate();
-        }else if(this.sortType==1){
-          this.sortJobsByRelevance();
-        }
-      },
-      error => {
-        alert(error.message);
-      }
-    );
-
+    
     this.jobService.getRecommendedJobs(this.userDetails.id).subscribe(
       (jobs) => {
         if(jobs.length != 0)
@@ -66,17 +52,33 @@ export class JobsComponent implements OnInit {
         alert(error.message);
       }
     );  
+
+    this.jobService.getJobs(this.userDetails.id).subscribe(
+      (jobs) => {
+        if(this.sortType==0 || this.sortType==null){
+          if(this.jobs.length!=0)
+            this.jobs = new Array<Job>();
+          Object.assign(this.jobs , jobs);
+          this.sortJobsByDate();
+        }else if(this.sortType==1){
+          if(this.jobs.length!=0)
+            this.jobs = new Array<Job>();
+          Object.assign(this.jobs,this.recommendedJobs);
+        }
+      },
+      error => {
+        alert(error.message);
+      }
+    );
   }
 
   changeSort(num:number){
     
     this.sortType = num;
     this.ngOnInit();
-    
   }
 
   sortJobsByDate() {
-
     this.jobs.sort(
       (a, b) => {
         return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
@@ -84,9 +86,6 @@ export class JobsComponent implements OnInit {
     );
   }
 
-  sortJobsByRelevance() {
-    Object.assign(this.jobs,this.recommendedJobs);
-  }
 
   jobSubmit(jobForm){
     if(jobForm.form.valid){
@@ -113,7 +112,6 @@ export class JobsComponent implements OnInit {
   } 
 
   newApplication(jobId: number) {
-
     this.jobService.apply(jobId,this.userDetails.id).subscribe(
       responce => {
         this.ngOnInit();

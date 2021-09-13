@@ -49,24 +49,6 @@ export class PostsinfeedComponent implements OnInit {
       this.userDetails = userDetails;
     });
 
-    this.feedService.getFeedPosts(this.userDetails.id).subscribe(
-      (posts) => {
-        Object.assign(this.posts , posts);
-        if(this.sortType==0 || this.sortType==null){
-          this.sortPostsByDate();
-        }else if(this.sortType==1){
-          this.sortPostsByRelevance();
-        }
-        this.posts.forEach(
-          p => {
-            p.newComment = new Comment();
-            p.comments = this.sortCommentsByDate(p.comments);
-
-          }
-        );
-      }
-    );
-
     this.userService.getUser(this.userDetails.id.toString()).subscribe(
       (user) => {
         Object.assign(this.user , user);
@@ -85,6 +67,29 @@ export class PostsinfeedComponent implements OnInit {
         alert(error.message);
       }
     );  
+
+    this.feedService.getFeedPosts(this.userDetails.id).subscribe(
+      (posts) => {
+        if(this.sortType==0 || this.sortType==null){
+          if(this.posts.length!=0)
+            this.posts = new Array<Post>();        
+          Object.assign(this.posts , posts);
+          this.sortPostsByDate();
+        }else if(this.sortType==1){
+          if(this.posts.length!=0)
+            this.posts = new Array<Post>();        
+          Object.assign(this.posts,this.recommendedPosts);
+        }
+        this.posts.forEach(
+          p => {
+            p.newComment = new Comment();
+            p.comments = this.sortCommentsByDate(p.comments);
+
+          }
+        );
+      }
+    );
+
   }
 
   changeSort(num:number){
@@ -94,18 +99,12 @@ export class PostsinfeedComponent implements OnInit {
     
   }
 
-  removePostsFromOtherUsers(){}
-
   sortPostsByDate(): Post[] {
     return this.posts.sort(
       (a, b) => {
         return <any>new Date(b.timestamp) - <any>new Date(a.timestamp);
       }
     );
-  }
-
-  sortPostsByRelevance() {
-    Object.assign(this.posts,this.recommendedPosts);
   }
 
   sortCommentsByDate(comments: Comment[]): Comment[] {
@@ -141,7 +140,7 @@ export class PostsinfeedComponent implements OnInit {
   setUserInterested(post: Post) {
     this.feedService.addPostReaction(post.id,this.userDetails.id).subscribe(
       response => {
-          location.reload();
+          this.ngOnInit();
         },
         error => {
           alert(error.message);
@@ -160,8 +159,6 @@ export class PostsinfeedComponent implements OnInit {
   }
 
   addNewComment(post: Post,commentform) {
-    // alert("here");
-
     if(commentform.form.valid) {
       post.newComment.timestamp = new Date();
       this.feedService.addNewComment(this.userDetails.id,post.id,post.newComment)
@@ -174,12 +171,9 @@ export class PostsinfeedComponent implements OnInit {
               alert(error.message);
             }
         );
-      // this.ngOnInit();
     }
     else{
       alert("Not valid data");
     }
-
-
   }
 }

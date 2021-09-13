@@ -240,7 +240,6 @@ public class FeedController {
                     Long id2 = p.getId();
                     if (id1 == id2)
                         recommendedPosts.add(p);
-
                 }
             }
         }else {
