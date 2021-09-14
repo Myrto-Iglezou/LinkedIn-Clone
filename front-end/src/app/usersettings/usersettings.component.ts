@@ -55,6 +55,7 @@ export class UsersettingsComponent implements OnInit {
 
       this.usersettings.newPassword = null;
       this.usersettings.passwordConfirm = null;
+      this.usersettings.currentPassword = this.currPwd_1;
 
       this.userService.changeUsername(this.usersettings)
         .subscribe(
@@ -95,6 +96,7 @@ export class UsersettingsComponent implements OnInit {
       this.loading_2 = true;
       this.usersettings.newUsername = null;
       this.usersettings.currentUsername = this.user.username;
+      this.usersettings.currentPassword = this.currPwd_2;
       this.userService.changePassword(this.usersettings)
         .subscribe(
           response => {

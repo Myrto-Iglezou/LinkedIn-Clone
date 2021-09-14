@@ -22,7 +22,6 @@
                     <div class=" box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                
                                 <img class="img-circle" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
                                 <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" alt="User Image">
                                 <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
