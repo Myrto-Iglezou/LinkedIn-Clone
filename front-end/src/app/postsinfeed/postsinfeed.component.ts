@@ -148,6 +148,12 @@ export class PostsinfeedComponent implements OnInit {
     );
   }
 
+  goToProfile(user: User) {
+    this.router.navigate(['/users/' + user.id.toString()]).then(() => {
+      location.reload();
+    });   
+  }
+
 
   userIsInterested(post: Post): boolean {
     for(let i=0; i<post.interestReactions.length; i++){

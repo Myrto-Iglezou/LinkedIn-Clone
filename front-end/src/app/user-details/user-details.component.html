@@ -170,8 +170,9 @@
                           <div *ngIf="user.skills.length != 0" class="container align-self-center" >
                             <div *ngIf="user.id && userDetails && userDetails.id == user.id" id="mySkills">
                               <ul id="skills_ul">
-                                <li *ngFor="let ed of user.skills;"  >
-                                  <span class="align-middle skill">{{ed.description}}</span>
+                                <li *ngFor="let skill of user.skills;"  >
+                                  <span *ngIf="skill.isPublic == 1" class="align-middle skill">{{skill.description}}</span>
+                                  <span *ngIf="skill.isPublic == 0" class="align-middle skill">{{skill.description}}</span>
                                 </li>
                               </ul>
   
@@ -180,6 +181,7 @@
                               <ul id="skills_ul">
                                 <li *ngFor="let skill of user.skills;"  >
                                   <span *ngIf="skill.isPublic == 1" class="align-middle skill">{{skill.description}}</span>
+                                  <span *ngIf="skill.isPublic == 0 && connected(user.id)" class="align-middle skill">{{skill.description}}</span>
                                 </li>
                               </ul>
                             </div>

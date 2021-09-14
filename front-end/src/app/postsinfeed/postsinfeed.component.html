@@ -15,16 +15,15 @@
     </div>
 
     <div  *ngFor="let post of posts; let i = index">
-    
         <div class="card">
             <div class="card-body ">
                 <div class="container">
                     <div class=" box box-widget">
                         <div class="box-header with-border">
-                            <div class="user-block">
+                            <div class="user-block"> 
                                 <img class="img-circle" *ngIf="post.owner.profilePicture" [src]="displayProfilePhoto(post.owner)">
                                 <img *ngIf="!post.owner.profilePicture" class="img-circle" src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg" alt="User Image">
-                                <span class="username"><a href="#" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
+                                <span class="username"><a (click)="goToProfile(post.owner)" style="cursor: pointer;" data-abc="true">{{post.owner.name}} {{post.owner.surname}}</a></span> <br>
                                 <span class="description">{{post.timestamp | date:'d MMMM y, h:mm a'}}</span> 
                             </div>
                             <div class="box-tools"> 
@@ -57,7 +56,7 @@
                                     <img class="img-circle img-sm" *ngIf="comment.userMadeBy.profilePicture" [src]="displayProfilePhoto(comment.userMadeBy)">
                                     <img class="img-circle img-sm" *ngIf="!comment.userMadeBy.profilePicture" src="https://www.donkey.bike/wp-content/uploads/2020/12/user-member-avatar-face-profile-icon-vector-22965342-e1608640557889.jpg">
                                     <div class="comment-text"> 
-                                        <span class="username"> {{comment.userMadeBy.name}} {{comment.userMadeBy.surname}}
+                                        <span class="username"><a (click)="goToProfile(comment.userMadeBy)" style="cursor: pointer;" data-abc="true"> <b>{{comment.userMadeBy.name}} {{comment.userMadeBy.surname}}</b></a>
                                             <span class="text-muted pull-right">{{comment.timestamp | date:'d MMMM y, h:mm a'}}</span> 
                                         </span> {{comment.content}}
                                     </div>
