@@ -54,6 +54,10 @@ public class JobsController {
             jobs.addAll(u.getJobsCreated());
         }
 
+        Set<Job> allJobs = new HashSet<>(jobRepository.findAll());
+        jobs.addAll(allJobs);
+
+
         System.out.println("\n");
         for(Job j: jobs) {
             System.out.println(j);
