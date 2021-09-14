@@ -1,6 +1,7 @@
 package com.linkedin.linkedinclone.controllers;
 
 
+import com.linkedin.linkedinclone.model.Picture;
 import com.linkedin.linkedinclone.model.User;
 import com.linkedin.linkedinclone.repositories.RoleRepository;
 import com.linkedin.linkedinclone.repositories.UserRepository;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Set;
 
+import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
+
 @RestController
 @AllArgsConstructor
 public class AdminController {
@@ -27,10 +30,19 @@ public class AdminController {
     private final BCryptPasswordEncoder encoder;
 
     @CrossOrigin(origins = "*") // CrossOrigin: For connecting with angular
-//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/users")
     public List<User> all() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        for(User u: users){
+            System.out.println(u.getName());
+            Picture uPic = u.getProfilePicture();
+            if(uPic!=null && uPic.isCompressed()) {
+                Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
+                temp.setCompressed(false);
+                u.setProfilePicture(temp);
+            }
+        }
+        return users;
     }
 
 

@@ -114,6 +114,7 @@ public class NetworkController {
             Picture uPic = u.getProfilePicture();
             if(uPic!=null && uPic.isCompressed()) {
                 Picture temp = new Picture(uPic.getName(), uPic.getType(), decompressBytes(uPic.getBytes()));
+                temp.setCompressed(false);
                 u.setProfilePicture(temp);
             }
         }
