@@ -242,7 +242,8 @@ public class UserService {
             System.out.println("Score: "+editDist+"\n\n");
             avgDistance += editDist;
         }
-        avgDistance += Utils.minDistance(u.getCurrentJob().toLowerCase(),j.getTitle().toLowerCase());
+        if(u.getCurrentJob()!=null)
+            avgDistance += Utils.minDistance(u.getCurrentJob().toLowerCase(),j.getTitle().toLowerCase());
         if (avgDistance != 0) {
             System.out.println("Avg Score: " + (int) (((double) avgDistance) / ((double) skills.size())));
             return (int) (((double) avgDistance) / ((double) skills.size()));
