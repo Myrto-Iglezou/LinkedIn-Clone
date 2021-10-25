@@ -1,10 +1,10 @@
 <p>
     <a><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /></a>
     <a><img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" /></a>
-    <a><img src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white" /></a>
-    <a><img src="https://img.shields.io/badge/SpringBoot-F7DF1E?style=for-the-badge&logo=javascript&logoColor=green" /></a>
-    <a><img src="https://img.shields.io/badge/Angular-FB7A24.svg?&style=for-the-badge&logo=xampp&logoColor=red" /></a>
+    <a><img src="https://img.shields.io/badge/SpringBoot-239120?style=for-the-badge&logo=javascript&logoColor=white" /></a>
+    <a><img src="https://img.shields.io/badge/Angular-E34F26.svg?&style=for-the-badge&logo=xampp&logoColor=white" /></a>
     <a><img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" /></a>
+    <a><img src="https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white" /></a>
 </p>
 
 
@@ -34,13 +34,14 @@ __Back:__   ```JetBrains run``` ☑️
 
 ## Existed Users
 
-|Username | Password |
-|admin@mail.com | 012345 |
-|papadopoulou@mail.com | 12345|
-|anastasiou@mail.com | 12345|
-|venetis@mail.com | 12345|
-|evangeliou@mail.com | 12345|
-|germanos@mail.com | 12345|
+| Username | Password |
+| ---- | ---- |
+| admin@mail.com | 012345 |
+| papadopoulou@mail.com | 12345|
+| anastasiou@mail.com | 12345|
+| venetis@mail.com | 12345|
+| evangeliou@mail.com | 12345|
+| germanos@mail.com | 12345|
 
 ## Photos of the application
 
