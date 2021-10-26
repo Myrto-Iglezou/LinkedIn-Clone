@@ -24,6 +24,10 @@ In the application there are 2 roles: __Administrator__ / __Professional__. The 
 When the application starts, the administrator is created (admin).He has access to all the information of other users. These users are professionals, who have the ability to interact with other users, exchanging messages, making friends, responding to friend posts, and more. At the same time, they can create job ads as well as make requests to other users' ads, edit their personal information and ultimately create their own professional network.
 SpringBoot and MySQL were used for the back-end implementation, while the Angular framework was used for the front-end.
 
+# Team members
+
+This project made by <a href="https://myrto-iglezou.github.io">Myrto Iglezou</a> and <a href="https://nikoletos-k.github.io">Konstantinos Nikoletos</a>
+
 # Execution
 
 __Front:__  ```ng serve```  ✅ 
