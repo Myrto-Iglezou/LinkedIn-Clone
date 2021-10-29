@@ -84,12 +84,6 @@ __Back:__   ```JetBrains run``` ☑️
 
 --- 
 
-### Network page
-
-![alt text](readme-photos/network-search.JPG)  
-
---- 
-
 ### Chat page
 
 ![alt text](readme-photos/chat.JPG)  
