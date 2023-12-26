@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 import static com.linkedin.linkedinclone.utils.PictureSave.decompressBytes;
-import static jdk.nashorn.internal.objects.Global.println;
+//import static jdk.nashorn.internal.objects.Global.println;
 
 @RestController
 @AllArgsConstructor
