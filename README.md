@@ -26,7 +26,7 @@ SpringBoot and MySQL were used for the back-end implementation, while the Angula
 
 ## Team members
 
-This project made by <a href="https://myrto-iglezou.github.io">Myrto Iglezou</a> and <a href="https://nikoletos-k.github.io">Konstantinos Nikoletos</a>.
+This project forked from <a href="https://myrto-iglezou.github.io">Myrto Iglezou</a> and <a href="https://nikoletos-k.github.io">Konstantinos Nikoletos</a>.
 
 # Execution
 
